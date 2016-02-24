@@ -1,0 +1,64 @@
+{
+  "name": "hastscript",
+  "version": "0.0.0",
+  "description": "Hyperscript compatible DSL for creating virtual HAST trees",
+  "license": "MIT",
+  "keywords": [
+    "hast",
+    "rehype",
+    "vdom",
+    "virtual",
+    "dom",
+    "hyperscript",
+    "dsl",
+    "html"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/hastscript.git"
+  },
+  "bugs": "https://github.com/wooorm/hastscript/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "dependencies": {
+    "camelcase": "^2.1.0",
+    "comma-separated-tokens": "^1.0.0",
+    "css-declarations": "^1.0.0",
+    "hast-util-parse-selector": "^1.0.0",
+    "property-information": "^2.0.0",
+    "space-separated-tokens": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "eslint": "^2.0.0",
+    "esmangle": "^1.0.0",
+    "hast": "0.0.2",
+    "istanbul": "^0.4.0",
+    "jscs": "^2.0.0",
+    "jscs-jsdoc": "^1.0.0",
+    "remark": "^4.0.0",
+    "remark-comment-config": "^3.0.0",
+    "remark-github": "^4.0.1",
+    "remark-lint": "^3.0.0",
+    "remark-usage": "^3.0.0",
+    "remark-validate-links": "^3.0.0",
+    "tape": "^4.0.0"
+  },
+  "scripts": {
+    "build-md": "remark . --quiet --frail",
+    "build-bundle": "browserify index.js --bare -s hastscript > hastscript.js",
+    "build-mangle": "esmangle hastscript.js > hastscript.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "lint-api": "eslint .",
+    "lint-style": "jscs --reporter inline .",
+    "lint": "npm run lint-api && npm run lint-style",
+    "test-api": "node test.js",
+    "test-coverage": "istanbul cover test.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
+  }
+}
