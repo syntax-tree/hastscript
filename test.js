@@ -624,7 +624,81 @@ test('hastscript', function (t) {
                 'children': []
             },
             'should *not* allow omitting `properties` for ' +
-            'an `input[type=text]`, as those are void and clash'
+            'an `input[type=text][value]`, as those are void and clash'
+        );
+
+        st.deepEqual(
+            h('a', {
+                'type': 'text/html'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'a',
+                'properties': {
+                    'type': 'text/html'
+                },
+                'children': []
+            },
+            'should *not* allow omitting `properties` for ' +
+            'an `[type]`, without `value` or `children`'
+        );
+
+        st.deepEqual(
+            h('foo', {
+                'type': 'text/html',
+                'children': {
+                    'bar': 'baz'
+                }
+            }),
+            {
+                'type': 'element',
+                'tagName': 'foo',
+                'properties': {
+                    'type': 'text/html',
+                    'children': {
+                        'bar': 'baz'
+                    }
+                },
+                'children': []
+            },
+            'should *not* allow omitting `properties` when ' +
+            '`children` is not set to an array'
+        );
+
+        st.deepEqual(
+            h('button', {
+                'type': 'submit',
+                'value': 'Send'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'button',
+                'properties': {
+                    'type': 'submit',
+                    'value': 'Send'
+                },
+                'children': []
+            },
+            'should *not* allow omitting `properties` when ' +
+            'a button has a valid type'
+        );
+
+        st.deepEqual(
+            h('button', {
+                'type': 'text',
+                'value': 'Send'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'button',
+                'properties': {},
+                'children': [{
+                    'type': 'text',
+                    'value': 'Send'
+                }]
+            },
+            'should allow omitting `properties` when ' +
+            'a button has an invalid type'
         );
 
         st.throws(

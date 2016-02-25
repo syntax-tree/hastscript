@@ -178,6 +178,32 @@ function addChild(nodes, value) {
 }
 
 /**
+ * Check if `value` is a valid child node of
+ * `tagName`.
+ *
+ * @param {string} tagName - Parent tag-name.
+ * @param {Object} value - Node or properties like value.
+ * @return {boolean} - Whether `value` is a node.
+ */
+function isNode(tagName, value) {
+    var type = value.type;
+
+    if (tagName === 'input' || !type || typeof type !== 'string') {
+        return false;
+    }
+
+    if (typeof value.children === 'object' && 'length' in value.children) {
+        return true;
+    }
+
+    if (tagName === 'button') {
+        return type !== 'submit' && type !== 'reset' && type !== 'button';
+    }
+
+    return 'value' in value;
+}
+
+/**
  * Hyperscript compatible DSL for creating virtual HAST
  * trees.
  *
@@ -197,11 +223,7 @@ function h(selector, properties, children) {
         (
             typeof properties === 'string' ||
             'length' in properties ||
-            // Only allow a node at the `properties`
-            // position when it isn’t an `input`, as those
-            // use HTML `type` and `value` attributes too
-            // and are void.
-            (node.tagName !== 'input' && 'type' in properties)
+            isNode(node.tagName, properties)
         )
     ) {
         children = properties;
