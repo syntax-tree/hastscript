@@ -197,7 +197,10 @@ function isNode(tagName, value) {
     }
 
     if (tagName === 'button') {
-        return type !== 'submit' && type !== 'reset' && type !== 'button';
+        return type !== 'menu' &&
+            type !== 'submit' &&
+            type !== 'reset' &&
+            type !== 'button';
     }
 
     return 'value' in value;

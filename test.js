@@ -730,6 +730,24 @@ test('hastscript', function (t) {
 
         st.deepEqual(
             h('button', {
+                'type': 'menu',
+                'value': 'Send'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'button',
+                'properties': {
+                    'type': 'menu',
+                    'value': 'Send'
+                },
+                'children': []
+            },
+            'should *not* allow omitting `properties` when ' +
+            'a button has a valid type'
+        );
+
+        st.deepEqual(
+            h('button', {
                 'type': 'text',
                 'value': 'Send'
             }),
