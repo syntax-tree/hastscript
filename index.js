@@ -47,11 +47,11 @@ function parsePrimitive(info, name, value) {
         return result;
     }
 
-    if (info.boolean) {
-        result = true;
-    } else if (info.numeric || info.positiveNumeric) {
-        result = Number(result);
-    } else if (info.overloadedBoolean) {
+    if (info.numeric || info.positiveNumeric) {
+        if (!isNaN(result)) {
+            result = Number(result);
+        }
+    } else if (info.boolean || info.overloadedBoolean) {
         /*
          * Accept `boolean` and `string`.
          */

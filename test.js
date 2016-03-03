@@ -248,7 +248,7 @@ test('hastscript', function (t) {
 
         st.deepEqual(
             h(null, {
-                'allowFullScreen': 'yup'
+                'allowFullScreen': ''
             }),
             {
                 'type': 'element',
@@ -258,7 +258,52 @@ test('hastscript', function (t) {
                 },
                 'children': []
             },
-            'should cast known `boolean` values'
+            'should cast valid known `boolean` values'
+        );
+
+        st.deepEqual(
+            h(null, {
+                'allowFullScreen': 'yup'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'div',
+                'properties': {
+                    'allowFullScreen': 'yup'
+                },
+                'children': []
+            },
+            'should not cast invalid known `boolean` values'
+        );
+
+        st.deepEqual(
+            h(null, {
+                'volume': '0.1'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'div',
+                'properties': {
+                    'volume': 0.1
+                },
+                'children': []
+            },
+            'should cast valid known `numeric` values'
+        );
+
+        st.deepEqual(
+            h(null, {
+                'volume': 'one'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'div',
+                'properties': {
+                    'volume': 'one'
+                },
+                'children': []
+            },
+            'should not cast invalid known `numeric` values'
         );
 
         st.deepEqual(
