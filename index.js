@@ -48,7 +48,7 @@ function parsePrimitive(info, name, value) {
     }
 
     if (info.numeric || info.positiveNumeric) {
-        if (!isNaN(result)) {
+        if (!isNaN(result) && result !== '') {
             result = Number(result);
         }
     } else if (info.boolean || info.overloadedBoolean) {
