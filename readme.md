@@ -1,11 +1,13 @@
 # hastscript [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
+<!--lint disable heading-increment-->
+
 [Hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
 compatible DSL for creating virtual [HAST][] trees.
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install hastscript
@@ -67,7 +69,7 @@ Yields:
 
 DSL for creating virtual [HAST][] trees.
 
-**Parameters**:
+###### Parameters
 
 *   `selector` (`string`, optional)
     — Simple CSS selector, e.g., tag names (`foo`), IDs (`#bar`)
@@ -81,7 +83,9 @@ DSL for creating virtual [HAST][] trees.
     — (List of) child nodes, when strings are encountered,
     they are normalised to [`text`][text] nodes.
 
-**Returns**: [`Node`][hast-node] — A HAST node.
+###### Returns
+
+[`Node`][hast-node] — A HAST node.
 
 ## License
 
@@ -97,7 +101,7 @@ DSL for creating virtual [HAST][] trees.
 
 [codecov]: https://codecov.io/github/wooorm/hastscript
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[npm]: https://docs.npmjs.com/cli/install
 
 [releases]: https://github.com/wooorm/hastscript/releases
 
