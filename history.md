@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+3.0.0 / 2016-06-14
+==================
+
+*   Update `readme.md` ([`2744ec3`](https://github.com/wooorm/hastscript/commit/2744ec3))
+*   Remove support for `style` ([`442166c`](https://github.com/wooorm/hastscript/commit/442166c))
+*   Update dependencies, dev-dependencies ([`faadb6e`](https://github.com/wooorm/hastscript/commit/faadb6e))
+
 2.0.0 / 2016-04-12
 ==================
 
