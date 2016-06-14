@@ -33,7 +33,6 @@ var tree = h('.foo#some-id', [
     }),
     h('a.alpha', {
         'class': 'bravo charlie',
-        'style': 'color:/*red*/purple',
         'download': 'download'
     }, ['delta', 'echo'])
 ]);
@@ -56,10 +55,7 @@ Yields:
        children: [] },
      { type: 'element',
        tagName: 'a',
-       properties: 
-        { className: [ 'alpha', 'bravo', 'charlie' ],
-          style: { color: 'purple' },
-          download: true },
+       properties: { className: [ 'alpha', 'bravo', 'charlie' ], download: true },
        children: 
         [ { type: 'text', value: 'delta' },
           { type: 'text', value: 'echo' } ] } ] }
@@ -80,9 +76,6 @@ DSL for creating virtual [HAST][] trees.
 
 *   `properties` (`Object.<string, *>`, optional)
     — Map of properties;
-
-    When providing an object to `properties.style`,
-    make sure you camel-case those properties.
 
 *   `children` (`string`, `Node`, `Array.<string|Node>`, optional)
     — (List of) child nodes, when strings are encountered,

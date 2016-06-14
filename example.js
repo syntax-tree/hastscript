@@ -10,7 +10,6 @@ var tree = h('.foo#some-id', [
     }),
     h('a.alpha', {
         'class': 'bravo charlie',
-        'style': 'color:/*red*/purple',
         'download': 'download'
     }, ['delta', 'echo'])
 ]);

@@ -18,7 +18,6 @@
 var parseSelector = require('hast-util-parse-selector');
 var camelcase = require('camelcase');
 var propertyInformation = require('property-information');
-var cssDeclarations = require('css-declarations').parse;
 var spaces = require('space-separated-tokens').parse;
 var commas = require('comma-separated-tokens').parse;
 
@@ -89,29 +88,20 @@ function addProperty(properties, name, value) {
         return;
     }
 
-    /*
-     * Handle values.
-     */
-
+    /* Handle values. */
     if (name === 'style') {
-        /*
-         * Accept both `string` and `object`.
-         */
-
-        if (typeof value === 'string') {
-            result = cssDeclarations(result);
-        } else {
-            result = {};
+        /* Accept `object`. */
+        if (typeof value !== 'string') {
+            result = [];
 
             for (key in value) {
-                result[key] = value[key];
+                result.push([key, value[key]].join(': '));
             }
+
+            result = result.join('; ');
         }
     } else if (info.spaceSeparated) {
-        /*
-         * Accept both `string` and `Array`.
-         */
-
+        /* Accept both `string` and `Array`. */
         result = typeof value === 'string' ? spaces(result) : result;
 
         /*
@@ -123,10 +113,7 @@ function addProperty(properties, name, value) {
             result = properties.className.concat(result);
         }
     } else if (info.commaSeparated) {
-        /*
-         * Accept both `string` and `Array`.
-         */
-
+        /* Accept both `string` and `Array`. */
         result = typeof value === 'string' ? commas(result) : result;
     }
 

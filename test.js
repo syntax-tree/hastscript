@@ -419,17 +419,14 @@ test('hastscript', function (t) {
             h(null, {
                 'style': {
                     'color': 'red',
-                    'webkitBorderRadius': '3px'
+                    '-webkit-border-radius': '3px'
                 }
             }),
             {
                 'type': 'element',
                 'tagName': 'div',
                 'properties': {
-                    'style': {
-                        'color': 'red',
-                        'webkitBorderRadius': '3px'
-                    }
+                    'style': 'color: red; -webkit-border-radius: 3px'
                 },
                 'children': []
             },
@@ -444,10 +441,7 @@ test('hastscript', function (t) {
                 'type': 'element',
                 'tagName': 'div',
                 'properties': {
-                    'style': {
-                        'color': 'purple',
-                        'webkitBorderRadius': '3px'
-                    }
+                    'style': 'color:/*red*/purple; -webkit-border-radius: 3px'
                 },
                 'children': []
             },
