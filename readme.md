@@ -1,7 +1,5 @@
 # hastscript [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
-<!--lint disable heading-increment-->
-
 [Hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
 compatible DSL for creating virtual [HAST][] trees.
 
@@ -12,9 +10,6 @@ compatible DSL for creating virtual [HAST][] trees.
 ```bash
 npm install hastscript
 ```
-
-**hastscript** is also available as an AMD, CommonJS, and globals
-module, [uncompressed and compressed][releases].
 
 ## Usage
 
@@ -46,7 +41,7 @@ Yields:
 { type: 'element',
   tagName: 'div',
   properties: { id: 'some-id', className: [ 'foo' ] },
-  children: 
+  children:
    [ { type: 'element',
        tagName: 'span',
        properties: {},
@@ -58,7 +53,7 @@ Yields:
      { type: 'element',
        tagName: 'a',
        properties: { className: [ 'alpha', 'bravo', 'charlie' ], download: true },
-       children: 
+       children:
         [ { type: 'text', value: 'delta' },
           { type: 'text', value: 'echo' } ] } ] }
 ```
@@ -75,10 +70,8 @@ DSL for creating virtual [HAST][] trees.
     — Simple CSS selector, e.g., tag names (`foo`), IDs (`#bar`)
     and classes (`.baz`) are supported,
     defaults to a `div` element.
-
 *   `properties` (`Object.<string, *>`, optional)
     — Map of properties;
-
 *   `children` (`string`, `Node`, `Array.<string|Node>`, optional)
     — (List of) child nodes, when strings are encountered,
     they are normalised to [`text`][text] nodes.
@@ -102,8 +95,6 @@ DSL for creating virtual [HAST][] trees.
 [codecov]: https://codecov.io/github/wooorm/hastscript
 
 [npm]: https://docs.npmjs.com/cli/install
-
-[releases]: https://github.com/wooorm/hastscript/releases
 
 [license]: LICENSE
 
