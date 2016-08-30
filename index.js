@@ -175,6 +175,10 @@ function addChild(nodes, value) {
 function isNode(tagName, value) {
     var type = value.type;
 
+    if (typeof type === 'string') {
+        type = type.toLowerCase();
+    }
+
     if (tagName === 'input' || !type || typeof type !== 'string') {
         return false;
     }

@@ -724,6 +724,24 @@ test('hastscript', function (t) {
 
         st.deepEqual(
             h('button', {
+                'type': 'BUTTON',
+                'value': 'Send'
+            }),
+            {
+                'type': 'element',
+                'tagName': 'button',
+                'properties': {
+                    'type': 'BUTTON',
+                    'value': 'Send'
+                },
+                'children': []
+            },
+            'should *not* allow omitting `properties` when ' +
+            'a button has a valid non-lowercase type'
+        );
+
+        st.deepEqual(
+            h('button', {
                 'type': 'menu',
                 'value': 'Send'
             }),
