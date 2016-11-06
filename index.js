@@ -1,12 +1,3 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module hastscript
- * @fileoverview Hyperscript compatible DSL for creating
- *   virtual HAST trees.
- */
-
 'use strict';
 
 /* Dependencies. */
@@ -19,16 +10,8 @@ var commas = require('comma-separated-tokens').parse;
 /* Expose. */
 module.exports = h;
 
-/**
- * Hyperscript compatible DSL for creating virtual HAST
- * trees.
- *
- * @param {string?} selector - Simple CSS selector to parse.
- * @param {Object?} properties - HTML attributes to add.
- * @param {string|Array.<string|Node>} children - List of
- *   children to add.
- * @return {Node} - HAST node.
- */
+/* Hyperscript compatible DSL for creating virtual HAST
+ * trees. */
 function h(selector, properties, children) {
   var node = parseSelector(selector);
   var property;

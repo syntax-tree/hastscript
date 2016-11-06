@@ -1,11 +1,3 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module hastscript
- * @fileoverview Test suite for `hastscript`.
- */
-
 'use strict';
 
 /* Dependencies. */
