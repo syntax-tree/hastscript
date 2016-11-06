@@ -13,15 +13,9 @@ npm install hastscript
 
 ## Usage
 
-Dependencies:
-
 ```javascript
 var h = require('hastscript');
-```
 
-AST:
-
-```javascript
 var tree = h('.foo#some-id', [
     h('span', 'some text'),
     h('input', {
@@ -78,7 +72,7 @@ DSL for creating virtual [HAST][] trees.
 
 ###### Returns
 
-[`Node`][hast-node] — A HAST node.
+[`Element`][element].
 
 ## License
 
@@ -102,7 +96,7 @@ DSL for creating virtual [HAST][] trees.
 
 [hast]: https://github.com/wooorm/hast
 
-[hast-node]: https://github.com/wooorm/hast#node
+[element]: https://github.com/wooorm/hast#element
 
 [virtual-hyperscript]: https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript
 
