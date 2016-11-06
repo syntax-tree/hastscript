@@ -314,7 +314,7 @@ test('hastscript', function (t) {
     );
 
     st.deepEqual(
-      h(null, {style: {'color': 'red', '-webkit-border-radius': '3px'}}),
+      h(null, {style: {color: 'red', '-webkit-border-radius': '3px'}}),
       {
         type: 'element',
         tagName: 'div',
