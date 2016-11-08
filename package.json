@@ -23,7 +23,7 @@
     "index.js"
   ],
   "dependencies": {
-    "camelcase": "^3.0.0",
+    "camelcase": "^4.0.0",
     "comma-separated-tokens": "^1.0.0",
     "hast-util-parse-selector": "^2.0.0",
     "property-information": "^3.0.0",
