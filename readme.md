@@ -77,13 +77,13 @@ DSL for creating virtual [HAST][] trees.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/hastscript.svg
+[travis-badge]: https://img.shields.io/travis/syntax-tree/hastscript.svg
 
-[travis]: https://travis-ci.org/wooorm/hastscript
+[travis]: https://travis-ci.org/syntax-tree/hastscript
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/hastscript.svg
+[codecov-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hastscript.svg
 
-[codecov]: https://codecov.io/github/wooorm/hastscript
+[codecov]: https://codecov.io/github/syntax-tree/hastscript
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -91,12 +91,12 @@ DSL for creating virtual [HAST][] trees.
 
 [author]: http://wooorm.com
 
-[hast]: https://github.com/wooorm/hast
+[hast]: https://github.com/syntax-tree/hast
 
-[element]: https://github.com/wooorm/hast#element
+[element]: https://github.com/syntax-tree/hast#element
 
 [virtual-hyperscript]: https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript
 
 [hyperscript]: https://github.com/dominictarr/hyperscript
 
-[text]: https://github.com/wooorm/hast#text
+[text]: https://github.com/syntax-tree/unist#text
