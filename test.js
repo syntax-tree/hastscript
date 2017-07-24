@@ -588,5 +588,74 @@ test('hastscript', function (t) {
     st.end();
   });
 
+  t.test('<template>', function (st) {
+    st.deepEqual(
+      h('template'),
+      {
+        type: 'element',
+        tagName: 'template',
+        properties: {},
+        children: [],
+        content: {
+          type: 'root',
+          children: []
+        }
+      },
+      'empty template'
+    );
+
+    st.deepEqual(
+      h('template', 'Alpha'),
+      {
+        type: 'element',
+        tagName: 'template',
+        properties: {},
+        children: [],
+        content: {
+          type: 'root',
+          children: [{type: 'text', value: 'Alpha'}]
+        }
+      },
+      'template with text'
+    );
+
+    st.deepEqual(
+      h('template', [
+        h('b', 'Bold'),
+        ' and ',
+        h('i', 'italic'),
+        '.'
+      ]),
+      {
+        type: 'element',
+        tagName: 'template',
+        properties: {},
+        children: [],
+        content: {
+          type: 'root',
+          children: [
+            {
+              type: 'element',
+              tagName: 'b',
+              properties: {},
+              children: [{type: 'text', value: 'Bold'}]
+            },
+            {type: 'text', value: ' and '},
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {},
+              children: [{type: 'text', value: 'italic'}]
+            },
+            {type: 'text', value: '.'}
+          ]
+        }
+      },
+      'template with elements'
+    );
+
+    st.end();
+  });
+
   t.end();
 });
