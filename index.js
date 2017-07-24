@@ -1,13 +1,11 @@
 'use strict';
 
-/* Dependencies. */
 var parseSelector = require('hast-util-parse-selector');
 var camelcase = require('camelcase');
 var propertyInformation = require('property-information');
 var spaces = require('space-separated-tokens').parse;
 var commas = require('comma-separated-tokens').parse;
 
-/* Expose. */
 module.exports = h;
 
 /* Hyperscript compatible DSL for creating virtual HAST

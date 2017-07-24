@@ -1,10 +1,8 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var h = require('./index.js');
 
-/* Tests. */
 test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function');
 
