@@ -55,19 +55,23 @@ Yields:
 
 DSL for creating virtual [HAST][] trees.
 
-###### Parameters
+##### Parameters
 
-*   `selector` (`string`, optional)
-    — Simple CSS selector, e.g., tag names (`foo`), IDs (`#bar`)
-    and classes (`.baz`) are supported,
-    defaults to a `div` element.
-*   `properties` (`Object.<string, *>`, optional)
-    — Map of properties;
-*   `children` (`string`, `Node`, `Array.<string|Node>`, optional)
-    — (List of) child nodes, when strings are encountered,
-    they are normalised to [`text`][text] nodes.
+###### `selector`
 
-###### Returns
+Simple CSS selector (`string`, optional).  Can contain a tag name (`foo`), IDs
+(`#bar`), and classes (`.baz`), defaults to a `div` element.
+
+###### `properties`
+
+Map of properties (`Object.<string, *>`, optional).
+
+###### `children`
+
+(List of) child nodes (`string`, `Node`, `Array.<string|Node>`, optional).
+When strings are encountered, they are normalised to [`text`][text] nodes.
+
+##### Returns
 
 [`Element`][element].
 
