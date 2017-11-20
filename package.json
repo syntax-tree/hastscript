@@ -13,7 +13,7 @@
     "dsl",
     "html"
   ],
-  "repository": "https://github.com/syntax-tree/hastscript",
+  "repository": "syntax-tree/hastscript",
   "bugs": "https://github.com/syntax-tree/hastscript/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
