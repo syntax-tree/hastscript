@@ -5,3 +5,4 @@ coverage/
 node_modules/
 hastscript.js
 hastscript.min.js
+yarn.lock
