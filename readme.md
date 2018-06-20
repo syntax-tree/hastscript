@@ -14,16 +14,22 @@ npm install hastscript
 ## Usage
 
 ```javascript
-var h = require('hastscript');
+var h = require('hastscript')
 
 var tree = h('.foo#some-id', [
   h('span', 'some text'),
   h('input', {type: 'text', value: 'foo'}),
-  h('a.alpha', {
-    class: 'bravo charlie',
-    download: 'download'
-  }, ['delta', 'echo'])
-]);
+  h(
+    'a.alpha',
+    {
+      class: 'bravo charlie',
+      download: 'download'
+    },
+    ['delta', 'echo']
+  )
+])
+
+console.log(tree)
 ```
 
 Yields:
