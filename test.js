@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var h = require('./index.js');
+var h = require('.');
 
 test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function');
