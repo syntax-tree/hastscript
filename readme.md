@@ -1,7 +1,7 @@
 # hastscript [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
 [Hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
-compatible DSL for creating virtual [HAST][] trees.
+compatible DSL for creating virtual [HAST][] trees in HTML and SVG.
 
 ## Installation
 
@@ -15,21 +15,25 @@ npm install hastscript
 
 ```javascript
 var h = require('hastscript')
+var s = require('hastscript/svg')
 
-var tree = h('.foo#some-id', [
-  h('span', 'some text'),
-  h('input', {type: 'text', value: 'foo'}),
-  h(
-    'a.alpha',
-    {
-      class: 'bravo charlie',
-      download: 'download'
-    },
-    ['delta', 'echo']
-  )
-])
+console.log(
+  h('.foo#some-id', [
+    h('span', 'some text'),
+    h('input', {type: 'text', value: 'foo'}),
+    h('a.alpha', {class: 'bravo charlie', download: 'download'}, [
+      'delta',
+      'echo'
+    ])
+  ])
+)
 
-console.log(tree)
+console.log(
+  s('svg', {xmlns: 'http://www.w3.org/2000/svg', viewbox: '0 0 500 500'}, [
+    s('title', 'SVG `<circle>` element'),
+    s('circle', {cx: 120, cy: 120, r: 100})
+  ])
+)
 ```
 
 Yields:
@@ -37,7 +41,7 @@ Yields:
 ```js
 { type: 'element',
   tagName: 'div',
-  properties: { id: 'some-id', className: [ 'foo' ] },
+  properties: { className: [ 'foo' ], id: 'some-id' },
   children:
    [ { type: 'element',
        tagName: 'span',
@@ -53,24 +57,40 @@ Yields:
        children:
         [ { type: 'text', value: 'delta' },
           { type: 'text', value: 'echo' } ] } ] }
+{ type: 'element',
+  tagName: 'svg',
+  properties: { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 500 500' },
+  children:
+   [ { type: 'element',
+       tagName: 'title',
+       properties: {},
+       children: [ { type: 'text', value: 'SVG `<circle>` element' } ] },
+     { type: 'element',
+       tagName: 'circle',
+       properties: { cx: 120, cy: 120, r: 100 },
+       children: [] } ] }
 ```
 
 ## API
 
 ### `h(selector?[, properties][, children])`
 
-DSL for creating virtual [HAST][] trees.
+### `s(selector?[, properties][, children])`
+
+DSL to create virtual [HAST][] trees for HTML or SVG.
 
 ##### Parameters
 
 ###### `selector`
 
 Simple CSS selector (`string`, optional).  Can contain a tag name (`foo`), IDs
-(`#bar`), and classes (`.baz`), defaults to a `div` element.
+(`#bar`), and classes (`.baz`).
+If there is no tag name in the selector, `h` defaults to a `div` element,
+and `s` to a `g` element.
 
 ###### `properties`
 
-Map of properties (`Object.<string, *>`, optional).
+Map of properties (`Object.<*>`, optional).
 
 ###### `children`
 
