@@ -506,6 +506,17 @@ test('hastscript', function(t) {
         'should not cast invalid known `boolean` values'
       )
 
+      sst.deepEqual(
+        h('img', {title: 'title'}),
+        {
+          type: 'element',
+          tagName: 'img',
+          properties: {title: 'title'},
+          children: []
+        },
+        'should not cast unknown boolean-like values'
+      )
+
       sst.end()
     })
 
