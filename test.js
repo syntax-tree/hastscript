@@ -882,6 +882,54 @@ test('hastscript', function(t) {
       'should allow omitting `properties` when a button has an invalid type'
     )
 
+    st.deepEqual(
+      h('section', {id: 'test'}, h('p', 'first'), h('p', 'second')),
+      {
+        type: 'element',
+        tagName: 'section',
+        properties: {id: 'test'},
+        children: [
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'first'}]
+          },
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'second'}]
+          }
+        ]
+      },
+      'should allow passing multiple child nodes as arguments'
+    )
+
+    st.deepEqual(
+      h('section', h('p', 'first'), h('p', 'second')),
+      {
+        type: 'element',
+        tagName: 'section',
+        properties: {},
+        children: [
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'first'}]
+          },
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'second'}]
+          }
+        ]
+      },
+      'should allow passing multiple child nodes as arguments when there is no properties argument present'
+    )
+
     st.throws(
       function() {
         h('foo', {}, true)

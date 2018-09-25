@@ -17,6 +17,7 @@ npm install hastscript
 var h = require('hastscript')
 var s = require('hastscript/svg')
 
+// Child nodes as an array
 console.log(
   h('.foo#some-id', [
     h('span', 'some text'),
@@ -26,6 +27,17 @@ console.log(
       'echo'
     ])
   ])
+)
+
+// Child nodes as arguments
+console.log(
+  h(
+    'form',
+    {method: 'POST'},
+    h('input', {type: 'text', name: 'foo'}),
+    h('input', {type: 'text', name: 'bar'}),
+    h('input', {type: 'submit', value: 'send'})
+  )
 )
 
 console.log(
@@ -58,6 +70,22 @@ Yields:
         [ { type: 'text', value: 'delta' },
           { type: 'text', value: 'echo' } ] } ] }
 { type: 'element',
+  tagName: 'form',
+  properties: { method: 'POST' },
+  children:
+   [ { type: 'element',
+       tagName: 'input',
+       properties: { type: 'text', name: 'foo' },
+       children: [] },
+     { type: 'element',
+       tagName: 'input',
+       properties: { type: 'text', name: 'bar' },
+       children: [] },
+     { type: 'element',
+       tagName: 'input',
+       properties: { type: 'submit', value: 'send' },
+       children: [] } ] }
+{ type: 'element',
   tagName: 'svg',
   properties: { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 500 500' },
   children:
@@ -73,9 +101,9 @@ Yields:
 
 ## API
 
-### `h(selector?[, properties][, children])`
+### `h(selector?[, properties][, ...children])`
 
-### `s(selector?[, properties][, children])`
+### `s(selector?[, properties][, ...children])`
 
 DSL to create virtual [HAST][] trees for HTML or SVG.
 
@@ -94,7 +122,7 @@ Map of properties (`Object.<*>`, optional).
 
 ###### `children`
 
-(List of) child nodes (`string`, `Node`, `Array.<string|Node>`, optional).
+(Lists of) child nodes (`string`, `Node`, `Array.<string|Node>`, optional).
 When strings are encountered, they are normalised to [`text`][text] nodes.
 
 ##### Returns

@@ -12,12 +12,13 @@ function factory(schema, defaultTagName) {
   return h
 
   /* Hyperscript compatible DSL for creating virtual HAST trees. */
-  function h(selector, properties, children) {
+  function h(selector, properties) {
     var node = parseSelector(selector, defaultTagName)
+    var children = Array.prototype.slice.call(arguments, 2)
     var property
 
-    if (!children && properties && isChildren(properties, node)) {
-      children = properties
+    if (properties && isChildren(properties, node)) {
+      children.unshift(properties)
       properties = null
     }
 
@@ -112,10 +113,6 @@ function isNode(tagName, value) {
 function addChild(nodes, value) {
   var index
   var length
-
-  if (value === null || value === undefined) {
-    return
-  }
 
   if (typeof value === 'string' || typeof value === 'number') {
     nodes.push({type: 'text', value: String(value)})
