@@ -114,10 +114,6 @@ function addChild(nodes, value) {
   var index
   var length
 
-  if (value === null || value === undefined) {
-    return
-  }
-
   if (typeof value === 'string' || typeof value === 'number') {
     nodes.push({type: 'text', value: String(value)})
     return

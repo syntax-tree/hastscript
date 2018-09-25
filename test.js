@@ -888,17 +888,20 @@ test('hastscript', function(t) {
         type: 'element',
         tagName: 'section',
         properties: {id: 'test'},
-        children: [{
-          type: 'element',
-          tagName: 'p',
-          properties: {},
-          children: [{type: 'text', value: 'first'}]
-        },{
-          type: 'element',
-          tagName: 'p',
-          properties: {},
-          children: [{type: 'text', value: 'second'}]
-        }]
+        children: [
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'first'}]
+          },
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'second'}]
+          }
+        ]
       },
       'should allow passing multiple child nodes as arguments'
     )
@@ -909,17 +912,20 @@ test('hastscript', function(t) {
         type: 'element',
         tagName: 'section',
         properties: {},
-        children: [{
-          type: 'element',
-          tagName: 'p',
-          properties: {},
-          children: [{type: 'text', value: 'first'}]
-        },{
-          type: 'element',
-          tagName: 'p',
-          properties: {},
-          children: [{type: 'text', value: 'second'}]
-        }]
+        children: [
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'first'}]
+          },
+          {
+            type: 'element',
+            tagName: 'p',
+            properties: {},
+            children: [{type: 'text', value: 'second'}]
+          }
+        ]
       },
       'should allow passing multiple child nodes as arguments when there is no properties argument present'
     )
