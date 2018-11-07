@@ -1,4 +1,4 @@
-# hastscript[![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# hastscript [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
 [Hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
 compatible DSL for creating virtual [HAST][] trees in HTML and SVG.
