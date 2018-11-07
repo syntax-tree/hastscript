@@ -28,7 +28,7 @@
   "dependencies": {
     "comma-separated-tokens": "^1.0.0",
     "hast-util-parse-selector": "^2.2.0",
-    "property-information": "^4.0.0",
+    "property-information": "^5.0.1",
     "space-separated-tokens": "^1.0.0"
   },
   "devDependencies": {

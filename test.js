@@ -150,10 +150,10 @@ test('hastscript', function(t) {
         {
           type: 'element',
           tagName: 'div',
-          properties: {className: ['foo']},
+          properties: {'class-name': 'foo'},
           children: []
         },
-        'should map property-like values to property names'
+        'should *not* map property-like values to property names'
       )
 
       sst.end()
