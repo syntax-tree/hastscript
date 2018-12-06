@@ -930,6 +930,17 @@ test('hastscript', function(t) {
       'should allow passing multiple child nodes as arguments when there is no properties argument present'
     )
 
+    t.deepEqual(
+      h('div', {type: 'test', value: 'value'}),
+      {
+        type: 'element',
+        tagName: 'div',
+        properties: {type: 'test', value: 'value'},
+        children: []
+      },
+      'should *not* interpret an attribute as children when it has an attribute called "value"'
+    )
+
     st.throws(
       function() {
         h('foo', {}, true)

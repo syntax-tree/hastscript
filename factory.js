@@ -107,7 +107,7 @@ function isNode(tagName, value) {
     )
   }
 
-  return 'value' in value
+  return false
 }
 
 function addChild(nodes, value) {
