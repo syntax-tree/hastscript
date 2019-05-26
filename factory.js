@@ -11,7 +11,7 @@ module.exports = factory
 function factory(schema, defaultTagName) {
   return h
 
-  /* Hyperscript compatible DSL for creating virtual hast trees. */
+  // Hyperscript compatible DSL for creating virtual hast trees.
   function h(selector, properties) {
     var node = parseSelector(selector, defaultTagName)
     var children = Array.prototype.slice.call(arguments, 2)
@@ -43,7 +43,7 @@ function factory(schema, defaultTagName) {
     var property
     var result
 
-    /* Ignore nully and NaN values. */
+    // Ignore nully and NaN values.
     if (value === null || value === undefined || value !== value) {
       return
     }
@@ -52,7 +52,7 @@ function factory(schema, defaultTagName) {
     property = info.property
     result = value
 
-    /* Handle list values. */
+    // Handle list values.
     if (typeof result === 'string') {
       if (info.spaceSeparated) {
         result = spaces(result)
@@ -63,12 +63,12 @@ function factory(schema, defaultTagName) {
       }
     }
 
-    /* Accept `object` on style. */
+    // Accept `object` on style.
     if (property === 'style' && typeof value !== 'string') {
       result = style(result)
     }
 
-    /* Class-names (which can be added both on the `selector` and here). */
+    // Class-names (which can be added both on the `selector` and here).
     if (property === 'className' && properties.className) {
       result = properties.className.concat(result)
     }
@@ -137,7 +137,7 @@ function addChild(nodes, value) {
   nodes.push(value)
 }
 
-/* Parse a (list of) primitives. */
+// Parse a (list of) primitives.
 function parsePrimitives(info, name, value) {
   var index
   var length
@@ -158,7 +158,7 @@ function parsePrimitives(info, name, value) {
   return result
 }
 
-/* Parse a single primitives. */
+// Parse a single primitives.
 function parsePrimitive(info, name, value) {
   var result = value
 
@@ -167,7 +167,7 @@ function parsePrimitive(info, name, value) {
       result = Number(result)
     }
   } else if (info.boolean || info.overloadedBoolean) {
-    /* Accept `boolean` and `string`. */
+    // Accept `boolean` and `string`.
     if (
       typeof result === 'string' &&
       (result === '' || normalize(value) === normalize(name))
