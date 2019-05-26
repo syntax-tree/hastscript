@@ -11,7 +11,7 @@ module.exports = factory
 function factory(schema, defaultTagName) {
   return h
 
-  /* Hyperscript compatible DSL for creating virtual HAST trees. */
+  /* Hyperscript compatible DSL for creating virtual hast trees. */
   function h(selector, properties) {
     var node = parseSelector(selector, defaultTagName)
     var children = Array.prototype.slice.call(arguments, 2)
