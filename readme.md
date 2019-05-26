@@ -1,23 +1,33 @@
-# hastscript [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# hastscript
 
-[Hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
-compatible DSL for creating virtual [HAST][] trees in HTML and SVG.
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
-## Installation
+[**hast**][hast] utility to create [*trees*][tree] in HTML or SVG.
+
+Similar to [hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
+but for [**hast**][hast].
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install hastscript
 ```
 
 ## Usage
 
-```javascript
+```js
 var h = require('hastscript')
 var s = require('hastscript/svg')
 
-// Child nodes as an array
+// Children as an array:
 console.log(
   h('.foo#some-id', [
     h('span', 'some text'),
@@ -29,7 +39,7 @@ console.log(
   ])
 )
 
-// Child nodes as arguments
+// Children as arguments:
 console.log(
   h(
     'form',
@@ -40,6 +50,7 @@ console.log(
   )
 )
 
+// SVG:
 console.log(
   s('svg', {xmlns: 'http://www.w3.org/2000/svg', viewbox: '0 0 500 500'}, [
     s('title', 'SVG `<circle>` element'),
@@ -51,52 +62,75 @@ console.log(
 Yields:
 
 ```js
-{ type: 'element',
+{
+  type: 'element',
   tagName: 'div',
-  properties: { className: [ 'foo' ], id: 'some-id' },
-  children:
-   [ { type: 'element',
-       tagName: 'span',
-       properties: {},
-       children: [ { type: 'text', value: 'some text' } ] },
-     { type: 'element',
-       tagName: 'input',
-       properties: { type: 'text', value: 'foo' },
-       children: [] },
-     { type: 'element',
-       tagName: 'a',
-       properties: { className: [ 'alpha', 'bravo', 'charlie' ], download: true },
-       children:
-        [ { type: 'text', value: 'delta' },
-          { type: 'text', value: 'echo' } ] } ] }
-{ type: 'element',
+  properties: {className: ['foo'], id: 'some-id'},
+  children: [
+    {
+      type: 'element',
+      tagName: 'span',
+      properties: {},
+      children: [{type: 'text', value: 'some text'}]
+    },
+    {
+      type: 'element',
+      tagName: 'input',
+      properties: {type: 'text', value: 'foo'},
+      children: []
+    },
+    {
+      type: 'element',
+      tagName: 'a',
+      properties: {className: ['alpha', 'bravo', 'charlie'], download: true},
+      children: [{type: 'text', value: 'delta'}, {type: 'text', value: 'echo'}]
+    }
+  ]
+}
+{
+  type: 'element',
   tagName: 'form',
-  properties: { method: 'POST' },
-  children:
-   [ { type: 'element',
-       tagName: 'input',
-       properties: { type: 'text', name: 'foo' },
-       children: [] },
-     { type: 'element',
-       tagName: 'input',
-       properties: { type: 'text', name: 'bar' },
-       children: [] },
-     { type: 'element',
-       tagName: 'input',
-       properties: { type: 'submit', value: 'send' },
-       children: [] } ] }
-{ type: 'element',
+  properties: {method: 'POST'},
+  children: [
+    {
+      type: 'element',
+      tagName: 'input',
+      properties: {type: 'text', name: 'foo'},
+      children: []
+    },
+    {
+      type: 'element',
+      tagName: 'input',
+      properties: {type: 'text', name: 'bar'},
+      children: []
+    },
+    {
+      type: 'element',
+      tagName: 'input',
+      properties: {type: 'submit', value: 'send'},
+      children: []
+    }
+  ]
+}
+{
+  type: 'element',
   tagName: 'svg',
-  properties: { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 500 500' },
-  children:
-   [ { type: 'element',
-       tagName: 'title',
-       properties: {},
-       children: [ { type: 'text', value: 'SVG `<circle>` element' } ] },
-     { type: 'element',
-       tagName: 'circle',
-       properties: { cx: 120, cy: 120, r: 100 },
-       children: [] } ] }
+  properties: {xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 500 500'},
+  children: [
+    {
+      type: 'element',
+      tagName: 'title',
+      properties: {},
+      children: [{type: 'text', value: 'SVG `<circle>` element'}]
+    },
+    {
+      type: 'element',
+      tagName: 'circle',
+      properties: {cx: 120, cy: 120, r: 100},
+      children: []
+    }
+  ]
+}
 ```
 
 ## API
@@ -111,8 +145,8 @@ DSL to create virtual [HAST][] trees for HTML or SVG.
 
 ###### `selector`
 
-Simple CSS selector (`string`, optional).  Can contain a tag name (`foo`), IDs
-(`#bar`), and classes (`.baz`).
+Simple CSS selector (`string`, optional).
+Can contain a tag name (`foo`), IDs (`#bar`), and classes (`.baz`).
 If there is no tag name in the selector, `h` defaults to a `div` element,
 and `s` to a `g` element.
 
@@ -123,7 +157,7 @@ Map of properties (`Object.<*>`, optional).
 ###### `children`
 
 (Lists of) child nodes (`string`, `Node`, `Array.<string|Node>`, optional).
-When strings are encountered, they are normalised to [`text`][text] nodes.
+When strings are encountered, they are mapped to [`text`][text] nodes.
 
 ##### Returns
 
@@ -131,11 +165,13 @@ When strings are encountered, they are normalised to [`text`][text] nodes.
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/hast`][contributing] for ways to get
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -159,9 +195,15 @@ repository, organisation, or community you agree to abide by its terms.
 
 [size]: https://bundlephobia.com/result?p=hastscript
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
-[chat]: https://spectrum.chat/unified/rehype
+[chat]: https://spectrum.chat/unified/syntax-tree
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -169,16 +211,20 @@ repository, organisation, or community you agree to abide by its terms.
 
 [author]: https://wooorm.com
 
-[hast]: https://github.com/syntax-tree/hast
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
 
-[element]: https://github.com/syntax-tree/hast#element
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
 
 [virtual-hyperscript]: https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript
 
 [hyperscript]: https://github.com/dominictarr/hyperscript
 
-[text]: https://github.com/syntax-tree/unist#text
+[tree]: https://github.com/syntax-tree/unist#tree
 
-[contributing]: https://github.com/syntax-tree/hast/blob/master/contributing.md
+[hast]: https://github.com/syntax-tree/hast
 
-[coc]: https://github.com/syntax-tree/hast/blob/master/code-of-conduct.md
+[element]: https://github.com/syntax-tree/hast#element
+
+[text]: https://github.com/syntax-tree/hast#text
