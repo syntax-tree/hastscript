@@ -139,7 +139,7 @@ Yields:
 
 ### `s(selector?[, properties][, ...children])`
 
-DSL to create virtual [HAST][] trees for HTML or SVG.
+DSL to create virtual [**hast**][hast] [*trees*][tree] for HTML or SVG.
 
 ##### Parameters
 
