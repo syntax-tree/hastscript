@@ -1121,5 +1121,49 @@ test('hastscript', function(t) {
     st.end()
   })
 
+  t.test('tag names', function(st) {
+    st.deepEqual(
+      h(null, [h('DIV'), h('dIv'), h('div')]),
+      {
+        type: 'element',
+        tagName: 'div',
+        properties: {},
+        children: [
+          {type: 'element', tagName: 'div', properties: {}, children: []},
+          {type: 'element', tagName: 'div', properties: {}, children: []},
+          {type: 'element', tagName: 'div', properties: {}, children: []}
+        ]
+      },
+      'should create lowercase tag names'
+    )
+
+    st.deepEqual(
+      s(null, [
+        s('RECT'),
+        s('rEcT'),
+        s('rect'),
+        s('feFuncA'),
+        s('FEFUNCA'),
+        s('fefunca')
+      ]),
+      {
+        type: 'element',
+        tagName: 'g',
+        properties: {},
+        children: [
+          {type: 'element', tagName: 'rect', properties: {}, children: []},
+          {type: 'element', tagName: 'rect', properties: {}, children: []},
+          {type: 'element', tagName: 'rect', properties: {}, children: []},
+          {type: 'element', tagName: 'feFuncA', properties: {}, children: []},
+          {type: 'element', tagName: 'feFuncA', properties: {}, children: []},
+          {type: 'element', tagName: 'feFuncA', properties: {}, children: []}
+        ]
+      },
+      'should create lowercase SVG tag names, and fix certain cases'
+    )
+
+    st.end()
+  })
+
   t.end()
 })

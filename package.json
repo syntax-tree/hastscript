@@ -23,7 +23,8 @@
     "index.js",
     "factory.js",
     "html.js",
-    "svg.js"
+    "svg.js",
+    "svg-case-sensitive-tag-names.json"
   ],
   "dependencies": {
     "comma-separated-tokens": "^1.0.0",
@@ -37,18 +38,20 @@
     "prettier": "^1.0.0",
     "remark-cli": "^6.0.0",
     "remark-preset-wooorm": "^5.0.0",
+    "svg-tag-names": "^2.0.0",
     "tape": "^4.0.0",
     "tinyify": "^2.0.0",
     "xo": "^0.24.0"
   },
   "scripts": {
+    "generate": "node build",
     "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
     "build-bundle": "browserify . -s hastscript > hastscript.js",
     "build-mangle": "browserify . -s hastscript -p tinyify > hastscript.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run format && npm run build && npm run test-coverage"
+    "test": "npm run generate && npm run format && npm run build && npm run test-coverage"
   },
   "nyc": {
     "check-coverage": true,
