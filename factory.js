@@ -8,14 +8,21 @@ var commas = require('comma-separated-tokens').parse
 
 module.exports = factory
 
-function factory(schema, defaultTagName) {
+var own = {}.hasOwnProperty
+
+function factory(schema, defaultTagName, caseSensitive) {
+  var adjust = caseSensitive ? createAdjustMap(caseSensitive) : null
+
   return h
 
   // Hyperscript compatible DSL for creating virtual hast trees.
   function h(selector, properties) {
     var node = parseSelector(selector, defaultTagName)
     var children = Array.prototype.slice.call(arguments, 2)
+    var name = node.tagName.toLowerCase()
     var property
+
+    node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
 
     if (properties && isChildren(properties, node)) {
       children.unshift(properties)
@@ -188,4 +195,18 @@ function style(value) {
   }
 
   return result.join('; ')
+}
+
+function createAdjustMap(values) {
+  var length = values.length
+  var index = -1
+  var result = {}
+  var value
+
+  while (++index < length) {
+    value = values[index]
+    result[value.toLowerCase()] = value
+  }
+
+  return result
 }
