@@ -1,6 +1,6 @@
 {
   "name": "hastscript",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Hyperscript compatible DSL for creating virtual hast trees",
   "license": "MIT",
   "keywords": [
