@@ -167,6 +167,69 @@ When strings are encountered, they are mapped to [`text`][text] nodes.
 
 [`Element`][element].
 
+## Security
+
+Use of `hastscript` can open you up to a [cross-site scripting (XSS)][xss]
+attack as values are injected into the syntax tree.
+The following example shows how a script is injected that runs when loaded in a
+browser.
+
+```js
+var tree = {type: 'root', children: []}
+
+tree.children.push(h('script', 'alert(1)'))
+```
+
+Yields:
+
+```html
+<script>alert(1)</script>
+```
+
+The following example shows how an image is injected that fails loading and
+therefore runs code in a browser.
+
+```js
+var tree = {type: 'root', children: []}
+
+// Somehow someone injected these properties instead of an expected `src` and
+// `alt`:
+var otherProps = {src: 'x', onError: 'alert(2)'}
+
+tree.children.push(h('img', {src: 'default.png', ...otherProps}))
+```
+
+Yields:
+
+```html
+<img src="x" onerror="alert(2)">
+```
+
+The following example shows how code can run in a browser because someone stored
+an object in a database instead of the expected string.
+
+```js
+var tree = {type: 'root', children: []}
+
+// Somehow this isn’t the expected `'wooorm'`.
+var username = {
+  type: 'element',
+  tagName: 'script',
+  children: [{type: 'text', value: 'alert(3)'}]
+}
+
+tree.children.push(h('span.handle', username))
+```
+
+Yields:
+
+```html
+<span class="handle"><script>alert(3)</script></span>
+```
+
+Either do not use user input in `hastscript` or use
+[`hast-util-santize`][sanitize].
+
 ## Contribute
 
 See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
@@ -242,3 +305,7 @@ abide by its terms.
 [u]: https://github.com/syntax-tree/unist-builder
 
 [parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[sanitize]: https://github.com/syntax-tree/hast-util-sanitize
