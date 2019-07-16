@@ -10,8 +10,11 @@
 
 [**hast**][hast] utility to create [*trees*][tree] in HTML or SVG.
 
-Similar to [hyperscript][] (and [`virtual-hyperscript`][virtual-hyperscript])
+Similar to [`hyperscript`][hyperscript], [`virtual-dom/h`][virtual-hyperscript],
+[`React.createElement`][react], and [Vue’s `createElement`][vue],
 but for [**hast**][hast].
+
+Use [`unist-builder`][u] to create any [**unist**][unist] tree.
 
 ## Install
 
@@ -21,7 +24,7 @@ but for [**hast**][hast].
 npm install hastscript
 ```
 
-## Usage
+## Use
 
 ```js
 var h = require('hastscript')
@@ -149,6 +152,7 @@ Simple CSS selector (`string`, optional).
 Can contain a tag name (`foo`), IDs (`#bar`), and classes (`.baz`).
 If there is no tag name in the selector, `h` defaults to a `div` element,
 and `s` to a `g` element.
+`selector` is parsed by [`hast-util-parse-selector`][parse-selector].
 
 ###### `properties`
 
@@ -217,9 +221,15 @@ abide by its terms.
 
 [coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
 
+[hyperscript]: https://github.com/dominictarr/hyperscript
+
 [virtual-hyperscript]: https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript
 
-[hyperscript]: https://github.com/dominictarr/hyperscript
+[react]: https://reactjs.org/docs/glossary.html#react-elements
+
+[vue]: https://vuejs.org/v2/guide/render-function.html#createElement-Arguments
+
+[unist]: https://github.com/syntax-tree/unist
 
 [tree]: https://github.com/syntax-tree/unist#tree
 
@@ -228,3 +238,7 @@ abide by its terms.
 [element]: https://github.com/syntax-tree/hast#element
 
 [text]: https://github.com/syntax-tree/hast#text
+
+[u]: https://github.com/syntax-tree/unist-builder
+
+[parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
