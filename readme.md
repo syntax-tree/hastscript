@@ -230,6 +230,21 @@ Yields:
 Either do not use user input in `hastscript` or use
 [`hast-util-santize`][sanitize].
 
+## Related
+
+*   [`unist-builder`](https://github.com/syntax-tree/unist-builder)
+    — Create any unist tree
+*   [`hast-to-hyperscript`](https://github.com/syntax-tree/hast-to-hyperscript)
+    — Convert a Node to React, Virtual DOM, Hyperscript, and more
+*   [`hast-util-from-dom`](https://github.com/syntax-tree/hast-util-from-dom)
+    — Transform a DOM tree to hast
+*   [`hast-util-select`](https://github.com/syntax-tree/hast-util-select)
+    — `querySelector`, `querySelectorAll`, and `matches`
+*   [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
+    — Stringify nodes to HTML
+*   [`hast-util-to-dom`](https://github.com/syntax-tree/hast-util-to-dom)
+    — Transform to a DOM tree
+
 ## Contribute
 
 See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
