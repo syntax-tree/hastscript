@@ -15,6 +15,10 @@
   ],
   "repository": "syntax-tree/hastscript",
   "bugs": "https://github.com/syntax-tree/hastscript/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
