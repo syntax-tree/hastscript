@@ -725,7 +725,10 @@ test('hastscript', function(t) {
         type: 'element',
         tagName: 'div',
         properties: {},
-        children: [{type: 'text', value: 'foo'}, {type: 'text', value: 'bar'}]
+        children: [
+          {type: 'text', value: 'foo'},
+          {type: 'text', value: 'bar'}
+        ]
       },
       'should support nodes'
     )
@@ -760,7 +763,10 @@ test('hastscript', function(t) {
         type: 'element',
         tagName: 'div',
         properties: {},
-        children: [{type: 'text', value: 'foo'}, {type: 'text', value: 'bar'}]
+        children: [
+          {type: 'text', value: 'foo'},
+          {type: 'text', value: 'bar'}
+        ]
       },
       'should support `Array.<string>` for a `Text`s'
     )
@@ -800,7 +806,10 @@ test('hastscript', function(t) {
         type: 'element',
         tagName: 'strong',
         properties: {},
-        children: [{type: 'text', value: 'foo'}, {type: 'text', value: 'bar'}]
+        children: [
+          {type: 'text', value: 'foo'},
+          {type: 'text', value: 'bar'}
+        ]
       },
       'should allow omitting `properties` for an array'
     )
