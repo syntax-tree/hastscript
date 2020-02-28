@@ -1,17 +1,21 @@
 {
   "name": "hastscript",
   "version": "5.1.1",
-  "description": "Hyperscript compatible DSL for creating virtual hast trees",
+  "description": "hast utility to create trees",
   "license": "MIT",
   "keywords": [
+    "unist",
     "hast",
+    "hast-util",
+    "util",
+    "utility",
+    "html",
     "rehype",
     "vdom",
     "virtual",
     "dom",
     "hyperscript",
-    "dsl",
-    "html"
+    "dsl"
   ],
   "repository": "syntax-tree/hastscript",
   "bugs": "https://github.com/syntax-tree/hastscript/issues",
