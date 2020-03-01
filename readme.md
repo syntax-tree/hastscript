@@ -234,6 +234,8 @@ Either do not use user input in `hastscript` or use
 
 *   [`unist-builder`](https://github.com/syntax-tree/unist-builder)
     — Create any unist tree
+*   [`xastscript`](https://github.com/syntax-tree/xastscript)
+    — Create a xast tree
 *   [`hast-to-hyperscript`](https://github.com/syntax-tree/hast-to-hyperscript)
     — Convert a Node to React, Virtual DOM, Hyperscript, and more
 *   [`hast-util-from-dom`](https://github.com/syntax-tree/hast-util-from-dom)
