@@ -4,10 +4,10 @@ var test = require('tape')
 var s = require('./svg')
 var h = require('./html')
 
-test('hastscript', function(t) {
+test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function')
 
-  t.test('selector', function(st) {
+  t.test('selector', function (st) {
     st.deepEqual(
       h(),
       {
@@ -110,8 +110,8 @@ test('hastscript', function(t) {
     st.end()
   })
 
-  t.test('properties', function(st) {
-    st.test('known property names', function(sst) {
+  t.test('properties', function (st) {
+    st.test('known property names', function (sst) {
       sst.deepEqual(
         h(null, {className: 'foo'}),
         {
@@ -159,7 +159,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('unknown property names', function(sst) {
+    st.test('unknown property names', function (sst) {
       sst.deepEqual(
         h(null, {allowbigscreen: true}),
         {
@@ -196,7 +196,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('other namespaces', function(sst) {
+    st.test('other namespaces', function (sst) {
       sst.deepEqual(
         h(null, {'aria-valuenow': 1}),
         {
@@ -310,7 +310,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('data property names', function(sst) {
+    st.test('data property names', function (sst) {
       sst.deepEqual(
         h(null, {'data-foo': true}),
         {
@@ -402,7 +402,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('unknown property values', function(sst) {
+    st.test('unknown property values', function (sst) {
       sst.deepEqual(
         h(null, {foo: 'bar'}),
         {
@@ -483,7 +483,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('known booleans', function(sst) {
+    st.test('known booleans', function (sst) {
       sst.deepEqual(
         h(null, {allowFullScreen: ''}),
         {
@@ -520,7 +520,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('known overloaded booleans', function(sst) {
+    st.test('known overloaded booleans', function (sst) {
       sst.deepEqual(
         h(null, {download: ''}),
         {
@@ -557,7 +557,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('known numbers', function(sst) {
+    st.test('known numbers', function (sst) {
       sst.deepEqual(
         h('textarea', {cols: '3'}),
         {
@@ -594,7 +594,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('known lists', function(sst) {
+    st.test('known lists', function (sst) {
       sst.deepEqual(
         h(null, {class: 'foo bar baz'}),
         {
@@ -631,7 +631,7 @@ test('hastscript', function(t) {
       sst.end()
     })
 
-    st.test('style', function(sst) {
+    st.test('style', function (sst) {
       sst.deepEqual(
         h(null, {style: {color: 'red', '-webkit-border-radius': '3px'}}),
         {
@@ -664,7 +664,7 @@ test('hastscript', function(t) {
     st.end()
   })
 
-  t.test('children', function(st) {
+  t.test('children', function (st) {
     st.deepEqual(
       h('div', {}, []),
       {
@@ -940,7 +940,7 @@ test('hastscript', function(t) {
     )
 
     st.throws(
-      function() {
+      function () {
         h('foo', {}, true)
       },
       /Expected node, nodes, or string, got `true`/,
@@ -950,7 +950,7 @@ test('hastscript', function(t) {
     st.end()
   })
 
-  t.test('<template>', function(st) {
+  t.test('<template>', function (st) {
     st.deepEqual(
       h('template'),
       {
@@ -1008,7 +1008,7 @@ test('hastscript', function(t) {
     st.end()
   })
 
-  t.test('svg', function(st) {
+  t.test('svg', function (st) {
     st.deepEqual(
       s(),
       {
@@ -1130,7 +1130,7 @@ test('hastscript', function(t) {
     st.end()
   })
 
-  t.test('tag names', function(st) {
+  t.test('tag names', function (st) {
     st.deepEqual(
       h(null, [h('DIV'), h('dIv'), h('div')]),
       {

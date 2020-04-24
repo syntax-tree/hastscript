@@ -3,7 +3,7 @@
 var fs = require('fs')
 var tagNames = require('svg-tag-names')
 
-var casing = tagNames.filter(function(d) {
+var casing = tagNames.filter(function (d) {
   return d !== d.toLowerCase()
 })
 
