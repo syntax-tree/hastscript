@@ -50,7 +50,7 @@ function factory(schema, defaultTagName, caseSensitive) {
     var property
     var result
 
-    // Ignore nully and NaN values.
+    // Ignore nullish and NaN values.
     if (value === null || value === undefined || value !== value) {
       return
     }
