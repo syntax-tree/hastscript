@@ -47,13 +47,13 @@
     "remark-cli": "^8.0.0",
     "remark-preset-wooorm": "^7.0.0",
     "svg-tag-names": "^2.0.0",
-    "tape": "^4.0.0",
+    "tape": "^5.0.0",
     "tinyify": "^2.0.0",
-    "xo": "^0.29.0"
+    "xo": "^0.32.0"
   },
   "scripts": {
     "generate": "node build",
-    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
+    "format": "remark . -qfo && prettier . --write && xo --fix",
     "build-bundle": "browserify . -s hastscript > hastscript.js",
     "build-mangle": "browserify . -s hastscript -p tinyify > hastscript.min.js",
     "build": "npm run build-bundle && npm run build-mangle",

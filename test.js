@@ -7,8 +7,8 @@ var h = require('./html')
 test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function')
 
-  t.test('selector', function (st) {
-    st.deepEqual(
+  t.test('selector', function (t) {
+    t.deepEqual(
       h(),
       {
         type: 'element',
@@ -19,7 +19,7 @@ test('hastscript', function (t) {
       'should create a `div` element without arguments'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('.bar', {class: 'baz'}),
       {
         type: 'element',
@@ -30,7 +30,7 @@ test('hastscript', function (t) {
       'should append to the selector’s classes'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('#id'),
       {
         type: 'element',
@@ -41,7 +41,7 @@ test('hastscript', function (t) {
       'should create a `div` element when given an id selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('#a#b'),
       {
         type: 'element',
@@ -52,7 +52,7 @@ test('hastscript', function (t) {
       'should create an element with the last ID when given multiple in a selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('.foo'),
       {
         type: 'element',
@@ -63,7 +63,7 @@ test('hastscript', function (t) {
       'should create a `div` element when given a class selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('foo'),
       {
         type: 'element',
@@ -74,7 +74,7 @@ test('hastscript', function (t) {
       'should create a `foo` element when given a tag selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('foo#bar'),
       {
         type: 'element',
@@ -85,7 +85,7 @@ test('hastscript', function (t) {
       'should create a `foo` element with an ID when given a both as a selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('foo.bar'),
       {
         type: 'element',
@@ -96,7 +96,7 @@ test('hastscript', function (t) {
       'should create a `foo` element with a class when given a both as a selector'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('.foo.bar'),
       {
         type: 'element',
@@ -107,12 +107,12 @@ test('hastscript', function (t) {
       'should support multiple classes'
     )
 
-    st.end()
+    t.end()
   })
 
-  t.test('properties', function (st) {
-    st.test('known property names', function (sst) {
-      sst.deepEqual(
+  t.test('properties', function (t) {
+    t.test('known property names', function (t) {
+      t.deepEqual(
         h(null, {className: 'foo'}),
         {
           type: 'element',
@@ -123,7 +123,7 @@ test('hastscript', function (t) {
         'should support correctly cased property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {class: 'foo'}),
         {
           type: 'element',
@@ -134,7 +134,7 @@ test('hastscript', function (t) {
         'should map attributes to property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {CLASS: 'foo'}),
         {
           type: 'element',
@@ -145,7 +145,7 @@ test('hastscript', function (t) {
         'should map attribute-like values to property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'class-name': 'foo'}),
         {
           type: 'element',
@@ -156,11 +156,11 @@ test('hastscript', function (t) {
         'should *not* map property-like values to property names'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('unknown property names', function (sst) {
-      sst.deepEqual(
+    t.test('unknown property names', function (t) {
+      t.deepEqual(
         h(null, {allowbigscreen: true}),
         {
           type: 'element',
@@ -171,7 +171,7 @@ test('hastscript', function (t) {
         'should keep lower-cased unknown names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {allowBigScreen: true}),
         {
           type: 'element',
@@ -182,7 +182,7 @@ test('hastscript', function (t) {
         'should keep camel-cased unknown names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'allow_big-screen': true}),
         {
           type: 'element',
@@ -193,11 +193,11 @@ test('hastscript', function (t) {
         'should keep weirdly cased unknown names'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('other namespaces', function (sst) {
-      sst.deepEqual(
+    t.test('other namespaces', function (t) {
+      t.deepEqual(
         h(null, {'aria-valuenow': 1}),
         {
           type: 'element',
@@ -208,7 +208,7 @@ test('hastscript', function (t) {
         'should support aria attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {ariaValueNow: 1}),
         {
           type: 'element',
@@ -219,7 +219,7 @@ test('hastscript', function (t) {
         'should support aria property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {'color-interpolation-filters': 'sRGB'}),
         {
           type: 'element',
@@ -230,7 +230,7 @@ test('hastscript', function (t) {
         'should support svg attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {colorInterpolationFilters: 'sRGB'}),
         {
           type: 'element',
@@ -241,7 +241,7 @@ test('hastscript', function (t) {
         'should support svg property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {'xml:space': 'preserve'}),
         {
           type: 'element',
@@ -252,7 +252,7 @@ test('hastscript', function (t) {
         'should support xml attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {xmlSpace: 'preserve'}),
         {
           type: 'element',
@@ -263,7 +263,7 @@ test('hastscript', function (t) {
         'should support xml property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {'xmlns:xlink': 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
@@ -274,7 +274,7 @@ test('hastscript', function (t) {
         'should support xmlns attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {xmlnsXLink: 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
@@ -285,7 +285,7 @@ test('hastscript', function (t) {
         'should support xmlns property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {'xlink:arcrole': 'http://www.example.com'}),
         {
           type: 'element',
@@ -296,7 +296,7 @@ test('hastscript', function (t) {
         'should support xlink attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         s(null, {xLinkArcRole: 'http://www.example.com'}),
         {
           type: 'element',
@@ -307,11 +307,11 @@ test('hastscript', function (t) {
         'should support xlink property names'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('data property names', function (sst) {
-      sst.deepEqual(
+    t.test('data property names', function (t) {
+      t.deepEqual(
         h(null, {'data-foo': true}),
         {
           type: 'element',
@@ -322,7 +322,7 @@ test('hastscript', function (t) {
         'should support data attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'data-123': true}),
         {
           type: 'element',
@@ -333,7 +333,7 @@ test('hastscript', function (t) {
         'should support numeric-first data attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {dataFooBar: true}),
         {
           type: 'element',
@@ -344,7 +344,7 @@ test('hastscript', function (t) {
         'should support data property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {data123: true}),
         {
           type: 'element',
@@ -355,7 +355,7 @@ test('hastscript', function (t) {
         'should support numeric-first data property names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'data-foo.bar': true}),
         {
           type: 'element',
@@ -366,7 +366,7 @@ test('hastscript', function (t) {
         'should support data attribute names with uncommon characters'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'dataFoo.bar': true}),
         {
           type: 'element',
@@ -377,7 +377,7 @@ test('hastscript', function (t) {
         'should support data property names with uncommon characters'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'data-foo!bar': true}),
         {
           type: 'element',
@@ -388,7 +388,7 @@ test('hastscript', function (t) {
         'should keep invalid data attribute names'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {'dataFoo!bar': true}),
         {
           type: 'element',
@@ -399,11 +399,11 @@ test('hastscript', function (t) {
         'should keep invalid data property names'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('unknown property values', function (sst) {
-      sst.deepEqual(
+    t.test('unknown property values', function (t) {
+      t.deepEqual(
         h(null, {foo: 'bar'}),
         {
           type: 'element',
@@ -414,7 +414,7 @@ test('hastscript', function (t) {
         'should support unknown `string` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {foo: 3}),
         {
           type: 'element',
@@ -425,7 +425,7 @@ test('hastscript', function (t) {
         'should support unknown `number` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {foo: true}),
         {
           type: 'element',
@@ -436,7 +436,7 @@ test('hastscript', function (t) {
         'should support unknown `boolean` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {list: ['bar', 'baz']}),
         {
           type: 'element',
@@ -447,7 +447,7 @@ test('hastscript', function (t) {
         'should support unknown `Array` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {foo: null}),
         {
           type: 'element',
@@ -458,7 +458,7 @@ test('hastscript', function (t) {
         'should ignore properties with a value of `null`'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {foo: undefined}),
         {
           type: 'element',
@@ -469,7 +469,7 @@ test('hastscript', function (t) {
         'should ignore properties with a value of `undefined`'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {foo: NaN}),
         {
           type: 'element',
@@ -480,11 +480,11 @@ test('hastscript', function (t) {
         'should ignore properties with a value of `NaN`'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('known booleans', function (sst) {
-      sst.deepEqual(
+    t.test('known booleans', function (t) {
+      t.deepEqual(
         h(null, {allowFullScreen: ''}),
         {
           type: 'element',
@@ -495,7 +495,7 @@ test('hastscript', function (t) {
         'should cast valid known `boolean` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {allowFullScreen: 'yup'}),
         {
           type: 'element',
@@ -506,7 +506,7 @@ test('hastscript', function (t) {
         'should not cast invalid known `boolean` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h('img', {title: 'title'}),
         {
           type: 'element',
@@ -517,11 +517,11 @@ test('hastscript', function (t) {
         'should not cast unknown boolean-like values'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('known overloaded booleans', function (sst) {
-      sst.deepEqual(
+    t.test('known overloaded booleans', function (t) {
+      t.deepEqual(
         h(null, {download: ''}),
         {
           type: 'element',
@@ -532,7 +532,7 @@ test('hastscript', function (t) {
         'should cast known empty overloaded `boolean` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {download: 'downLOAD'}),
         {
           type: 'element',
@@ -543,7 +543,7 @@ test('hastscript', function (t) {
         'should cast known named overloaded `boolean` values'
       )
 
-      st.deepEqual(
+      t.deepEqual(
         h(null, {download: 'example.ogg'}),
         {
           type: 'element',
@@ -554,11 +554,11 @@ test('hastscript', function (t) {
         'should not cast overloaded `boolean` values for different values'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('known numbers', function (sst) {
-      sst.deepEqual(
+    t.test('known numbers', function (t) {
+      t.deepEqual(
         h('textarea', {cols: '3'}),
         {
           type: 'element',
@@ -569,7 +569,7 @@ test('hastscript', function (t) {
         'should cast valid known `numeric` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h('textarea', {cols: 'one'}),
         {
           type: 'element',
@@ -580,7 +580,7 @@ test('hastscript', function (t) {
         'should not cast invalid known `numeric` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h('meter', {low: '40', high: '90'}),
         {
           type: 'element',
@@ -591,11 +591,11 @@ test('hastscript', function (t) {
         'should cast known `numeric` values'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('known lists', function (sst) {
-      sst.deepEqual(
+    t.test('known lists', function (t) {
+      t.deepEqual(
         h(null, {class: 'foo bar baz'}),
         {
           type: 'element',
@@ -606,7 +606,7 @@ test('hastscript', function (t) {
         'should cast know space-separated `array` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h('input', {type: 'file', accept: 'video/*, image/*'}),
         {
           type: 'element',
@@ -617,7 +617,7 @@ test('hastscript', function (t) {
         'should cast know comma-separated `array` values'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h('a', {coords: ['0', '0', '82', '126']}),
         {
           type: 'element',
@@ -628,11 +628,11 @@ test('hastscript', function (t) {
         'should cast a list of known `numeric` values'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.test('style', function (sst) {
-      sst.deepEqual(
+    t.test('style', function (t) {
+      t.deepEqual(
         h(null, {style: {color: 'red', '-webkit-border-radius': '3px'}}),
         {
           type: 'element',
@@ -645,7 +645,7 @@ test('hastscript', function (t) {
         'should support `style` as an object'
       )
 
-      sst.deepEqual(
+      t.deepEqual(
         h(null, {style: 'color:/*red*/purple; -webkit-border-radius: 3px'}),
         {
           type: 'element',
@@ -658,14 +658,14 @@ test('hastscript', function (t) {
         'should support `style` as a string'
       )
 
-      sst.end()
+      t.end()
     })
 
-    st.end()
+    t.end()
   })
 
-  t.test('children', function (st) {
-    st.deepEqual(
+  t.test('children', function (t) {
+    t.deepEqual(
       h('div', {}, []),
       {
         type: 'element',
@@ -676,7 +676,7 @@ test('hastscript', function (t) {
       'should ignore no children'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, 'foo'),
       {
         type: 'element',
@@ -687,7 +687,7 @@ test('hastscript', function (t) {
       'should support `string` for a `Text`'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, {type: 'text', value: 'foo'}),
       {
         type: 'element',
@@ -698,7 +698,7 @@ test('hastscript', function (t) {
       'should support a node'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, h('span', {}, 'foo')),
       {
         type: 'element',
@@ -716,7 +716,7 @@ test('hastscript', function (t) {
       'should support a node created by `h`'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, [
         {type: 'text', value: 'foo'},
         {type: 'text', value: 'bar'}
@@ -733,7 +733,7 @@ test('hastscript', function (t) {
       'should support nodes'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, [h('span', {}, 'foo'), h('strong', {}, 'bar')]),
       {
         type: 'element',
@@ -757,7 +757,7 @@ test('hastscript', function (t) {
       'should support nodes created by `h`'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('div', {}, ['foo', 'bar']),
       {
         type: 'element',
@@ -771,7 +771,7 @@ test('hastscript', function (t) {
       'should support `Array.<string>` for a `Text`s'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('strong', 'foo'),
       {
         type: 'element',
@@ -782,7 +782,7 @@ test('hastscript', function (t) {
       'should allow omitting `properties` for a `string`'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('strong', h('span', 'foo')),
       {
         type: 'element',
@@ -800,7 +800,7 @@ test('hastscript', function (t) {
       'should allow omitting `properties` for a node'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('strong', ['foo', 'bar']),
       {
         type: 'element',
@@ -814,7 +814,7 @@ test('hastscript', function (t) {
       'should allow omitting `properties` for an array'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('input', {type: 'text', value: 'foo'}),
       {
         type: 'element',
@@ -825,7 +825,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` for an `input[type=text][value]`, as those are void and clash'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('a', {type: 'text/html'}),
       {
         type: 'element',
@@ -836,7 +836,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` for a `[type]`, without `value` or `children`'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('foo', {type: 'text/html', children: {bar: 'baz'}}),
       {
         type: 'element',
@@ -847,7 +847,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` when `children` is not set to an array'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('button', {type: 'submit', value: 'Send'}),
       {
         type: 'element',
@@ -858,7 +858,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` when a button has a valid type'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('button', {type: 'BUTTON', value: 'Send'}),
       {
         type: 'element',
@@ -869,7 +869,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` when a button has a valid non-lowercase type'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('button', {type: 'menu', value: 'Send'}),
       {
         type: 'element',
@@ -880,7 +880,7 @@ test('hastscript', function (t) {
       'should *not* allow omitting `properties` when a button has a valid type'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('button', {type: 'text', value: 'Send'}),
       {
         type: 'element',
@@ -891,7 +891,7 @@ test('hastscript', function (t) {
       'should allow omitting `properties` when a button has an invalid type'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('section', {id: 'test'}, h('p', 'first'), h('p', 'second')),
       {
         type: 'element',
@@ -915,7 +915,7 @@ test('hastscript', function (t) {
       'should allow passing multiple child nodes as arguments'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('section', h('p', 'first'), h('p', 'second')),
       {
         type: 'element',
@@ -939,7 +939,7 @@ test('hastscript', function (t) {
       'should allow passing multiple child nodes as arguments when there is no properties argument present'
     )
 
-    st.throws(
+    t.throws(
       function () {
         h('foo', {}, true)
       },
@@ -947,11 +947,11 @@ test('hastscript', function (t) {
       'should throw when given an invalid value'
     )
 
-    st.end()
+    t.end()
   })
 
-  t.test('<template>', function (st) {
-    st.deepEqual(
+  t.test('<template>', function (t) {
+    t.deepEqual(
       h('template'),
       {
         type: 'element',
@@ -963,7 +963,7 @@ test('hastscript', function (t) {
       'empty template'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('template', 'Alpha'),
       {
         type: 'element',
@@ -975,7 +975,7 @@ test('hastscript', function (t) {
       'template with text'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       h('template', [h('b', 'Bold'), ' and ', h('i', 'italic'), '.']),
       {
         type: 'element',
@@ -1005,11 +1005,11 @@ test('hastscript', function (t) {
       'template with elements'
     )
 
-    st.end()
+    t.end()
   })
 
-  t.test('svg', function (st) {
-    st.deepEqual(
+  t.test('svg', function (t) {
+    t.deepEqual(
       s(),
       {
         type: 'element',
@@ -1020,7 +1020,7 @@ test('hastscript', function (t) {
       'should create a `g` element without arguments'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s(
         'svg',
         {
@@ -1063,7 +1063,7 @@ test('hastscript', function (t) {
       'should support trees'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s('circle', {class: 'foo bar'}),
       {
         type: 'element',
@@ -1074,7 +1074,7 @@ test('hastscript', function (t) {
       'should cast valid known space-separated values'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s('glyph', {'glyph-name': 'foo, bar'}),
       {
         type: 'element',
@@ -1085,7 +1085,7 @@ test('hastscript', function (t) {
       'should cast valid known comma-separated values'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s('rect', {
         requiredFeatures:
           'http://www.w3.org/TR/SVG11/feature#SVG, http://www.w3.org/TR/SVG11/feature#SVGDOM http://www.w3.org/TR/SVG11/feature#SVG-static'
@@ -1105,7 +1105,7 @@ test('hastscript', function (t) {
       'should cast valid known comma- or space-separated values'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s('path', {'stroke-opacity': '0.7'}),
       {
         type: 'element',
@@ -1116,7 +1116,7 @@ test('hastscript', function (t) {
       'should cast valid known numeric values'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s('path', {'stroke-miterlimit': '1'}),
       {
         type: 'element',
@@ -1127,11 +1127,11 @@ test('hastscript', function (t) {
       'should cast valid known positive numeric values'
     )
 
-    st.end()
+    t.end()
   })
 
-  t.test('tag names', function (st) {
-    st.deepEqual(
+  t.test('tag names', function (t) {
+    t.deepEqual(
       h(null, [h('DIV'), h('dIv'), h('div')]),
       {
         type: 'element',
@@ -1146,7 +1146,7 @@ test('hastscript', function (t) {
       'should create lowercase tag names'
     )
 
-    st.deepEqual(
+    t.deepEqual(
       s(null, [
         s('RECT'),
         s('rEcT'),
@@ -1171,7 +1171,7 @@ test('hastscript', function (t) {
       'should create lowercase SVG tag names, and fix certain cases'
     )
 
-    st.end()
+    t.end()
   })
 
   t.end()
