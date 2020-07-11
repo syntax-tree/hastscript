@@ -27,9 +27,10 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
-  "types": "types/index.d.ts",
+  "types": "types",
   "files": [
     "types/index.d.ts",
+    "types/svg.d.ts",
     "index.js",
     "factory.js",
     "html.js",
