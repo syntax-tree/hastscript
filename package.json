@@ -38,7 +38,7 @@
     "svg-case-sensitive-tag-names.json"
   ],
   "dependencies": {
-    "@types/hast": "^2.3.1",
+    "@types/hast": "^2.0.0",
     "comma-separated-tokens": "^1.0.0",
     "hast-util-parse-selector": "^2.0.0",
     "property-information": "^5.0.0",
