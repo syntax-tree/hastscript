@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015"],
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "hastscript": ["index.d.ts"],
+      "hastscript/svg": ["svg.d.ts"]
+    }
+  }
+}

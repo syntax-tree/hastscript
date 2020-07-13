@@ -27,7 +27,10 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
+    "svg.d.ts",
     "index.js",
     "factory.js",
     "html.js",
@@ -35,6 +38,7 @@
     "svg-case-sensitive-tag-names.json"
   ],
   "dependencies": {
+    "@types/hast": "^2.3.1",
     "comma-separated-tokens": "^1.0.0",
     "hast-util-parse-selector": "^2.0.0",
     "property-information": "^5.0.0",
@@ -42,6 +46,7 @@
   },
   "devDependencies": {
     "browserify": "^16.0.0",
+    "dtslint": "^3.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^8.0.0",
@@ -59,7 +64,8 @@
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run generate && npm run format && npm run build && npm run test-coverage"
+    "test-types": "dtslint .",
+    "test": "npm run generate && npm run format && npm run build && npm run test-coverage && npm run test-types"
   },
   "nyc": {
     "check-coverage": true,
