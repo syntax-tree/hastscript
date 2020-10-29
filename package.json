@@ -85,9 +85,17 @@
     "prettier": true,
     "esnext": false,
     "rules": {
-      "unicorn/prefer-number-properties": "off",
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "guard-for-in": "off",
+      "no-eq-null": "off",
       "no-self-compare": "off",
-      "guard-for-in": "off"
+      "unicorn/prefer-number-properties": "off"
     },
     "ignores": [
       "hastscript.js"

@@ -3,99 +3,62 @@
 var find = require('property-information/find')
 var normalize = require('property-information/normalize')
 var parseSelector = require('hast-util-parse-selector')
-var spaces = require('space-separated-tokens').parse
-var commas = require('comma-separated-tokens').parse
+var spaceSeparated = require('space-separated-tokens')
+var commaSeparated = require('comma-separated-tokens')
 
 module.exports = factory
 
 var own = {}.hasOwnProperty
 
 function factory(schema, defaultTagName, caseSensitive) {
-  var adjust = caseSensitive ? createAdjustMap(caseSensitive) : null
+  var adjust = caseSensitive && createAdjustMap(caseSensitive)
 
   return h
 
   // Hyperscript compatible DSL for creating virtual hast trees.
   function h(selector, properties) {
     var node = parseSelector(selector, defaultTagName)
-    var children = Array.prototype.slice.call(arguments, 2)
     var name = node.tagName.toLowerCase()
+    var index = 1
     var property
 
+    // Normalize the name.
     node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
 
-    if (properties && isChildren(properties, node)) {
-      children.unshift(properties)
-      properties = null
-    }
-
+    // Handle props.
     if (properties) {
-      for (property in properties) {
-        addProperty(node.properties, property, properties[property])
+      if (
+        typeof properties === 'string' ||
+        'length' in properties ||
+        isNode(name, properties)
+      ) {
+        // Nope, it’s something for `children`.
+        index--
+      } else {
+        for (property in properties) {
+          addProperty(schema, node.properties, property, properties[property])
+        }
       }
     }
 
-    addChild(node.children, children)
+    // Handle children.
+    while (++index < arguments.length) {
+      addChild(node.children, arguments[index])
+    }
 
-    if (node.tagName === 'template') {
+    if (name === 'template') {
       node.content = {type: 'root', children: node.children}
       node.children = []
     }
 
     return node
   }
-
-  function addProperty(properties, key, value) {
-    var info
-    var property
-    var result
-
-    // Ignore nullish and NaN values.
-    if (value === null || value === undefined || value !== value) {
-      return
-    }
-
-    info = find(schema, key)
-    property = info.property
-    result = value
-
-    // Handle list values.
-    if (typeof result === 'string') {
-      if (info.spaceSeparated) {
-        result = spaces(result)
-      } else if (info.commaSeparated) {
-        result = commas(result)
-      } else if (info.commaOrSpaceSeparated) {
-        result = spaces(commas(result).join(' '))
-      }
-    }
-
-    // Accept `object` on style.
-    if (property === 'style' && typeof value !== 'string') {
-      result = style(result)
-    }
-
-    // Class-names (which can be added both on the `selector` and here).
-    if (property === 'className' && properties.className) {
-      result = properties.className.concat(result)
-    }
-
-    properties[property] = parsePrimitives(info, property, result)
-  }
 }
 
-function isChildren(value, node) {
-  return (
-    typeof value === 'string' ||
-    'length' in value ||
-    isNode(node.tagName, value)
-  )
-}
-
-function isNode(tagName, value) {
+function isNode(name, value) {
   var type = value.type
 
-  if (tagName === 'input' || !type || typeof type !== 'string') {
+  if (name === 'input' || !type || typeof type !== 'string') {
     return false
   }
 
@@ -105,7 +68,7 @@ function isNode(tagName, value) {
 
   type = type.toLowerCase()
 
-  if (tagName === 'button') {
+  if (name === 'button') {
     return (
       type !== 'menu' &&
       type !== 'submit' &&
@@ -117,70 +80,81 @@ function isNode(tagName, value) {
   return 'value' in value
 }
 
+function addProperty(schema, properties, key, value) {
+  var info = find(schema, key)
+  var result = value
+  var index = -1
+  var finalResult
+
+  // Ignore nullish and NaN values.
+  if (result == null || result !== result) {
+    return
+  }
+
+  // Handle list values.
+  if (typeof result === 'string') {
+    if (info.spaceSeparated) {
+      result = spaceSeparated.parse(result)
+    } else if (info.commaSeparated) {
+      result = commaSeparated.parse(result)
+    } else if (info.commaOrSpaceSeparated) {
+      result = spaceSeparated.parse(commaSeparated.parse(result).join(' '))
+    }
+  }
+
+  // Accept `object` on style.
+  if (info.property === 'style' && typeof result !== 'string') {
+    result = style(result)
+  }
+
+  // Class names (which can be added both on the `selector` and here).
+  if (info.property === 'className' && properties.className) {
+    result = properties.className.concat(result)
+  }
+
+  if (typeof result === 'object' && 'length' in result) {
+    finalResult = []
+    while (++index < result.length) {
+      finalResult[index] = parsePrimitive(info, info.property, result[index])
+    }
+  } else {
+    finalResult = parsePrimitive(info, info.property, result)
+  }
+
+  properties[info.property] = finalResult
+}
+
 function addChild(nodes, value) {
-  var index
-  var length
+  var index = -1
 
   if (typeof value === 'string' || typeof value === 'number') {
     nodes.push({type: 'text', value: String(value)})
-    return
-  }
-
-  if (typeof value === 'object' && 'length' in value) {
-    index = -1
-    length = value.length
-
-    while (++index < length) {
+  } else if (typeof value === 'object' && 'length' in value) {
+    while (++index < value.length) {
       addChild(nodes, value[index])
     }
-
-    return
-  }
-
-  if (typeof value !== 'object' || !('type' in value)) {
+  } else if (typeof value === 'object' && 'type' in value) {
+    nodes.push(value)
+  } else {
     throw new Error('Expected node, nodes, or string, got `' + value + '`')
   }
-
-  nodes.push(value)
-}
-
-// Parse a (list of) primitives.
-function parsePrimitives(info, name, value) {
-  var index
-  var length
-  var result
-
-  if (typeof value !== 'object' || !('length' in value)) {
-    return parsePrimitive(info, name, value)
-  }
-
-  length = value.length
-  index = -1
-  result = []
-
-  while (++index < length) {
-    result[index] = parsePrimitive(info, name, value[index])
-  }
-
-  return result
 }
 
 // Parse a single primitives.
 function parsePrimitive(info, name, value) {
   var result = value
 
-  if (info.number || info.positiveNumber) {
-    if (!isNaN(result) && result !== '') {
-      result = Number(result)
-    }
-  } else if (info.boolean || info.overloadedBoolean) {
-    // Accept `boolean` and `string`.
-    if (
-      typeof result === 'string' &&
-      (result === '' || normalize(value) === normalize(name))
-    ) {
-      result = true
-    }
+  if ((info.number || info.positiveNumber) && !isNaN(result) && result !== '') {
+    result = Number(result)
+  }
+
+  // Accept `boolean` and `string`.
+  if (
+    (info.boolean || info.overloadedBoolean) &&
+    typeof result === 'string' &&
+    (result === '' || normalize(value) === normalize(name))
+  ) {
+    result = true
   }
 
   return result
@@ -198,14 +172,11 @@ function style(value) {
 }
 
 function createAdjustMap(values) {
-  var length = values.length
-  var index = -1
   var result = {}
-  var value
+  var index = -1
 
-  while (++index < length) {
-    value = values[index]
-    result[value.toLowerCase()] = value
+  while (++index < values.length) {
+    result[values[index].toLowerCase()] = values[index]
   }
 
   return result
