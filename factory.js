@@ -17,17 +17,23 @@ function factory(schema, defaultTagName, caseSensitive) {
 
   // Hyperscript compatible DSL for creating virtual hast trees.
   function h(selector, properties) {
-    var node = parseSelector(selector, defaultTagName)
-    var name = node.tagName.toLowerCase()
+    var node =
+      selector == null
+        ? {type: 'root', children: []}
+        : parseSelector(selector, defaultTagName)
+    var name = selector == null ? null : node.tagName.toLowerCase()
     var index = 1
     var property
 
     // Normalize the name.
-    node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
+    if (name != null) {
+      node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
+    }
 
     // Handle props.
     if (properties) {
       if (
+        name == null ||
         typeof properties === 'string' ||
         'length' in properties ||
         isNode(name, properties)
@@ -134,7 +140,11 @@ function addChild(nodes, value) {
       addChild(nodes, value[index])
     }
   } else if (typeof value === 'object' && 'type' in value) {
-    nodes.push(value)
+    if (value.type === 'root') {
+      addChild(nodes, value.children)
+    } else {
+      nodes.push(value)
+    }
   } else {
     throw new Error('Expected node, nodes, or string, got `' + value + '`')
   }

@@ -1,8 +1,8 @@
 'use strict'
 
 var test = require('tape')
-var s = require('./svg')
-var h = require('./html')
+var s = require('../svg')
+var h = require('../html')
 
 test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function')
@@ -10,13 +10,19 @@ test('hastscript', function (t) {
   t.test('selector', function (t) {
     t.deepEqual(
       h(),
+      {type: 'root', children: []},
+      'should create a `root` node without arguments'
+    )
+
+    t.deepEqual(
+      h(''),
       {
         type: 'element',
         tagName: 'div',
         properties: {},
         children: []
       },
-      'should create a `div` element without arguments'
+      'should create a `div` element w/ an empty string name'
     )
 
     t.deepEqual(
@@ -113,7 +119,7 @@ test('hastscript', function (t) {
   t.test('properties', function (t) {
     t.test('known property names', function (t) {
       t.deepEqual(
-        h(null, {className: 'foo'}),
+        h('', {className: 'foo'}),
         {
           type: 'element',
           tagName: 'div',
@@ -124,7 +130,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {class: 'foo'}),
+        h('', {class: 'foo'}),
         {
           type: 'element',
           tagName: 'div',
@@ -135,7 +141,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {CLASS: 'foo'}),
+        h('', {CLASS: 'foo'}),
         {
           type: 'element',
           tagName: 'div',
@@ -146,7 +152,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'class-name': 'foo'}),
+        h('', {'class-name': 'foo'}),
         {
           type: 'element',
           tagName: 'div',
@@ -161,7 +167,7 @@ test('hastscript', function (t) {
 
     t.test('unknown property names', function (t) {
       t.deepEqual(
-        h(null, {allowbigscreen: true}),
+        h('', {allowbigscreen: true}),
         {
           type: 'element',
           tagName: 'div',
@@ -172,7 +178,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {allowBigScreen: true}),
+        h('', {allowBigScreen: true}),
         {
           type: 'element',
           tagName: 'div',
@@ -183,7 +189,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'allow_big-screen': true}),
+        h('', {'allow_big-screen': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -198,7 +204,7 @@ test('hastscript', function (t) {
 
     t.test('other namespaces', function (t) {
       t.deepEqual(
-        h(null, {'aria-valuenow': 1}),
+        h('', {'aria-valuenow': 1}),
         {
           type: 'element',
           tagName: 'div',
@@ -209,7 +215,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {ariaValueNow: 1}),
+        h('', {ariaValueNow: 1}),
         {
           type: 'element',
           tagName: 'div',
@@ -220,7 +226,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {'color-interpolation-filters': 'sRGB'}),
+        s('', {'color-interpolation-filters': 'sRGB'}),
         {
           type: 'element',
           tagName: 'g',
@@ -231,7 +237,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {colorInterpolationFilters: 'sRGB'}),
+        s('', {colorInterpolationFilters: 'sRGB'}),
         {
           type: 'element',
           tagName: 'g',
@@ -242,7 +248,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {'xml:space': 'preserve'}),
+        s('', {'xml:space': 'preserve'}),
         {
           type: 'element',
           tagName: 'g',
@@ -253,7 +259,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {xmlSpace: 'preserve'}),
+        s('', {xmlSpace: 'preserve'}),
         {
           type: 'element',
           tagName: 'g',
@@ -264,7 +270,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {'xmlns:xlink': 'http://www.w3.org/1999/xlink'}),
+        s('', {'xmlns:xlink': 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
           tagName: 'g',
@@ -275,7 +281,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {xmlnsXLink: 'http://www.w3.org/1999/xlink'}),
+        s('', {xmlnsXLink: 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
           tagName: 'g',
@@ -286,7 +292,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {'xlink:arcrole': 'http://www.example.com'}),
+        s('', {'xlink:arcrole': 'http://www.example.com'}),
         {
           type: 'element',
           tagName: 'g',
@@ -297,7 +303,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        s(null, {xLinkArcRole: 'http://www.example.com'}),
+        s('', {xLinkArcRole: 'http://www.example.com'}),
         {
           type: 'element',
           tagName: 'g',
@@ -312,7 +318,7 @@ test('hastscript', function (t) {
 
     t.test('data property names', function (t) {
       t.deepEqual(
-        h(null, {'data-foo': true}),
+        h('', {'data-foo': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -323,7 +329,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'data-123': true}),
+        h('', {'data-123': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -334,7 +340,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {dataFooBar: true}),
+        h('', {dataFooBar: true}),
         {
           type: 'element',
           tagName: 'div',
@@ -345,7 +351,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {data123: true}),
+        h('', {data123: true}),
         {
           type: 'element',
           tagName: 'div',
@@ -356,7 +362,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'data-foo.bar': true}),
+        h('', {'data-foo.bar': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -367,7 +373,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'dataFoo.bar': true}),
+        h('', {'dataFoo.bar': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -378,7 +384,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'data-foo!bar': true}),
+        h('', {'data-foo!bar': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -389,7 +395,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {'dataFoo!bar': true}),
+        h('', {'dataFoo!bar': true}),
         {
           type: 'element',
           tagName: 'div',
@@ -404,7 +410,7 @@ test('hastscript', function (t) {
 
     t.test('unknown property values', function (t) {
       t.deepEqual(
-        h(null, {foo: 'bar'}),
+        h('', {foo: 'bar'}),
         {
           type: 'element',
           tagName: 'div',
@@ -415,7 +421,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {foo: 3}),
+        h('', {foo: 3}),
         {
           type: 'element',
           tagName: 'div',
@@ -426,7 +432,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {foo: true}),
+        h('', {foo: true}),
         {
           type: 'element',
           tagName: 'div',
@@ -437,7 +443,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {list: ['bar', 'baz']}),
+        h('', {list: ['bar', 'baz']}),
         {
           type: 'element',
           tagName: 'div',
@@ -448,7 +454,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {foo: null}),
+        h('', {foo: null}),
         {
           type: 'element',
           tagName: 'div',
@@ -459,7 +465,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {foo: undefined}),
+        h('', {foo: undefined}),
         {
           type: 'element',
           tagName: 'div',
@@ -470,7 +476,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {foo: NaN}),
+        h('', {foo: NaN}),
         {
           type: 'element',
           tagName: 'div',
@@ -485,7 +491,7 @@ test('hastscript', function (t) {
 
     t.test('known booleans', function (t) {
       t.deepEqual(
-        h(null, {allowFullScreen: ''}),
+        h('', {allowFullScreen: ''}),
         {
           type: 'element',
           tagName: 'div',
@@ -496,7 +502,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {allowFullScreen: 'yup'}),
+        h('', {allowFullScreen: 'yup'}),
         {
           type: 'element',
           tagName: 'div',
@@ -522,7 +528,7 @@ test('hastscript', function (t) {
 
     t.test('known overloaded booleans', function (t) {
       t.deepEqual(
-        h(null, {download: ''}),
+        h('', {download: ''}),
         {
           type: 'element',
           tagName: 'div',
@@ -533,7 +539,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {download: 'downLOAD'}),
+        h('', {download: 'downLOAD'}),
         {
           type: 'element',
           tagName: 'div',
@@ -544,7 +550,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {download: 'example.ogg'}),
+        h('', {download: 'example.ogg'}),
         {
           type: 'element',
           tagName: 'div',
@@ -596,7 +602,7 @@ test('hastscript', function (t) {
 
     t.test('known lists', function (t) {
       t.deepEqual(
-        h(null, {class: 'foo bar baz'}),
+        h('', {class: 'foo bar baz'}),
         {
           type: 'element',
           tagName: 'div',
@@ -633,7 +639,7 @@ test('hastscript', function (t) {
 
     t.test('style', function (t) {
       t.deepEqual(
-        h(null, {style: {color: 'red', '-webkit-border-radius': '3px'}}),
+        h('', {style: {color: 'red', '-webkit-border-radius': '3px'}}),
         {
           type: 'element',
           tagName: 'div',
@@ -646,7 +652,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h(null, {style: 'color:/*red*/purple; -webkit-border-radius: 3px'}),
+        h('', {style: 'color:/*red*/purple; -webkit-border-radius: 3px'}),
         {
           type: 'element',
           tagName: 'div',
@@ -1011,13 +1017,19 @@ test('hastscript', function (t) {
   t.test('svg', function (t) {
     t.deepEqual(
       s(),
+      {type: 'root', children: []},
+      'should create a `root` node without arguments'
+    )
+
+    t.deepEqual(
+      s(''),
       {
         type: 'element',
         tagName: 'g',
         properties: {},
         children: []
       },
-      'should create a `g` element without arguments'
+      'should create a `g` element w/ an empty string name'
     )
 
     t.deepEqual(
@@ -1132,7 +1144,7 @@ test('hastscript', function (t) {
 
   t.test('tag names', function (t) {
     t.deepEqual(
-      h(null, [h('DIV'), h('dIv'), h('div')]),
+      h('', [h('DIV'), h('dIv'), h('div')]),
       {
         type: 'element',
         tagName: 'div',
@@ -1147,7 +1159,7 @@ test('hastscript', function (t) {
     )
 
     t.deepEqual(
-      s(null, [
+      s('', [
         s('RECT'),
         s('rEcT'),
         s('rect'),

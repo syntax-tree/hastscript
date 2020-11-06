@@ -3,6 +3,7 @@
 .nyc_output/
 coverage/
 node_modules/
+test/jsx-*.js
 hastscript.js
 hastscript.min.js
 yarn.lock
