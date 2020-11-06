@@ -185,8 +185,8 @@ If [`Root`][root] nodes are given, their children are used instead.
 ## JSX
 
 `hastscript` can be used as a pragma for JSX.
-The example above (omitting the second) can then be written like so, using
-inline Babel pragmas, so that SVG can be used too:
+The example above can then be written like so, using inline Babel pragmas, so
+that SVG can be used too:
 
 `example-html.jsx`:
 
