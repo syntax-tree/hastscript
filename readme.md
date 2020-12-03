@@ -263,9 +263,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/syntax-tree/hastscript.svg
+[build-badge]: https://github.com/syntax-tree/hastscript/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/syntax-tree/hastscript
+[build]: https://github.com/syntax-tree/hastscript/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hastscript.svg
 
