@@ -54,7 +54,7 @@
     "svg-tag-names": "^2.0.0",
     "tape": "^5.0.0",
     "tinyify": "^3.0.0",
-    "xo": "^0.34.0"
+    "xo": "^0.35.0"
   },
   "scripts": {
     "generate": "node build",
