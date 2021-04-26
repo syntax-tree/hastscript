@@ -1,18 +1,24 @@
-'use strict'
-
-var fs = require('fs')
-var path = require('path')
-var buble = require('buble')
-var babel = require('@babel/core')
+import fs from 'fs'
+import path from 'path'
+import babel from '@babel/core'
+import {Parser} from 'acorn'
+import acornJsx from 'acorn-jsx'
+import {generate} from 'astring'
+import {buildJsx} from 'estree-util-build-jsx'
 
 var doc = String(fs.readFileSync(path.join('test', 'jsx.jsx')))
 
 fs.writeFileSync(
-  path.join('test', 'jsx-buble.js'),
-  buble.transform(doc.replace(/'name'/, "'jsx (buble)'"), {
-    jsx: 'h',
-    jsxFragment: 'null'
-  }).code
+  path.join('test', 'jsx-build-jsx.js'),
+  generate(
+    buildJsx(
+      Parser.extend(acornJsx()).parse(
+        doc.replace(/'name'/, "'jsx (build-jsx)'"),
+        {sourceType: 'module'}
+      ),
+      {pragma: 'h', pragmaFrag: 'null'}
+    )
+  )
 )
 
 fs.writeFileSync(

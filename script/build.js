@@ -1,12 +1,11 @@
-'use strict'
+import fs from 'fs'
+import {svgTagNames} from 'svg-tag-names'
 
-var fs = require('fs')
-var tagNames = require('svg-tag-names')
+var casing = svgTagNames.filter((d) => d !== d.toLowerCase())
 
-var casing = tagNames.filter(function (d) {
-  return d !== d.toLowerCase()
-})
-
-var doc = JSON.stringify(casing, null, 2) + '\n'
-
-fs.writeFileSync('./svg-case-sensitive-tag-names.json', doc)
+fs.writeFileSync(
+  'svg-case-sensitive-tag-names.js',
+  'export const svgCaseSensitiveTagNames = ' +
+    JSON.stringify(casing, null, 2) +
+    '\n'
+)

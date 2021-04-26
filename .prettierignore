@@ -1,5 +1,2 @@
 coverage/
-hastscript.js
-hastscript.min.js
-*.json
 *.md

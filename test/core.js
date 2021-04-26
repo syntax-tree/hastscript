@@ -1,8 +1,5 @@
-'use strict'
-
-var test = require('tape')
-var s = require('../svg')
-var h = require('../html')
+import test from 'tape'
+import {h, s} from '../index.js'
 
 test('hastscript', function (t) {
   t.equal(typeof h, 'function', 'should expose a function')
@@ -476,7 +473,7 @@ test('hastscript', function (t) {
       )
 
       t.deepEqual(
-        h('', {foo: NaN}),
+        h('', {foo: Number.NaN}),
         {
           type: 'element',
           tagName: 'div',

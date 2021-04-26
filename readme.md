@@ -18,6 +18,9 @@ Use [`unist-builder`][u] to create any [**unist**][unist] tree.
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -27,8 +30,7 @@ npm install hastscript
 ## Use
 
 ```js
-var h = require('hastscript')
-var s = require('hastscript/svg')
+import {h, s} from 'hastscript'
 
 // Children as an array:
 console.log(
@@ -138,6 +140,9 @@ Yields:
 
 ## API
 
+This package exports the following identifiers: `h` and `s`.
+There is no default export.
+
 ### `h(selector?[, properties][, …children])`
 
 ### `s(selector?[, properties][, …children])`
@@ -193,7 +198,7 @@ that SVG can be used too:
 ```jsx
 /** @jsx h */
 /** @jsxFrag null */
-var h = require('hastscript')
+import {h} from 'hastscript'
 
 console.log(
   <div class="foo" id="some-id">
@@ -219,7 +224,7 @@ console.log(
 ```jsx
 /** @jsx s */
 /** @jsxFrag null */
-var s = require('hastscript/svg')
+import {s} from 'hastscript'
 
 console.log(
   <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 500 500">
@@ -249,7 +254,7 @@ Babel also lets you configure this in a script:
 ```jsx
 /** @jsx s */
 /** @jsxFrag null */
-var s = require('hastscript/svg')
+import {s} from 'hastscript'
 
 console.log(<rect />)
 ```

@@ -27,56 +27,46 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
   "types": "index.d.ts",
   "files": [
     "index.d.ts",
-    "svg.d.ts",
     "index.js",
-    "factory.js",
-    "html.js",
-    "svg.js",
-    "svg-case-sensitive-tag-names.json"
+    "svg-case-sensitive-tag-names.d.ts",
+    "svg-case-sensitive-tag-names.js"
   ],
   "dependencies": {
     "@types/hast": "^2.0.0",
-    "comma-separated-tokens": "^1.0.0",
-    "hast-util-parse-selector": "^2.0.0",
-    "property-information": "^5.0.0",
-    "space-separated-tokens": "^1.0.0"
+    "comma-separated-tokens": "^2.0.0",
+    "hast-util-parse-selector": "^3.0.0",
+    "property-information": "^6.0.0",
+    "space-separated-tokens": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "browserify": "^17.0.0",
-    "buble": "^0.20.0",
-    "dtslint": "^4.0.0",
-    "nyc": "^15.0.0",
+    "acorn": "^6.0.0",
+    "acorn-jsx": "^5.0.0",
+    "astring": "^1.0.0",
+    "c8": "^7.0.0",
+    "estree-util-build-jsx": "^2.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^9.0.0",
     "remark-preset-wooorm": "^8.0.0",
-    "svg-tag-names": "^2.0.0",
+    "svg-tag-names": "^3.0.0",
     "tape": "^5.0.0",
-    "tinyify": "^3.0.0",
-    "unist-builder": "^2.0.0",
-    "xo": "^0.38.0"
+    "unist-builder": "^3.0.0",
+    "xo": "^0.39.0"
   },
   "scripts": {
     "generate": "node script/generate-jsx && node script/build",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify . -s hastscript > hastscript.js",
-    "build-mangle": "browserify . -s hastscript -p tinyify > hastscript.min.js",
-    "build": "npm run build-bundle && npm run build-mangle",
-    "test-api": "node test",
-    "test-coverage": "nyc --reporter lcov tape test/index.js",
-    "test-types": "dtslint .",
-    "test": "npm run generate && npm run format && npm run build && npm run test-coverage && npm run test-types"
-  },
-  "nyc": {
-    "check-coverage": true,
-    "lines": 100,
-    "functions": 100,
-    "branches": 100
+    "test-api": "node test/index.js",
+    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node test/index.js",
+    "test": "npm run generate && npm run format && npm run test-coverage"
   },
   "prettier": {
     "tabWidth": 2,
@@ -88,22 +78,12 @@
   },
   "xo": {
     "prettier": true,
-    "esnext": false,
     "rules": {
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "ignore"
-        }
-      ],
-      "guard-for-in": "off",
-      "no-eq-null": "off",
-      "no-self-compare": "off",
-      "unicorn/prefer-number-properties": "off"
+      "no-var": "off",
+      "prefer-arrow-callback": "off"
     },
-    "ignores": [
-      "hastscript.js"
+    "ignore": [
+      "**/*.d.ts"
     ]
   },
   "remarkConfig": {
