@@ -138,11 +138,19 @@ Yields:
 
 ## API
 
-### `h(selector?[, properties][, ...children])`
+### `h(selector?[, properties][, …children])`
 
-### `s(selector?[, properties][, ...children])`
+### `s(selector?[, properties][, …children])`
 
-DSL to create virtual [**hast**][hast] [*trees*][tree] for HTML or SVG.
+Create virtual [**hast**][hast] [*trees*][tree] for HTML or SVG.
+
+##### Signatures
+
+*   `h(): root`
+*   `h(null[, …children]): root`
+*   `h(name[, properties][, …children]): element`
+
+(and the same for `s`).
 
 ##### Parameters
 
@@ -150,22 +158,104 @@ DSL to create virtual [**hast**][hast] [*trees*][tree] for HTML or SVG.
 
 Simple CSS selector (`string`, optional).
 Can contain a tag name (`foo`), IDs (`#bar`), and classes (`.baz`).
-If there is no tag name in the selector, `h` defaults to a `div` element,
-and `s` to a `g` element.
+If the selector is a string but there is no tag name in it, `h` defaults to
+build a `div` element, and `s` to a `g` element.
 `selector` is parsed by [`hast-util-parse-selector`][parse-selector].
+When string, builds an [`Element`][element].
+When nullish, builds a [`Root`][root] instead.
 
 ###### `properties`
 
 Map of properties (`Object.<*>`, optional).
+Keys should match either the HTML attribute name, or the DOM property name, but
+are case-insensitive.
+Cannot be given when building a [`Root`][root].
 
 ###### `children`
 
-(Lists of) child nodes (`string`, `Node`, `Array.<string|Node>`, optional).
-When strings are encountered, they are mapped to [`text`][text] nodes.
+(Lists of) children (`string`, `number`, `Node`, `Array.<children>`, optional).
+When strings or numbers are encountered, they are mapped to [`Text`][text]
+nodes.
+If [`Root`][root] nodes are given, their children are used instead.
 
 ##### Returns
 
-[`Element`][element].
+[`Element`][element] or [`Root`][root].
+
+## JSX
+
+`hastscript` can be used as a pragma for JSX.
+The example above can then be written like so, using inline Babel pragmas, so
+that SVG can be used too:
+
+`example-html.jsx`:
+
+```jsx
+/** @jsx h */
+/** @jsxFrag null */
+var h = require('hastscript')
+
+console.log(
+  <div class="foo" id="some-id">
+    <span>some text</span>
+    <input type="text" value="foo" />
+    <a class="alpha bravo charlie" download>
+      deltaecho
+    </a>
+  </div>
+)
+
+console.log(
+  <form method="POST">
+    <input type="text" name="foo" />
+    <input type="text" name="bar" />
+    <input type="submit" name="send" />
+  </form>
+)
+```
+
+`example-svg.jsx`:
+
+```jsx
+/** @jsx s */
+/** @jsxFrag null */
+var s = require('hastscript/svg')
+
+console.log(
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 500 500">
+    <title>SVG `&lt;circle&gt;` element</title>
+    <circle cx={120} cy={120} r={100} />
+  </svg>
+)
+```
+
+Because JSX does not allow dots (`.`) or number signs (`#`) in tag names, you
+have to pass class names and IDs in as attributes.
+
+Note that you must still import `hastscript` yourself and configure your
+JavaScript compiler to use the identifier you assign it to as a pragma (and
+pass `null` for fragments).
+
+For [bublé][], this can be done by setting `jsx: 'h'` and `jsxFragment: 'null'`
+(note that `jsxFragment` is currently only available on the API, not the CLI).
+Bublé is less ideal because it allows a single pragma.
+
+For [Babel][], use [`@babel/plugin-transform-react-jsx`][babel-jsx] (in classic
+mode), and pass `pragma: 'h'` and `pragmaFrag: 'null'`.
+This is less ideal because it allows a single pragma.
+
+Babel also lets you configure this in a script:
+
+```jsx
+/** @jsx s */
+/** @jsxFrag null */
+var s = require('hastscript/svg')
+
+console.log(<rect />)
+```
+
+This is useful because it allows using *both* `hastscript/html` and
+`hastscript/svg`, although in different files.
 
 ## Security
 
@@ -317,9 +407,17 @@ abide by its terms.
 
 [element]: https://github.com/syntax-tree/hast#element
 
+[root]: https://github.com/syntax-tree/xast#root
+
 [text]: https://github.com/syntax-tree/hast#text
 
 [u]: https://github.com/syntax-tree/unist-builder
+
+[bublé]: https://github.com/Rich-Harris/buble
+
+[babel]: https://github.com/babel/babel
+
+[babel-jsx]: https://github.com/babel/babel/tree/main/packages/babel-plugin-transform-react-jsx
 
 [parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
 
