@@ -189,16 +189,20 @@ If [`Root`][root] nodes are given, their children are used instead.
 
 ## JSX
 
-`hastscript` can be used as a pragma for JSX.
-The example above can then be written like so, using inline Babel pragmas, so
+`hastscript` can be used with JSX.
+Either use the automatic runtime set to `hastscript/html`, `hastscript/svg`,
+or `hastscript` (shortcut for HTML).
+
+Or import `h` or `s` yourself and define it as the pragma (plus set the fragment
+to `null`).
+
+The example above can then be written like so, using inline pragmas, so
 that SVG can be used too:
 
 `example-html.jsx`:
 
 ```jsx
-/** @jsx h */
-/** @jsxFrag null */
-import {h} from 'hastscript'
+/** @jsxImportSource hastscript */
 
 console.log(
   <div class="foo" id="some-id">
@@ -222,10 +226,7 @@ console.log(
 `example-svg.jsx`:
 
 ```jsx
-/** @jsx s */
-/** @jsxFrag null */
-import {s} from 'hastscript'
-
+/** @jsxImportSource hastscript/svg */
 console.log(
   <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 500 500">
     <title>SVG `&lt;circle&gt;` element</title>
@@ -237,24 +238,20 @@ console.log(
 Because JSX does not allow dots (`.`) or number signs (`#`) in tag names, you
 have to pass class names and IDs in as attributes.
 
-Note that you must still import `hastscript` yourself and configure your
-JavaScript compiler to use the identifier you assign it to as a pragma (and
-pass `null` for fragments).
-
 You can use [`estree-util-build-jsx`][build-jsx] to compile JSX away.
 
 You could also use [bublé][], but it’s not ideal (`jsxFragment` is currently
 only available on the API, not the CLI, and it only allows a single pragma).
 
-For [Babel][], use [`@babel/plugin-transform-react-jsx`][babel-jsx] (in classic
-mode), and pass `pragma: 'h'` and `pragmaFrag: 'null'`.
+For [Babel][], use [`@babel/plugin-transform-react-jsx`][babel-jsx] and either
+pass `pragma: 'h'` and `pragmaFrag: 'null'`, or pass `importSource:
+'hastscript'`.
 This is less ideal because it allows a single pragma.
 
 Babel also lets you configure this in a script:
 
 ```jsx
-/** @jsx s */
-/** @jsxFrag null */
+/** @jsx s @jsxFrag null */
 import {s} from 'hastscript'
 
 console.log(<rect />)

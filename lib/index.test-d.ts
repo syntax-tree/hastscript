@@ -1,6 +1,7 @@
 import {expectType, expectError} from 'tsd'
 import {Root, Element} from 'hast'
 import {h, s} from './index.js'
+import {Fragment, jsx, jsxs} from './runtime-html.js'
 
 expectType<Root>(h())
 expectType<Root>(s())
@@ -37,3 +38,11 @@ expectType<Element>(
     s('circle', {cx: 120, cy: 120, r: 100})
   ])
 )
+
+expectType<Root>(jsx(Fragment, {}))
+expectType<Root>(jsx(Fragment, {children: h('x')}))
+expectType<Element>(jsx('a', {}))
+expectType<Element>(jsx('a', {children: 'a'}))
+expectType<Element>(jsx('a', {children: h('x')}))
+expectType<Element>(jsxs('a', {children: ['a', 'b']}))
+expectType<Element>(jsxs('a', {children: [h('x'), h('y')]}))

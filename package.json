@@ -29,13 +29,22 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": "./index.js",
+    "./index.js": "./index.js",
+    "./html.js": "./lib/html.js",
+    "./svg.js": "./lib/svg.js",
+    "./jsx-runtime": "./lib/runtime-html.js",
+    "./html/jsx-runtime": "./lib/runtime-html.js",
+    "./svg/jsx-runtime": "./lib/runtime-svg.js"
+  },
   "files": [
+    "!lib/index.test-d.ts",
+    "lib/",
     "index.d.ts",
-    "index.js",
-    "svg-case-sensitive-tag-names.d.ts",
-    "svg-case-sensitive-tag-names.js"
+    "index.js"
   ],
   "dependencies": {
     "@types/hast": "^2.0.0",
@@ -50,7 +59,7 @@
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@types/babel__core": "^7.0.0",
     "@types/tape": "^4.0.0",
-    "acorn": "^6.0.0",
+    "acorn": "^8.0.0",
     "acorn-jsx": "^5.0.0",
     "astring": "^1.0.0",
     "c8": "^7.0.0",
@@ -69,7 +78,7 @@
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
-    "build": "rimraf \"{test/**,script/**,}*.d.ts\" && tsc && tsd && type-coverage",
+    "build": "rimraf \"{lib/**,test/**,script/**,}*.d.ts\" && tsc && tsd && type-coverage",
     "generate": "node script/generate-jsx && node script/build",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node test/index.js",
