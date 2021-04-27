@@ -241,9 +241,10 @@ Note that you must still import `hastscript` yourself and configure your
 JavaScript compiler to use the identifier you assign it to as a pragma (and
 pass `null` for fragments).
 
-For [bublé][], this can be done by setting `jsx: 'h'` and `jsxFragment: 'null'`
-(note that `jsxFragment` is currently only available on the API, not the CLI).
-Bublé is less ideal because it allows a single pragma.
+You can use [`estree-util-build-jsx`][build-jsx] to compile JSX away.
+
+You could also use [bublé][], but it’s not ideal (`jsxFragment` is currently
+only available on the API, not the CLI, and it only allows a single pragma).
 
 For [Babel][], use [`@babel/plugin-transform-react-jsx`][babel-jsx] (in classic
 mode), and pass `pragma: 'h'` and `pragmaFrag: 'null'`.
@@ -259,8 +260,8 @@ import {s} from 'hastscript'
 console.log(<rect />)
 ```
 
-This is useful because it allows using *both* `hastscript/html` and
-`hastscript/svg`, although in different files.
+This is useful because it allows using *both* `html` and `svg`, although in
+different files.
 
 ## Security
 
@@ -417,6 +418,8 @@ abide by its terms.
 [text]: https://github.com/syntax-tree/hast#text
 
 [u]: https://github.com/syntax-tree/unist-builder
+
+[build-jsx]: https://github.com/wooorm/estree-util-build-jsx
 
 [bublé]: https://github.com/Rich-Harris/buble
 

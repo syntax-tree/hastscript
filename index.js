@@ -1,158 +1,228 @@
+/**
+ * @typedef {import('hast').Root} HastRoot
+ * @typedef {import('hast').Element} HastElement
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {HastRoot['children'][number]} HastChild
+ * @typedef {import('property-information').html['property'][string]} Info
+ * @typedef {html|svg} Schema
+ */
+
+/**
+ * @typedef {string|number} HStyleValue
+ * @typedef {Object.<string, HStyleValue>} HStyle
+ * @typedef {string|number|boolean|null|undefined} HPrimitiveValue
+ * @typedef {Array.<string|number>} HArrayValue
+ * @typedef {HPrimitiveValue|HArrayValue} HPropertyValue
+ * @typedef {{[property: string]: HPropertyValue|HStyle}} HProperties
+ *
+ * @typedef {string|number|null|undefined} HPrimitiveChild
+ * @typedef {HastChild|HastRoot} HNodeChild
+ * @typedef {Array.<HPrimitiveChild|HNodeChild>} HArrayChild
+ * @typedef {HPrimitiveChild|HNodeChild|HArrayChild} HChild
+ */
+
 import {html, svg, find, normalize} from 'property-information'
 import {parseSelector} from 'hast-util-parse-selector'
 import {parse as spaces} from 'space-separated-tokens'
 import {parse as commas} from 'comma-separated-tokens'
 import {svgCaseSensitiveTagNames} from './svg-case-sensitive-tag-names.js'
 
+var buttonTypes = new Set(['menu', 'submit', 'reset', 'button'])
+
 var own = {}.hasOwnProperty
 
 export const h = factory(html, 'div')
-h.displayName = 'html'
 
 export const s = factory(svg, 'g', svgCaseSensitiveTagNames)
-s.displayName = 'svg'
 
+/**
+ * @param {Schema} schema
+ * @param {string} defaultTagName
+ * @param {Array.<string>} [caseSensitive]
+ */
 function factory(schema, defaultTagName, caseSensitive) {
   var adjust = caseSensitive && createAdjustMap(caseSensitive)
 
-  return h
+  const h =
+    /**
+     * @type {{
+     *   (): HastRoot
+     *   (selector: null|undefined, ...children: HChild[]): HastRoot
+     *   (selector: string, properties: HProperties, ...children: HChild[]): HastElement
+     *   (selector: string, ...children: HChild[]): HastElement
+     * }}
+     */
+    (
+      /**
+       * Hyperscript compatible DSL for creating virtual hast trees.
+       *
+       * @param {string|null} [selector]
+       * @param {HProperties|HChild} [properties]
+       * @param {...HChild} [children]
+       */
+      function (selector, properties, ...children) {
+        var index = -1
+        /** @type {HastRoot|HastElement} */
+        var node
+        /** @type {string} */
+        var name
+        /** @type {string} */
+        var key
 
-  // Hyperscript compatible DSL for creating virtual hast trees.
-  function h(selector, properties) {
-    var node =
-      selector === undefined || selector === null
-        ? {type: 'root', children: []}
-        : parseSelector(selector, defaultTagName)
-    var name =
-      selector === undefined || selector === null
-        ? null
-        : node.tagName.toLowerCase()
-    var index = 1
-    var property
+        if (selector === undefined || selector === null) {
+          node = {type: 'root', children: []}
+          // @ts-ignore Properties are not supported for roots.
+          children.unshift(properties)
+        } else {
+          node = parseSelector(selector, defaultTagName)
+          // Normalize the name.
+          name = node.tagName.toLowerCase()
+          if (adjust && own.call(adjust, name)) name = adjust[name]
+          node.tagName = name
 
-    // Normalize the name.
-    if (name !== undefined && name !== null) {
-      node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
-    }
-
-    // Handle props.
-    if (properties) {
-      if (
-        name === undefined ||
-        name === null ||
-        typeof properties === 'string' ||
-        'length' in properties ||
-        isNode(name, properties)
-      ) {
-        // Nope, it’s something for `children`.
-        index--
-      } else {
-        for (property in properties) {
-          if (own.call(properties, property)) {
-            addProperty(schema, node.properties, property, properties[property])
+          // Handle props.
+          if (isProperties(properties, name)) {
+            for (key in properties) {
+              if (own.call(properties, key)) {
+                addProperty(schema, node.properties, key, properties[key])
+              }
+            }
+          } else {
+            children.unshift(properties)
           }
         }
+
+        // Handle children.
+        while (++index < children.length) {
+          addChild(node.children, children[index])
+        }
+
+        if (name === 'template') {
+          node.content = {type: 'root', children: node.children}
+          node.children = []
+        }
+
+        return node
       }
-    }
+    )
 
-    // Handle children.
-    while (++index < arguments.length) {
-      addChild(node.children, arguments[index])
-    }
-
-    if (name === 'template') {
-      node.content = {type: 'root', children: node.children}
-      node.children = []
-    }
-
-    return node
-  }
+  return h
 }
 
-function isNode(name, value) {
-  var type = value.type
-
-  if (name === 'input' || !type || typeof type !== 'string') {
+/**
+ * @param {HProperties|HChild} value
+ * @param {string} name
+ * @returns {value is HProperties}
+ */
+function isProperties(value, name) {
+  if (
+    value === null ||
+    value === undefined ||
+    typeof value !== 'object' ||
+    Array.isArray(value)
+  ) {
     return false
   }
 
-  if (typeof value.children === 'object' && 'length' in value.children) {
+  if (name === 'input' || !value.type || typeof value.type !== 'string') {
     return true
   }
 
-  type = type.toLowerCase()
-
-  if (name === 'button') {
-    return (
-      type !== 'menu' &&
-      type !== 'submit' &&
-      type !== 'reset' &&
-      type !== 'button'
-    )
+  if (Array.isArray(value.children)) {
+    return false
   }
 
-  return 'value' in value
+  if (name === 'button') {
+    return buttonTypes.has(value.type.toLowerCase())
+  }
+
+  return !('value' in value)
 }
 
+/**
+ * @param {Schema} schema
+ * @param {Properties} properties
+ * @param {string} key
+ * @param {HStyle|HPropertyValue} value
+ * @returns {void}
+ */
 function addProperty(schema, properties, key, value) {
   var info = find(schema, key)
-  var result = value
   var index = -1
+  /** @type {HPropertyValue} */
+  var result
+  /** @type {Array.<string|number>} */
   var finalResult
 
   // Ignore nullish and NaN values.
-  if (
-    result === undefined ||
-    result === null ||
-    (typeof result === 'number' && Number.isNaN(result))
-  ) {
-    return
-  }
+  if (value === undefined || value === null) return
 
+  if (typeof value === 'number') {
+    // Ignore NaN.
+    if (Number.isNaN(value)) return
+
+    result = value
+  }
+  // Booleans.
+  else if (typeof value === 'boolean') {
+    result = value
+  }
   // Handle list values.
-  if (typeof result === 'string') {
+  else if (typeof value === 'string') {
     if (info.spaceSeparated) {
-      result = spaces(result)
+      result = spaces(value)
     } else if (info.commaSeparated) {
-      result = commas(result)
+      result = commas(value)
     } else if (info.commaOrSpaceSeparated) {
-      result = spaces(commas(result).join(' '))
+      result = spaces(commas(value).join(' '))
+    } else {
+      result = parsePrimitive(info, info.property, value)
     }
+  } else if (Array.isArray(value)) {
+    result = value.concat()
+  } else {
+    result = info.property === 'style' ? style(value) : String(value)
   }
 
-  // Accept `object` on style.
-  if (info.property === 'style' && typeof result !== 'string') {
-    result = style(result)
+  if (Array.isArray(result)) {
+    finalResult = []
+
+    while (++index < result.length) {
+      // @ts-ignore Assume no booleans in array.
+      finalResult[index] = parsePrimitive(info, info.property, result[index])
+    }
+
+    result = finalResult
   }
 
   // Class names (which can be added both on the `selector` and here).
-  if (info.property === 'className' && properties.className) {
+  if (info.property === 'className' && Array.isArray(properties.className)) {
+    // @ts-ignore Assume no booleans in `className`.
     result = properties.className.concat(result)
   }
 
-  if (typeof result === 'object' && 'length' in result) {
-    finalResult = []
-    while (++index < result.length) {
-      finalResult[index] = parsePrimitive(info, info.property, result[index])
-    }
-  } else {
-    finalResult = parsePrimitive(info, info.property, result)
-  }
-
-  properties[info.property] = finalResult
+  properties[info.property] = result
 }
 
+/**
+ * @param {Array.<HastChild>} nodes
+ * @param {HChild} value
+ * @returns {void}
+ */
 function addChild(nodes, value) {
   var index = -1
 
-  if (typeof value === 'string' || typeof value === 'number') {
+  if (value === undefined || value === null) {
+    // Empty.
+  } else if (typeof value === 'string' || typeof value === 'number') {
     nodes.push({type: 'text', value: String(value)})
-  } else if (typeof value === 'object' && 'length' in value) {
+  } else if (Array.isArray(value)) {
     while (++index < value.length) {
       addChild(nodes, value[index])
     }
   } else if (typeof value === 'object' && 'type' in value) {
     if (value.type === 'root') {
+      // @ts-ignore it looks like a root, TS…
       addChild(nodes, value.children)
     } else {
       nodes.push(value)
@@ -162,32 +232,39 @@ function addChild(nodes, value) {
   }
 }
 
-// Parse a single primitives.
+/**
+ * Parse a single primitives.
+ *
+ * @param {Info} info
+ * @param {string} name
+ * @param {HPrimitiveValue} value
+ * @returns {HPrimitiveValue}
+ */
 function parsePrimitive(info, name, value) {
-  var result = value
+  if (typeof value === 'string') {
+    if (info.number && value && !Number.isNaN(Number(value))) {
+      return Number(value)
+    }
 
-  if (
-    (info.number || info.positiveNumber) &&
-    !Number.isNaN(Number(result)) &&
-    result !== ''
-  ) {
-    result = Number(result)
+    if (
+      (info.boolean || info.overloadedBoolean) &&
+      (value === '' || normalize(value) === normalize(name))
+    ) {
+      return true
+    }
   }
 
-  // Accept `boolean` and `string`.
-  if (
-    (info.boolean || info.overloadedBoolean) &&
-    typeof result === 'string' &&
-    (result === '' || normalize(value) === normalize(name))
-  ) {
-    result = true
-  }
-
-  return result
+  return value
 }
 
+/**
+ * @param {HStyle} value
+ * @returns {string}
+ */
 function style(value) {
+  /** @type {Array.<string>} */
   var result = []
+  /** @type {string} */
   var key
 
   for (key in value) {
@@ -199,7 +276,12 @@ function style(value) {
   return result.join('; ')
 }
 
+/**
+ * @param {Array.<string>} values
+ * @returns {Object.<string, string>}
+ */
 function createAdjustMap(values) {
+  /** @type {Object.<string, string>} */
   var result = {}
   var index = -1
 

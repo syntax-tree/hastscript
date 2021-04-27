@@ -840,11 +840,12 @@ test('hastscript', function (t) {
     )
 
     t.deepEqual(
+      // @ts-ignore runtime.
       h('foo', {type: 'text/html', children: {bar: 'baz'}}),
       {
         type: 'element',
         tagName: 'foo',
-        properties: {type: 'text/html', children: {bar: 'baz'}},
+        properties: {type: 'text/html', children: '[object Object]'},
         children: []
       },
       'should *not* allow omitting `properties` when `children` is not set to an array'
@@ -944,6 +945,7 @@ test('hastscript', function (t) {
 
     t.throws(
       function () {
+        // @ts-ignore runtime.
         h('foo', {}, true)
       },
       /Expected node, nodes, or string, got `true`/,

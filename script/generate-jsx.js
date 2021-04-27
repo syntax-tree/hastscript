@@ -12,6 +12,7 @@ fs.writeFileSync(
   path.join('test', 'jsx-build-jsx.js'),
   generate(
     buildJsx(
+      // @ts-ignore Acorn nodes are assignable to ESTree nodes.
       Parser.extend(acornJsx()).parse(
         doc.replace(/'name'/, "'jsx (build-jsx)'"),
         {sourceType: 'module'}

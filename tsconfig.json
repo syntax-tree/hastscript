@@ -1,11 +1,15 @@
 {
+  "include": ["*.js", "script/**/*.js", "test/**/*.js"],
   "compilerOptions": {
-    "lib": ["es2015"],
-    "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "hastscript": ["index.d.ts"],
-      "hastscript/svg": ["svg.d.ts"]
-    }
+    "target": "ES2020",
+    "lib": ["ES2020"],
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   }
 }
