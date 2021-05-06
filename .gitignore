@@ -1,7 +1,9 @@
 .DS_Store
-*.d.ts
 *.log
 coverage/
 node_modules/
 test/jsx-*.js
 yarn.lock
+**/*.d.ts
+!lib/jsx-classic.d.ts
+!lib/jsx-automatic.d.ts

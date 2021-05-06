@@ -1,7 +1,13 @@
 import {expectType, expectError} from 'tsd'
 import {Root, Element} from 'hast'
-import {h, s} from './index.js'
-import {Fragment, jsx, jsxs} from './runtime-html.js'
+import {h, s} from '../index.js'
+import {h as hFromRoot} from '../html.js'
+import {s as sFromRoot} from '../svg.js'
+import {Fragment, jsx, jsxs} from '../jsx-runtime.js'
+
+// Ensure files are loadable in TS.
+expectType<Root>(hFromRoot())
+expectType<Root>(sFromRoot())
 
 expectType<Root>(h())
 expectType<Root>(s())

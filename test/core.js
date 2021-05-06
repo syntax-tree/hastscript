@@ -1,7 +1,12 @@
 import test from 'tape'
 import {h, s} from '../index.js'
+import {h as hFromRoot} from '../html.js'
+import {s as sFromRoot} from '../svg.js'
 
 test('hastscript', function (t) {
+  t.equal(h, hFromRoot, '`h` should be exposed from `/html.js`')
+  t.equal(s, sFromRoot, '`s` should be exposed from `/svg.js`')
+
   t.equal(typeof h, 'function', 'should expose a function')
 
   t.test('selector', function (t) {
