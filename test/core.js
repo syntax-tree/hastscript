@@ -845,7 +845,6 @@ test('hastscript', (t) => {
     )
 
     t.deepEqual(
-      // @ts-ignore runtime.
       h('foo', {type: 'text/html', children: {bar: 'baz'}}),
       {
         type: 'element',
@@ -950,7 +949,7 @@ test('hastscript', (t) => {
 
     t.throws(
       () => {
-        // @ts-ignore runtime.
+        // @ts-expect-error runtime.
         h('foo', {}, true)
       },
       /Expected node, nodes, or string, got `true`/,

@@ -12,7 +12,7 @@ fs.writeFileSync(
   path.join('test', 'jsx-build-jsx-classic.js'),
   generate(
     buildJsx(
-      // @ts-ignore Acorn nodes are assignable to ESTree nodes.
+      // @ts-expect-error Acorn nodes are assignable to ESTree nodes.
       Parser.extend(acornJsx()).parse(
         doc.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"),
         {sourceType: 'module', ecmaVersion: 2021}
@@ -26,7 +26,7 @@ fs.writeFileSync(
   path.join('test', 'jsx-build-jsx-automatic.js'),
   generate(
     buildJsx(
-      // @ts-ignore Acorn nodes are assignable to ESTree nodes.
+      // @ts-expect-error Acorn nodes are assignable to ESTree nodes.
       Parser.extend(acornJsx()).parse(
         doc.replace(/'name'/, "'jsx (estree-util-build-jsx, automatic)'"),
         {sourceType: 'module', ecmaVersion: 2021}
@@ -38,7 +38,7 @@ fs.writeFileSync(
 
 fs.writeFileSync(
   path.join('test', 'jsx-babel-classic.js'),
-  // @ts-ignore Result always given.
+  // @ts-expect-error Result always given.
   babel.transform(doc.replace(/'name'/, "'jsx (babel, classic)'"), {
     plugins: [
       ['@babel/plugin-transform-react-jsx', {pragma: 'h', pragmaFrag: 'null'}]
@@ -48,7 +48,7 @@ fs.writeFileSync(
 
 fs.writeFileSync(
   path.join('test', 'jsx-babel-automatic.js'),
-  // @ts-ignore Result always given.
+  // @ts-expect-error Result always given.
   babel
     .transformSync(doc.replace(/'name'/, "'jsx (babel, automatic)'"), {
       plugins: [
