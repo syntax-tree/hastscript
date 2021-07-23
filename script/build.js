@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import {svgTagNames} from 'svg-tag-names'
 
 const casing = svgTagNames.filter((d) => d !== d.toLowerCase())
