@@ -3,13 +3,13 @@ import {h, s} from '../index.js'
 import {h as hFromRoot} from '../html.js'
 import {s as sFromRoot} from '../svg.js'
 
-test('hastscript', function (t) {
+test('hastscript', (t) => {
   t.equal(h, hFromRoot, '`h` should be exposed from `/html.js`')
   t.equal(s, sFromRoot, '`s` should be exposed from `/svg.js`')
 
   t.equal(typeof h, 'function', 'should expose a function')
 
-  t.test('selector', function (t) {
+  t.test('selector', (t) => {
     t.deepEqual(
       h(),
       {type: 'root', children: []},
@@ -118,8 +118,8 @@ test('hastscript', function (t) {
     t.end()
   })
 
-  t.test('properties', function (t) {
-    t.test('known property names', function (t) {
+  t.test('properties', (t) => {
+    t.test('known property names', (t) => {
       t.deepEqual(
         h('', {className: 'foo'}),
         {
@@ -167,7 +167,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('unknown property names', function (t) {
+    t.test('unknown property names', (t) => {
       t.deepEqual(
         h('', {allowbigscreen: true}),
         {
@@ -204,7 +204,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('other namespaces', function (t) {
+    t.test('other namespaces', (t) => {
       t.deepEqual(
         h('', {'aria-valuenow': 1}),
         {
@@ -318,7 +318,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('data property names', function (t) {
+    t.test('data property names', (t) => {
       t.deepEqual(
         h('', {'data-foo': true}),
         {
@@ -410,7 +410,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('unknown property values', function (t) {
+    t.test('unknown property values', (t) => {
       t.deepEqual(
         h('', {foo: 'bar'}),
         {
@@ -491,7 +491,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('known booleans', function (t) {
+    t.test('known booleans', (t) => {
       t.deepEqual(
         h('', {allowFullScreen: ''}),
         {
@@ -528,7 +528,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('known overloaded booleans', function (t) {
+    t.test('known overloaded booleans', (t) => {
       t.deepEqual(
         h('', {download: ''}),
         {
@@ -565,7 +565,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('known numbers', function (t) {
+    t.test('known numbers', (t) => {
       t.deepEqual(
         h('textarea', {cols: '3'}),
         {
@@ -602,7 +602,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('known lists', function (t) {
+    t.test('known lists', (t) => {
       t.deepEqual(
         h('', {class: 'foo bar baz'}),
         {
@@ -639,7 +639,7 @@ test('hastscript', function (t) {
       t.end()
     })
 
-    t.test('style', function (t) {
+    t.test('style', (t) => {
       t.deepEqual(
         h('', {style: {color: 'red', '-webkit-border-radius': '3px'}}),
         {
@@ -672,7 +672,7 @@ test('hastscript', function (t) {
     t.end()
   })
 
-  t.test('children', function (t) {
+  t.test('children', (t) => {
     t.deepEqual(
       h('div', {}, []),
       {
@@ -949,7 +949,7 @@ test('hastscript', function (t) {
     )
 
     t.throws(
-      function () {
+      () => {
         // @ts-ignore runtime.
         h('foo', {}, true)
       },
@@ -960,7 +960,7 @@ test('hastscript', function (t) {
     t.end()
   })
 
-  t.test('<template>', function (t) {
+  t.test('<template>', (t) => {
     t.deepEqual(
       h('template'),
       {
@@ -1018,7 +1018,7 @@ test('hastscript', function (t) {
     t.end()
   })
 
-  t.test('svg', function (t) {
+  t.test('svg', (t) => {
     t.deepEqual(
       s(),
       {type: 'root', children: []},
@@ -1146,7 +1146,7 @@ test('hastscript', function (t) {
     t.end()
   })
 
-  t.test('tag names', function (t) {
+  t.test('tag names', (t) => {
     t.deepEqual(
       h('', [h('DIV'), h('dIv'), h('div')]),
       {

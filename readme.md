@@ -268,7 +268,7 @@ The following example shows how a script is injected that runs when loaded in a
 browser.
 
 ```js
-var tree = {type: 'root', children: []}
+const tree = {type: 'root', children: []}
 
 tree.children.push(h('script', 'alert(1)'))
 ```
@@ -283,11 +283,11 @@ The following example shows how an image is injected that fails loading and
 therefore runs code in a browser.
 
 ```js
-var tree = {type: 'root', children: []}
+const tree = {type: 'root', children: []}
 
 // Somehow someone injected these properties instead of an expected `src` and
 // `alt`:
-var otherProps = {src: 'x', onError: 'alert(2)'}
+const otherProps = {src: 'x', onError: 'alert(2)'}
 
 tree.children.push(h('img', {src: 'default.png', ...otherProps}))
 ```
@@ -302,10 +302,10 @@ The following example shows how code can run in a browser because someone stored
 an object in a database instead of the expected string.
 
 ```js
-var tree = {type: 'root', children: []}
+const tree = {type: 'root', children: []}
 
 // Somehow this isn’t the expected `'wooorm'`.
-var username = {
+const username = {
   type: 'element',
   tagName: 'script',
   children: [{type: 'text', value: 'alert(3)'}]

@@ -2,12 +2,12 @@ import test from 'tape'
 import {u} from 'unist-builder'
 import {h} from '../index.js'
 
-test('name', function (t) {
+test('name', (t) => {
   t.deepEqual(<a />, h('a'), 'should support a self-closing element')
 
   t.deepEqual(<a>b</a>, h('a', 'b'), 'should support a value as a child')
 
-  var A = 'a'
+  const A = 'a'
 
   t.deepEqual(<A />, h(A), 'should support an uppercase tag name')
 
@@ -39,7 +39,7 @@ test('name', function (t) {
     'should support a fragment with an expression'
   )
 
-  var com = {acme: {a: 'A', b: 'B'}}
+  const com = {acme: {a: 'A', b: 'B'}}
 
   t.deepEqual(
     <com.acme.a />,
@@ -67,7 +67,7 @@ test('name', function (t) {
     'should support expression value attributes'
   )
 
-  var props = {a: 1, b: 2}
+  const props = {a: 1, b: 2}
 
   t.deepEqual(
     <a {...props} />,
@@ -92,7 +92,7 @@ test('name', function (t) {
     'should support a fragment in an element (#1)'
   )
 
-  var dl = [
+  const dl = [
     ['Firefox', 'A red panda.'],
     ['Chrome', 'A chemical element.']
   ]

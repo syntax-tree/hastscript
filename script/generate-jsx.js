@@ -6,7 +6,7 @@ import acornJsx from 'acorn-jsx'
 import {generate} from 'astring'
 import {buildJsx} from 'estree-util-build-jsx'
 
-var doc = String(fs.readFileSync(path.join('test', 'jsx.jsx')))
+const doc = String(fs.readFileSync(path.join('test', 'jsx.jsx')))
 
 fs.writeFileSync(
   path.join('test', 'jsx-build-jsx-classic.js'),
