@@ -88,8 +88,8 @@
     "build": "rimraf \"{script/**,test/**,}*.d.ts\" \"lib/{core,html,index,runtime-html,runtime-svg,runtime,svg-case-sensitive-tag-names,svg}.d.ts\" && tsc && tsd && type-coverage",
     "generate": "node script/generate-jsx && node script/build",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "test-api": "node test/index.js",
-    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node test/index.js",
+    "test-api": "node --conditions development test/index.js",
+    "test-coverage": "c8 --check-coverage --100 --reporter lcov npm run test-api",
     "test": "npm run build && npm run generate && npm run format && npm run test-coverage"
   },
   "prettier": {

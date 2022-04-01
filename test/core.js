@@ -776,7 +776,7 @@ test('hastscript', (t) => {
           {type: 'text', value: 'bar'}
         ]
       },
-      'should support `Array.<string>` for a `Text`s'
+      'should support `Array<string>` for a `Text`s'
     )
 
     t.deepEqual(

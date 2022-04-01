@@ -171,14 +171,14 @@ When nullish, builds a [`Root`][root] instead.
 
 ###### `properties`
 
-Map of properties (`Object.<*>`, optional).
+Map of properties (`Record<string, any>`, optional).
 Keys should match either the HTML attribute name, or the DOM property name, but
 are case-insensitive.
 Cannot be given when building a [`Root`][root].
 
 ###### `children`
 
-(Lists of) children (`string`, `number`, `Node`, `Array.<children>`, optional).
+(Lists of) children (`string`, `number`, `Node`, `Array<children>`, optional).
 When strings or numbers are encountered, they are mapped to [`Text`][text]
 nodes.
 If [`Root`][root] nodes are given, their children are used instead.
