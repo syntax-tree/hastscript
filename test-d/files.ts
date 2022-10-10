@@ -1,5 +1,5 @@
 import {expectType} from 'tsd'
-import {Root} from 'hast'
+import type {Root} from 'hast'
 import {h as hFromRoot} from '../html.js'
 import {s as sFromRoot} from '../svg.js'
 import {h as hFromIndex, s as sFromIndex} from '../index.js'

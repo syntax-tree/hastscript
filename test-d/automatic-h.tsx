@@ -2,7 +2,7 @@
 /* @jsxImportSource .. */
 
 import {expectType, expectError} from 'tsd'
-import {Root, Element} from 'hast'
+import type {Root, Element} from 'hast'
 import {h} from '../index.js'
 import {Fragment, jsx, jsxs} from '../jsx-runtime.js'
 

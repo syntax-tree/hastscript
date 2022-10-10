@@ -1,4 +1,4 @@
-import {HProperties, HChild, HResult} from './core.js'
+import type {HProperties, HChild, HResult} from './core.js'
 
 /**
  * This unique symbol is declared to specify the key on which JSX children are passed, without conflicting
@@ -23,7 +23,7 @@ export type IntrinsicAttributes = never
  *
  * This **must** be an interface.
  */
-// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style, @typescript-eslint/consistent-type-definitions
 export interface IntrinsicElements {
   [name: string]:
     | HProperties
@@ -38,6 +38,7 @@ export interface IntrinsicElements {
 /**
  * The key of this interface defines as what prop children are passed.
  */
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface ElementChildrenAttribute {
   /**
    * Only the key matters, not the value.

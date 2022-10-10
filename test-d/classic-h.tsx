@@ -1,7 +1,7 @@
 /* @jsx h */
 /* @jsxFrag null */
 import {expectType, expectError} from 'tsd'
-import {Root, Element} from 'hast'
+import type {Root, Element} from 'hast'
 import {h} from '../index.js'
 
 type Result = Element | Root
