@@ -254,7 +254,11 @@ different files.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types `Child` and `Properties`.
+It exports the additional types:
+
+*   `Child` — valid value used as a child
+*   `Properties` — valid properties passed to an element
+*   `Result` — output of a `h` (or `s`) call
 
 ## Compatibility
 
