@@ -74,7 +74,6 @@
     "prettier": "^2.0.0",
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
-    "rimraf": "^3.0.0",
     "svg-tag-names": "^3.0.0",
     "tape": "^5.0.0",
     "tsd": "^0.25.0",
@@ -85,8 +84,8 @@
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
-    "build": "rimraf \"{script/**,test/**,}*.d.ts\" \"lib/{core,html,index,runtime-html,runtime-svg,runtime,svg-case-sensitive-tag-names,svg}.d.ts\" && tsc && tsd && type-coverage",
-    "generate": "node script/generate-jsx && node script/build",
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "generate": "node script/generate-jsx.js && node script/build.js",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node --conditions development test/index.js",
     "test-coverage": "c8 --check-coverage --100 --reporter lcov npm run test-api",
