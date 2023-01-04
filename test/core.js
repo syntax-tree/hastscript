@@ -3,6 +3,52 @@ import test from 'node:test'
 import {h, s} from '../index.js'
 import {h as hFromRoot} from '../html.js'
 import {s as sFromRoot} from '../svg.js'
+import * as coreMod from '../index.js'
+import * as htmlMod from '../html.js'
+import * as svgMod from '../svg.js'
+import * as jsxCoreMod from '../jsx-runtime.js'
+import * as jsxHtmlMod from '../html/jsx-runtime.js'
+import * as jsxSvgMod from '../svg/jsx-runtime.js'
+
+test('api', () => {
+  const core = Object.keys(coreMod)
+  assert(core.includes('h'), 'should expose `h` from `.`')
+  assert(core.includes('s'), 'should expose `s` from `.`')
+  const html = Object.keys(htmlMod)
+  assert(html.includes('h'), 'should expose `h` from `/html`')
+  const svg = Object.keys(svgMod)
+  assert(svg.includes('s'), 'should expose `s` from `/svg`')
+  const jsxCore = Object.keys(jsxCoreMod)
+  assert(
+    jsxCore.includes('Fragment'),
+    'should expose `Fragment` from `/jsx-runtime`'
+  )
+  assert(jsxCore.includes('jsx'), 'should expose `jsx` from `/jsx-runtime`')
+  assert(jsxCore.includes('jsxs'), 'should expose `jsxs` from `/jsx-runtime`')
+  const jsxHtml = Object.keys(jsxHtmlMod)
+  assert(
+    jsxHtml.includes('Fragment'),
+    'should expose `Fragment` from `/html/jsx-runtime`'
+  )
+  assert(
+    jsxHtml.includes('jsx'),
+    'should expose `jsx` from `/html/jsx-runtime`'
+  )
+  assert(
+    jsxHtml.includes('jsxs'),
+    'should expose `jsxs` from `/html/jsx-runtime`'
+  )
+  const jsxSvg = Object.keys(jsxSvgMod)
+  assert(
+    jsxSvg.includes('Fragment'),
+    'should expose `Fragment` from `/svg/jsx-runtime`'
+  )
+  assert(jsxSvg.includes('jsx'), 'should expose `jsx` from `/svg/jsx-runtime`')
+  assert(
+    jsxSvg.includes('jsxs'),
+    'should expose `jsxs` from `/svg/jsx-runtime`'
+  )
+})
 
 test('hastscript', async (t) => {
   assert.equal(h, hFromRoot, '`h` should be exposed from `/html.js`')
