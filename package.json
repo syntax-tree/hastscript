@@ -37,8 +37,11 @@
     "./html.js": "./html.js",
     "./svg.js": "./svg.js",
     "./jsx-runtime": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-runtime.js",
     "./html/jsx-runtime": "./html/jsx-runtime.js",
-    "./svg/jsx-runtime": "./svg/jsx-runtime.js"
+    "./html/jsx-dev-runtime": "./html/jsx-runtime.js",
+    "./svg/jsx-runtime": "./svg/jsx-runtime.js",
+    "./svg/jsx-dev-runtime": "./svg/jsx-runtime.js"
   },
   "files": [
     "lib/",

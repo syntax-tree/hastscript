@@ -25,6 +25,10 @@ test('api', () => {
   )
   assert(jsxCore.includes('jsx'), 'should expose `jsx` from `/jsx-runtime`')
   assert(jsxCore.includes('jsxs'), 'should expose `jsxs` from `/jsx-runtime`')
+  assert(
+    jsxCore.includes('jsxDEV'),
+    'should expose `jsxDEV` from `/jsx-runtime`'
+  )
   const jsxHtml = Object.keys(jsxHtmlMod)
   assert(
     jsxHtml.includes('Fragment'),
@@ -38,6 +42,10 @@ test('api', () => {
     jsxHtml.includes('jsxs'),
     'should expose `jsxs` from `/html/jsx-runtime`'
   )
+  assert(
+    jsxHtml.includes('jsxDEV'),
+    'should expose `jsxDEV` from `/html/jsx-runtime`'
+  )
   const jsxSvg = Object.keys(jsxSvgMod)
   assert(
     jsxSvg.includes('Fragment'),
@@ -47,6 +55,10 @@ test('api', () => {
   assert(
     jsxSvg.includes('jsxs'),
     'should expose `jsxs` from `/svg/jsx-runtime`'
+  )
+  assert(
+    jsxSvg.includes('jsxDEV'),
+    'should expose `jsxDEV` from `/svg/jsx-runtime`'
   )
 })
 
