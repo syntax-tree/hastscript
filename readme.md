@@ -150,8 +150,8 @@ This package exports the identifiers `h` and `s`.
 There is no default export.
 
 The export map supports the automatic JSX runtime.
-You can pass `hastscript/html` (or `hastscript`) or `hastscript/svg` to your
-build tool (TypeScript, Babel, SWC) as with an `importSource` option or similar.
+You can pass `hastscript` (or `hastscript/html`) or `hastscript/svg` to your
+build tool (TypeScript, Babel, SWC) with an `importSource` option or similar.
 
 ### `h(selector?[, properties][, …children])`
 
