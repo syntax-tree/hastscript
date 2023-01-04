@@ -1,5 +1,5 @@
 {
-  "include": ["**/**.js"],
+  "include": ["**/**.js", "**/**.jsx"],
   "exclude": [
     "coverage/",
     "node_modules/",
@@ -17,6 +17,7 @@
     "newLine": "lf",
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2020"
+    "target": "es2020",
+    "jsx": "preserve"
   }
 }

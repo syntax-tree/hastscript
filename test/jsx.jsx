@@ -1,31 +1,36 @@
-import test from 'tape'
+/** @jsxImportSource hastscript */
+
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {u} from 'unist-builder'
 import {h} from '../index.js'
 
-test('name', (t) => {
-  t.deepEqual(<a />, h('a'), 'should support a self-closing element')
+test('name', () => {
+  assert.deepEqual(<a />, h('a'), 'should support a self-closing element')
 
-  t.deepEqual(<a>b</a>, h('a', 'b'), 'should support a value as a child')
+  assert.deepEqual(<a>b</a>, h('a', 'b'), 'should support a value as a child')
 
   const A = 'a'
 
-  t.deepEqual(<A />, h(A), 'should support an uppercase tag name')
+  // Note: this file is a template, generated with different runtimes.
+  // @ts-ignore: TS (depending on this build) sometimes doesn’t understand.
+  assert.deepEqual(<A />, h(A), 'should support an uppercase tag name')
 
-  t.deepEqual(
+  assert.deepEqual(
     <a>{1 + 1}</a>,
     h('a', '2'),
     'should support expressions as children'
   )
 
-  t.deepEqual(<></>, u('root', []), 'should support a fragment')
+  assert.deepEqual(<></>, u('root', []), 'should support a fragment')
 
-  t.deepEqual(
+  assert.deepEqual(
     <>a</>,
     u('root', [u('text', 'a')]),
     'should support a fragment with text'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <>
       <a />
     </>,
@@ -33,7 +38,7 @@ test('name', (t) => {
     'should support a fragment with an element'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <>{-1}</>,
     u('root', [u('text', '-1')]),
     'should support a fragment with an expression'
@@ -41,27 +46,33 @@ test('name', (t) => {
 
   const com = {acme: {a: 'A', b: 'B'}}
 
-  t.deepEqual(
+  assert.deepEqual(
+    // Note: this file is a template, generated with different runtimes.
+    // @ts-ignore: TS (depending on this build) sometimes doesn’t understand.
     <com.acme.a />,
     h(com.acme.a),
     'should support members as names (`a.b`)'
   )
 
-  t.deepEqual(<a b />, h('a', {b: true}), 'should support a boolean attribute')
+  assert.deepEqual(
+    <a b />,
+    h('a', {b: true}),
+    'should support a boolean attribute'
+  )
 
-  t.deepEqual(
+  assert.deepEqual(
     <a b="" />,
     h('a', {b: ''}),
     'should support a double quoted attribute'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <a b='"' />,
     h('a', {b: '"'}),
     'should support a single quoted attribute'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <a b={1 + 1} />,
     h('a', {b: 2}),
     'should support expression value attributes'
@@ -69,13 +80,13 @@ test('name', (t) => {
 
   const props = {a: 1, b: 2}
 
-  t.deepEqual(
+  assert.deepEqual(
     <a {...props} />,
     h('a', props),
     'should support expression spread attributes'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <a>
       <b />c<d>e</d>
       {1 + 1}
@@ -84,7 +95,7 @@ test('name', (t) => {
     'should support text, elements, and expressions in jsx'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     <a>
       <>{1}</>
     </a>,
@@ -97,7 +108,7 @@ test('name', (t) => {
     ['Chrome', 'A chemical element.']
   ]
 
-  t.deepEqual(
+  assert.deepEqual(
     <dl>
       {dl.map(([title, definition]) => (
         <>
@@ -114,6 +125,4 @@ test('name', (t) => {
     ]),
     'should support a fragment in an element (#2)'
   )
-
-  t.end()
 })

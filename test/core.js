@@ -1,22 +1,23 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h, s} from '../index.js'
 import {h as hFromRoot} from '../html.js'
 import {s as sFromRoot} from '../svg.js'
 
-test('hastscript', (t) => {
-  t.equal(h, hFromRoot, '`h` should be exposed from `/html.js`')
-  t.equal(s, sFromRoot, '`s` should be exposed from `/svg.js`')
+test('hastscript', async (t) => {
+  assert.equal(h, hFromRoot, '`h` should be exposed from `/html.js`')
+  assert.equal(s, sFromRoot, '`s` should be exposed from `/svg.js`')
 
-  t.equal(typeof h, 'function', 'should expose a function')
+  assert.equal(typeof h, 'function', 'should expose a function')
 
-  t.test('selector', (t) => {
-    t.deepEqual(
+  await t.test('selector', () => {
+    assert.deepEqual(
       h(),
       {type: 'root', children: []},
       'should create a `root` node without arguments'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h(''),
       {
         type: 'element',
@@ -27,7 +28,7 @@ test('hastscript', (t) => {
       'should create a `div` element w/ an empty string name'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('.bar', {class: 'baz'}),
       {
         type: 'element',
@@ -38,7 +39,7 @@ test('hastscript', (t) => {
       'should append to the selector’s classes'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('#id'),
       {
         type: 'element',
@@ -49,7 +50,7 @@ test('hastscript', (t) => {
       'should create a `div` element when given an id selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('#a#b'),
       {
         type: 'element',
@@ -60,7 +61,7 @@ test('hastscript', (t) => {
       'should create an element with the last ID when given multiple in a selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('.foo'),
       {
         type: 'element',
@@ -71,7 +72,7 @@ test('hastscript', (t) => {
       'should create a `div` element when given a class selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('foo'),
       {
         type: 'element',
@@ -82,7 +83,7 @@ test('hastscript', (t) => {
       'should create a `foo` element when given a tag selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('foo#bar'),
       {
         type: 'element',
@@ -93,7 +94,7 @@ test('hastscript', (t) => {
       'should create a `foo` element with an ID when given a both as a selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('foo.bar'),
       {
         type: 'element',
@@ -104,7 +105,7 @@ test('hastscript', (t) => {
       'should create a `foo` element with a class when given a both as a selector'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('.foo.bar'),
       {
         type: 'element',
@@ -114,13 +115,11 @@ test('hastscript', (t) => {
       },
       'should support multiple classes'
     )
-
-    t.end()
   })
 
-  t.test('properties', (t) => {
-    t.test('known property names', (t) => {
-      t.deepEqual(
+  await t.test('properties', async (t) => {
+    await t.test('known property names', () => {
+      assert.deepEqual(
         h('', {className: 'foo'}),
         {
           type: 'element',
@@ -131,7 +130,7 @@ test('hastscript', (t) => {
         'should support correctly cased property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {class: 'foo'}),
         {
           type: 'element',
@@ -142,7 +141,7 @@ test('hastscript', (t) => {
         'should map attributes to property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {CLASS: 'foo'}),
         {
           type: 'element',
@@ -153,7 +152,7 @@ test('hastscript', (t) => {
         'should map attribute-like values to property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'class-name': 'foo'}),
         {
           type: 'element',
@@ -163,12 +162,10 @@ test('hastscript', (t) => {
         },
         'should *not* map property-like values to property names'
       )
-
-      t.end()
     })
 
-    t.test('unknown property names', (t) => {
-      t.deepEqual(
+    await t.test('unknown property names', () => {
+      assert.deepEqual(
         h('', {allowbigscreen: true}),
         {
           type: 'element',
@@ -179,7 +176,7 @@ test('hastscript', (t) => {
         'should keep lower-cased unknown names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {allowBigScreen: true}),
         {
           type: 'element',
@@ -190,7 +187,7 @@ test('hastscript', (t) => {
         'should keep camel-cased unknown names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'allow_big-screen': true}),
         {
           type: 'element',
@@ -200,12 +197,10 @@ test('hastscript', (t) => {
         },
         'should keep weirdly cased unknown names'
       )
-
-      t.end()
     })
 
-    t.test('other namespaces', (t) => {
-      t.deepEqual(
+    await t.test('other namespaces', () => {
+      assert.deepEqual(
         h('', {'aria-valuenow': 1}),
         {
           type: 'element',
@@ -216,7 +211,7 @@ test('hastscript', (t) => {
         'should support aria attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {ariaValueNow: 1}),
         {
           type: 'element',
@@ -227,7 +222,7 @@ test('hastscript', (t) => {
         'should support aria property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {'color-interpolation-filters': 'sRGB'}),
         {
           type: 'element',
@@ -238,7 +233,7 @@ test('hastscript', (t) => {
         'should support svg attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {colorInterpolationFilters: 'sRGB'}),
         {
           type: 'element',
@@ -249,7 +244,7 @@ test('hastscript', (t) => {
         'should support svg property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {'xml:space': 'preserve'}),
         {
           type: 'element',
@@ -260,7 +255,7 @@ test('hastscript', (t) => {
         'should support xml attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {xmlSpace: 'preserve'}),
         {
           type: 'element',
@@ -271,7 +266,7 @@ test('hastscript', (t) => {
         'should support xml property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {'xmlns:xlink': 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
@@ -282,7 +277,7 @@ test('hastscript', (t) => {
         'should support xmlns attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {xmlnsXLink: 'http://www.w3.org/1999/xlink'}),
         {
           type: 'element',
@@ -293,7 +288,7 @@ test('hastscript', (t) => {
         'should support xmlns property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {'xlink:arcrole': 'http://www.example.com'}),
         {
           type: 'element',
@@ -304,7 +299,7 @@ test('hastscript', (t) => {
         'should support xlink attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         s('', {xLinkArcRole: 'http://www.example.com'}),
         {
           type: 'element',
@@ -314,12 +309,10 @@ test('hastscript', (t) => {
         },
         'should support xlink property names'
       )
-
-      t.end()
     })
 
-    t.test('data property names', (t) => {
-      t.deepEqual(
+    await t.test('data property names', () => {
+      assert.deepEqual(
         h('', {'data-foo': true}),
         {
           type: 'element',
@@ -330,7 +323,7 @@ test('hastscript', (t) => {
         'should support data attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'data-123': true}),
         {
           type: 'element',
@@ -341,7 +334,7 @@ test('hastscript', (t) => {
         'should support numeric-first data attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {dataFooBar: true}),
         {
           type: 'element',
@@ -352,7 +345,7 @@ test('hastscript', (t) => {
         'should support data property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {data123: true}),
         {
           type: 'element',
@@ -363,7 +356,7 @@ test('hastscript', (t) => {
         'should support numeric-first data property names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'data-foo.bar': true}),
         {
           type: 'element',
@@ -374,7 +367,7 @@ test('hastscript', (t) => {
         'should support data attribute names with uncommon characters'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'dataFoo.bar': true}),
         {
           type: 'element',
@@ -385,7 +378,7 @@ test('hastscript', (t) => {
         'should support data property names with uncommon characters'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'data-foo!bar': true}),
         {
           type: 'element',
@@ -396,7 +389,7 @@ test('hastscript', (t) => {
         'should keep invalid data attribute names'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {'dataFoo!bar': true}),
         {
           type: 'element',
@@ -406,12 +399,10 @@ test('hastscript', (t) => {
         },
         'should keep invalid data property names'
       )
-
-      t.end()
     })
 
-    t.test('unknown property values', (t) => {
-      t.deepEqual(
+    await t.test('unknown property values', () => {
+      assert.deepEqual(
         h('', {foo: 'bar'}),
         {
           type: 'element',
@@ -422,7 +413,7 @@ test('hastscript', (t) => {
         'should support unknown `string` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {foo: 3}),
         {
           type: 'element',
@@ -433,7 +424,7 @@ test('hastscript', (t) => {
         'should support unknown `number` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {foo: true}),
         {
           type: 'element',
@@ -444,7 +435,7 @@ test('hastscript', (t) => {
         'should support unknown `boolean` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {list: ['bar', 'baz']}),
         {
           type: 'element',
@@ -455,7 +446,7 @@ test('hastscript', (t) => {
         'should support unknown `Array` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {foo: null}),
         {
           type: 'element',
@@ -466,7 +457,7 @@ test('hastscript', (t) => {
         'should ignore properties with a value of `null`'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {foo: undefined}),
         {
           type: 'element',
@@ -477,7 +468,7 @@ test('hastscript', (t) => {
         'should ignore properties with a value of `undefined`'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {foo: Number.NaN}),
         {
           type: 'element',
@@ -487,12 +478,10 @@ test('hastscript', (t) => {
         },
         'should ignore properties with a value of `NaN`'
       )
-
-      t.end()
     })
 
-    t.test('known booleans', (t) => {
-      t.deepEqual(
+    await t.test('known booleans', () => {
+      assert.deepEqual(
         h('', {allowFullScreen: ''}),
         {
           type: 'element',
@@ -503,7 +492,7 @@ test('hastscript', (t) => {
         'should cast valid known `boolean` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {allowFullScreen: 'yup'}),
         {
           type: 'element',
@@ -514,7 +503,7 @@ test('hastscript', (t) => {
         'should not cast invalid known `boolean` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('img', {title: 'title'}),
         {
           type: 'element',
@@ -524,12 +513,10 @@ test('hastscript', (t) => {
         },
         'should not cast unknown boolean-like values'
       )
-
-      t.end()
     })
 
-    t.test('known overloaded booleans', (t) => {
-      t.deepEqual(
+    await t.test('known overloaded booleans', () => {
+      assert.deepEqual(
         h('', {download: ''}),
         {
           type: 'element',
@@ -540,7 +527,7 @@ test('hastscript', (t) => {
         'should cast known empty overloaded `boolean` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {download: 'downLOAD'}),
         {
           type: 'element',
@@ -551,7 +538,7 @@ test('hastscript', (t) => {
         'should cast known named overloaded `boolean` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {download: 'example.ogg'}),
         {
           type: 'element',
@@ -561,12 +548,10 @@ test('hastscript', (t) => {
         },
         'should not cast overloaded `boolean` values for different values'
       )
-
-      t.end()
     })
 
-    t.test('known numbers', (t) => {
-      t.deepEqual(
+    await t.test('known numbers', () => {
+      assert.deepEqual(
         h('textarea', {cols: '3'}),
         {
           type: 'element',
@@ -577,7 +562,7 @@ test('hastscript', (t) => {
         'should cast valid known `numeric` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('textarea', {cols: 'one'}),
         {
           type: 'element',
@@ -588,7 +573,7 @@ test('hastscript', (t) => {
         'should not cast invalid known `numeric` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('meter', {low: '40', high: '90'}),
         {
           type: 'element',
@@ -598,12 +583,10 @@ test('hastscript', (t) => {
         },
         'should cast known `numeric` values'
       )
-
-      t.end()
     })
 
-    t.test('known lists', (t) => {
-      t.deepEqual(
+    await t.test('known lists', () => {
+      assert.deepEqual(
         h('', {class: 'foo bar baz'}),
         {
           type: 'element',
@@ -614,7 +597,7 @@ test('hastscript', (t) => {
         'should cast know space-separated `array` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('input', {type: 'file', accept: 'video/*, image/*'}),
         {
           type: 'element',
@@ -625,7 +608,7 @@ test('hastscript', (t) => {
         'should cast know comma-separated `array` values'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('a', {coords: ['0', '0', '82', '126']}),
         {
           type: 'element',
@@ -635,12 +618,10 @@ test('hastscript', (t) => {
         },
         'should cast a list of known `numeric` values'
       )
-
-      t.end()
     })
 
-    t.test('style', (t) => {
-      t.deepEqual(
+    await t.test('style', () => {
+      assert.deepEqual(
         h('', {style: {color: 'red', '-webkit-border-radius': '3px'}}),
         {
           type: 'element',
@@ -653,7 +634,7 @@ test('hastscript', (t) => {
         'should support `style` as an object'
       )
 
-      t.deepEqual(
+      assert.deepEqual(
         h('', {style: 'color:/*red*/purple; -webkit-border-radius: 3px'}),
         {
           type: 'element',
@@ -665,15 +646,11 @@ test('hastscript', (t) => {
         },
         'should support `style` as a string'
       )
-
-      t.end()
     })
-
-    t.end()
   })
 
-  t.test('children', (t) => {
-    t.deepEqual(
+  await t.test('children', () => {
+    assert.deepEqual(
       h('div', {}, []),
       {
         type: 'element',
@@ -684,7 +661,7 @@ test('hastscript', (t) => {
       'should ignore no children'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, 'foo'),
       {
         type: 'element',
@@ -695,7 +672,7 @@ test('hastscript', (t) => {
       'should support `string` for a `Text`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, {type: 'text', value: 'foo'}),
       {
         type: 'element',
@@ -706,7 +683,7 @@ test('hastscript', (t) => {
       'should support a node'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, h('span', {}, 'foo')),
       {
         type: 'element',
@@ -724,7 +701,7 @@ test('hastscript', (t) => {
       'should support a node created by `h`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, [
         {type: 'text', value: 'foo'},
         {type: 'text', value: 'bar'}
@@ -741,7 +718,7 @@ test('hastscript', (t) => {
       'should support nodes'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, [h('span', {}, 'foo'), h('strong', {}, 'bar')]),
       {
         type: 'element',
@@ -765,7 +742,7 @@ test('hastscript', (t) => {
       'should support nodes created by `h`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('div', {}, ['foo', 'bar']),
       {
         type: 'element',
@@ -779,7 +756,7 @@ test('hastscript', (t) => {
       'should support `Array<string>` for a `Text`s'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('strong', 'foo'),
       {
         type: 'element',
@@ -790,7 +767,7 @@ test('hastscript', (t) => {
       'should allow omitting `properties` for a `string`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('strong', h('span', 'foo')),
       {
         type: 'element',
@@ -808,7 +785,7 @@ test('hastscript', (t) => {
       'should allow omitting `properties` for a node'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('strong', ['foo', 'bar']),
       {
         type: 'element',
@@ -822,7 +799,7 @@ test('hastscript', (t) => {
       'should allow omitting `properties` for an array'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('input', {type: 'text', value: 'foo'}),
       {
         type: 'element',
@@ -833,7 +810,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` for an `input[type=text][value]`, as those are void and clash'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('a', {type: 'text/html'}),
       {
         type: 'element',
@@ -844,7 +821,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` for a `[type]`, without `value` or `children`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('foo', {type: 'text/html', children: {bar: 'baz'}}),
       {
         type: 'element',
@@ -855,7 +832,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` when `children` is not set to an array'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('button', {type: 'submit', value: 'Send'}),
       {
         type: 'element',
@@ -866,7 +843,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` when a button has a valid type'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('button', {type: 'BUTTON', value: 'Send'}),
       {
         type: 'element',
@@ -877,7 +854,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` when a button has a valid non-lowercase type'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('button', {type: 'menu', value: 'Send'}),
       {
         type: 'element',
@@ -888,7 +865,7 @@ test('hastscript', (t) => {
       'should *not* allow omitting `properties` when a button has a valid type'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('button', {type: 'text', value: 'Send'}),
       {
         type: 'element',
@@ -899,7 +876,7 @@ test('hastscript', (t) => {
       'should allow omitting `properties` when a button has an invalid type'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('section', {id: 'test'}, h('p', 'first'), h('p', 'second')),
       {
         type: 'element',
@@ -923,7 +900,7 @@ test('hastscript', (t) => {
       'should allow passing multiple child nodes as arguments'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('section', h('p', 'first'), h('p', 'second')),
       {
         type: 'element',
@@ -947,7 +924,7 @@ test('hastscript', (t) => {
       'should allow passing multiple child nodes as arguments when there is no properties argument present'
     )
 
-    t.throws(
+    assert.throws(
       () => {
         // @ts-expect-error runtime.
         h('foo', {}, true)
@@ -955,12 +932,10 @@ test('hastscript', (t) => {
       /Expected node, nodes, or string, got `true`/,
       'should throw when given an invalid value'
     )
-
-    t.end()
   })
 
-  t.test('<template>', (t) => {
-    t.deepEqual(
+  await t.test('<template>', () => {
+    assert.deepEqual(
       h('template'),
       {
         type: 'element',
@@ -972,7 +947,7 @@ test('hastscript', (t) => {
       'empty template'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('template', 'Alpha'),
       {
         type: 'element',
@@ -984,7 +959,7 @@ test('hastscript', (t) => {
       'template with text'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       h('template', [h('b', 'Bold'), ' and ', h('i', 'italic'), '.']),
       {
         type: 'element',
@@ -1013,18 +988,16 @@ test('hastscript', (t) => {
       },
       'template with elements'
     )
-
-    t.end()
   })
 
-  t.test('svg', (t) => {
-    t.deepEqual(
+  await t.test('svg', () => {
+    assert.deepEqual(
       s(),
       {type: 'root', children: []},
       'should create a `root` node without arguments'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s(''),
       {
         type: 'element',
@@ -1035,7 +1008,7 @@ test('hastscript', (t) => {
       'should create a `g` element w/ an empty string name'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s(
         'svg',
         {
@@ -1078,7 +1051,7 @@ test('hastscript', (t) => {
       'should support trees'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('circle', {class: 'foo bar'}),
       {
         type: 'element',
@@ -1089,7 +1062,7 @@ test('hastscript', (t) => {
       'should cast valid known space-separated values'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('glyph', {'glyph-name': 'foo, bar'}),
       {
         type: 'element',
@@ -1100,7 +1073,7 @@ test('hastscript', (t) => {
       'should cast valid known comma-separated values'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('rect', {
         requiredFeatures:
           'http://www.w3.org/TR/SVG11/feature#SVG, http://www.w3.org/TR/SVG11/feature#SVGDOM http://www.w3.org/TR/SVG11/feature#SVG-static'
@@ -1120,7 +1093,7 @@ test('hastscript', (t) => {
       'should cast valid known comma- or space-separated values'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('path', {'stroke-opacity': '0.7'}),
       {
         type: 'element',
@@ -1131,7 +1104,7 @@ test('hastscript', (t) => {
       'should cast valid known numeric values'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('path', {'stroke-miterlimit': '1'}),
       {
         type: 'element',
@@ -1141,12 +1114,10 @@ test('hastscript', (t) => {
       },
       'should cast valid known positive numeric values'
     )
-
-    t.end()
   })
 
-  t.test('tag names', (t) => {
-    t.deepEqual(
+  await t.test('tag names', () => {
+    assert.deepEqual(
       h('', [h('DIV'), h('dIv'), h('div')]),
       {
         type: 'element',
@@ -1161,7 +1132,7 @@ test('hastscript', (t) => {
       'should create lowercase tag names'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       s('', [
         s('RECT'),
         s('rEcT'),
@@ -1185,9 +1156,5 @@ test('hastscript', (t) => {
       },
       'should create lowercase SVG tag names, and fix certain cases'
     )
-
-    t.end()
   })
-
-  t.end()
 })
