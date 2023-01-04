@@ -1,5 +1,5 @@
 /* @jsxRuntime automatic */
-/* @jsxImportSource ../svg */
+/* @jsxImportSource hastscript/svg */
 
 import {expectType, expectError} from 'tsd'
 import type {Root, Element} from 'hast'
@@ -39,7 +39,7 @@ expectError(<a invalid={[true]} />)
 
 // This is where the automatic runtime differs from the classic runtime.
 // The automatic runtime the children prop to define JSX children, whereas it’s used as an attribute in the classic runtime.
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
 expectType<Result>(<a children={<b />} />)
 
 declare function Bar(props?: Record<string, unknown>): Element
