@@ -1,52 +1,34 @@
-import fs from 'node:fs'
+import fs from 'node:fs/promises'
 import path from 'node:path'
-import babel from '@babel/core'
-import {Parser} from 'acorn'
 import acornJsx from 'acorn-jsx'
-import {generate} from 'astring'
+import {fromJs} from 'esast-util-from-js'
+import {toJs} from 'estree-util-to-js'
 import {buildJsx} from 'estree-util-build-jsx'
 
-const doc = String(fs.readFileSync(path.join('test', 'jsx.jsx')))
+const doc = String(await fs.readFile(path.join('test', 'jsx.jsx')))
 
-fs.writeFileSync(
+await fs.writeFile(
   path.join('test', 'jsx-build-jsx-classic.js'),
-  generate(
+  toJs(
     buildJsx(
-      // @ts-expect-error Acorn nodes are assignable to ESTree nodes.
-      Parser.extend(acornJsx()).parse(
-        doc.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"),
-        {sourceType: 'module', ecmaVersion: 2021}
-      ),
+      fromJs(doc.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"), {
+        plugins: [acornJsx()],
+        module: true
+      }),
       {pragma: 'h', pragmaFrag: 'null'}
     )
-  )
+  ).value
 )
 
-fs.writeFileSync(
+await fs.writeFile(
   path.join('test', 'jsx-build-jsx-automatic.js'),
-  generate(
+  toJs(
     buildJsx(
-      // @ts-expect-error Acorn nodes are assignable to ESTree nodes.
-      Parser.extend(acornJsx()).parse(
+      fromJs(
         doc.replace(/'name'/, "'jsx (estree-util-build-jsx, automatic)'"),
-        {sourceType: 'module', ecmaVersion: 2021}
+        {plugins: [acornJsx()], module: true}
       ),
-      {runtime: 'automatic', importSource: '.'}
+      {runtime: 'automatic', importSource: 'hastscript'}
     )
-  ).replace(/\/jsx-runtime(?=["'])/g, './lib/runtime-html.js')
-)
-
-fs.writeFileSync(
-  path.join('test', 'jsx-babel-automatic.js'),
-  // @ts-expect-error Result always given.
-  babel
-    .transformSync(doc.replace(/'name'/, "'jsx (babel, automatic)'"), {
-      plugins: [
-        [
-          '@babel/plugin-transform-react-jsx',
-          {runtime: 'automatic', importSource: '.'}
-        ]
-      ]
-    })
-    .code.replace(/\/jsx-runtime(?=["'])/g, './lib/runtime-html.js')
+  ).value
 )

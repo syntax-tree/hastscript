@@ -61,16 +61,12 @@
     "space-separated-tokens": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-syntax-jsx": "^7.0.0",
-    "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "@types/babel__core": "^7.0.0",
     "@types/tape": "^4.0.0",
-    "acorn": "^8.0.0",
     "acorn-jsx": "^5.0.0",
-    "astring": "^1.0.0",
     "c8": "^7.0.0",
+    "esast-util-from-js": "^1.0.0",
     "estree-util-build-jsx": "^2.0.0",
+    "estree-util-to-js": "^1.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
