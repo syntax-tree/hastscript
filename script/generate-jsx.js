@@ -1,14 +1,15 @@
 import fs from 'node:fs/promises'
-import path from 'node:path'
 import acornJsx from 'acorn-jsx'
 import {fromJs} from 'esast-util-from-js'
 import {toJs} from 'estree-util-to-js'
 import {buildJsx} from 'estree-util-build-jsx'
 
-const doc = String(await fs.readFile(path.join('test', 'jsx.jsx')))
+const doc = String(
+  await fs.readFile(new URL('../test/jsx.jsx', import.meta.url))
+)
 
 await fs.writeFile(
-  path.join('test', 'jsx-build-jsx-classic.js'),
+  new URL('../test/jsx-build-jsx-classic.js', import.meta.url),
   toJs(
     buildJsx(
       fromJs(doc.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"), {
@@ -21,7 +22,8 @@ await fs.writeFile(
 )
 
 await fs.writeFile(
-  path.join('test', 'jsx-build-jsx-automatic.js'),
+  new URL('../test/jsx-build-jsx-automatic.js', import.meta.url),
+
   toJs(
     buildJsx(
       fromJs(
