@@ -19,6 +19,10 @@
 *   [API](#api)
     *   [`h(selector?[, properties][, …children])`](#hselector-properties-children)
     *   [`s(selector?[, properties][, …children])`](#sselector-properties-children)
+    *   [`Child`](#child)
+    *   [`Properties`](#properties-1)
+    *   [`Result`](#result)
+*   [Syntax tree](#syntax-tree)
 *   [JSX](#jsx)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -47,7 +51,7 @@ You can instead use [`unist-builder`][u] when creating any unist nodes and
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+In Node.js (version 14.14+ or 16.0+), install with [npm][]:
 
 ```sh
 npm install hastscript
@@ -151,17 +155,13 @@ build tool (TypeScript, Babel, SWC) as with an `importSource` option or similar.
 
 ### `h(selector?[, properties][, …children])`
 
-### `s(selector?[, properties][, …children])`
-
-Create virtual [**hast**][hast] [*trees*][tree] for HTML or SVG.
+Create virtual **[hast][]** trees for HTML.
 
 ##### Signatures
 
 *   `h(): root`
 *   `h(null[, …children]): root`
 *   `h(selector[, properties][, …children]): element`
-
-(and the same for `s`).
 
 ##### Parameters
 
@@ -177,30 +177,97 @@ When nullish, builds a [`Root`][root] instead.
 
 ###### `properties`
 
-Map of properties (`Record<string, any>`, optional).
-Keys should match either the HTML attribute name, or the DOM property name, but
-are case-insensitive.
-Cannot be given when building a [`Root`][root].
+Properties of the element ([`Properties`][properties], optional).
 
 ###### `children`
 
-(Lists of) children (`string`, `number`, `Node`, `Array<children>`, optional).
-When strings or numbers are encountered, they are mapped to [`Text`][text]
-nodes.
-If [`Root`][root] nodes are given, their children are used instead.
+Children of the element ([`Child`][child] or `Array<Child>`, optional).
 
 ##### Returns
 
-[`Element`][element] or [`Root`][root].
+Created tree ([`Result`][result]).
+[`Element`][element] when a `selector` is passed, otherwise [`Root`][root].
+
+### `s(selector?[, properties][, …children])`
+
+Create virtual **[hast][]** trees for SVG.
+
+Signatures, parameters, and return value are the same as `h` above.
+Importantly, the `selector` and `properties` parameters are interpreted as
+SVG.
+
+### `Child`
+
+(Lists of) children (TypeScript type).
+When strings or numbers are encountered, they are turned into [`Text`][text]
+nodes.
+[`Root`][root] nodes are treated as “fragments”, meaning that their children
+are used instead.
+
+###### Type
+
+```ts
+type Child =
+  | string
+  | number
+  | null
+  | undefined
+  | Node
+  | Array<string | number | null | undefined | Node>
+```
+
+### `Properties`
+
+Map of properties (TypeScript type).
+Keys should match either the HTML attribute name, or the DOM property name, but
+are case-insensitive.
+
+###### Type
+
+```ts
+type Properties = Record<
+  string,
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  // For comma- and space-separated values such as `className`:
+  | Array<string | number>
+  // Accepts value for `style` prop as object.
+  | Record<string, string | number>
+>
+```
+
+### `Result`
+
+Result from a `h` (or `s`) call (TypeScript type).
+
+###### Type
+
+```ts
+type Result = Root | Element
+```
+
+## Syntax tree
+
+The syntax tree is [hast][].
 
 ## JSX
 
-`hastscript` can be used with JSX.
-Either use the automatic runtime set to `hastscript/html` (or `hastscript`) or
-`hastscript/svg` or import `h` or `s` yourself and define it as the pragma (plus
-set the fragment to `null`).
+This package can be used with JSX.
+You should use the automatic JSX runtime set to `hastscript` (also available as
+the more explicit name `hastscript/html`) or `hastscript/svg`.
 
-The example above can then be written like so, using inline pragmas, so
+> 👉 **Note**: while `h` supports dots (`.`) for classes or number signs (`#`)
+> for IDs in `selector`, those are not supported in JSX.
+
+> 🪦 **Legacy**: you can also use the classic JSX runtime, but this is not
+> recommended.
+> To do so, import `h` (or `s`) yourself and define it as the pragma (plus
+> set the fragment to `null`).
+
+The Use example above can then be written like so, using inline pragmas, so
 that SVG can be used too:
 
 `example-html.jsx`:
@@ -230,61 +297,23 @@ console.log(
 )
 ```
 
-> 👉 **Note**: while `h` supports dots (`.`) for classes or number signs (`#`)
-> for IDs in `selector`, those are not supported in JSX.
-
-You can use [`estree-util-build-jsx`][build-jsx] to compile JSX away.
-
-For [Babel][], use [`@babel/plugin-transform-react-jsx`][babel-jsx] and either
-pass `pragma: 'h'` and `pragmaFrag: 'null'`, or pass `importSource:
-'hastscript'`.
-This is not perfect as it allows only a single pragma.
-Alternatively, Babel also lets you configure this with a comment:
-
-```jsx
-/** @jsx s @jsxFrag null */
-import {s} from 'hastscript'
-
-console.log(<rect />)
-```
-
-This is useful because it allows using *both* `html` and `svg` when used in
-different files.
-
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types:
-
-*   `Child` — valid value used as a child
-*   `Properties` — valid properties passed to an element
-*   `Result` — output of a `h` (or `s`) call
+It exports the additional types `Child`, `Properties`, and `Result`.
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
 
 Use of `hastscript` can open you up to a [cross-site scripting (XSS)][xss]
-attack as values are injected into the syntax tree.
-The following example shows how a script is injected that runs when loaded in a
-browser.
-
-```js
-const tree = h()
-
-tree.children.push(h('script', 'alert(1)'))
-```
-
-Yields:
-
-```html
-<script>alert(1)</script>
-```
+when you pass user-provided input to it because values are injected into the
+syntax tree.
 
 The following example shows how an image is injected that fails loading and
 therefore runs code in a browser.
@@ -327,7 +356,7 @@ Yields:
 <span class="handle"><script>alert(3)</script></span>
 ```
 
-Either do not use user input in `hastscript` or use
+Either do not use user-provided input in `hastscript` or use
 [`hast-util-santize`][hast-util-sanitize].
 
 ## Related
@@ -338,14 +367,12 @@ Either do not use user input in `hastscript` or use
     — create xast trees
 *   [`hast-to-hyperscript`](https://github.com/syntax-tree/hast-to-hyperscript)
     — turn hast into React, Preact, Vue, etc
-*   [`hast-util-from-dom`](https://github.com/syntax-tree/hast-util-from-dom)
-    — turn DOM trees into hast
-*   [`hast-util-select`](https://github.com/syntax-tree/hast-util-select)
-    — `querySelector`, `querySelectorAll`, and `matches`
 *   [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
     — turn hast into HTML
 *   [`hast-util-to-dom`](https://github.com/syntax-tree/hast-util-to-dom)
     — turn hast into DOM trees
+*   [`estree-util-build-jsx`](https://github.com/syntax-tree/estree-util-build-jsx)
+    — compile JSX away
 
 ## Contribute
 
@@ -409,8 +436,6 @@ abide by its terms.
 
 [coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
 
-[tree]: https://github.com/syntax-tree/unist#tree
-
 [hast]: https://github.com/syntax-tree/hast
 
 [element]: https://github.com/syntax-tree/hast#element
@@ -423,14 +448,14 @@ abide by its terms.
 
 [x]: https://github.com/syntax-tree/xastscript
 
-[build-jsx]: https://github.com/wooorm/estree-util-build-jsx
-
-[babel]: https://github.com/babel/babel
-
-[babel-jsx]: https://github.com/babel/babel/tree/main/packages/babel-plugin-transform-react-jsx
-
 [parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
 
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[child]: #child
+
+[properties]: #properties-1
+
+[result]: #result
