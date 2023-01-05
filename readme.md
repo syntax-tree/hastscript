@@ -377,7 +377,7 @@ Either do not use user-provided input in `hastscript` or use
 ## Contribute
 
 See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
-started.
+ways to get started.
 See [`support.md`][support] for ways to get help.
 
 This project has a [code of conduct][coc].
