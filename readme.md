@@ -51,7 +51,7 @@ You can instead use [`unist-builder`][u] when creating any unist nodes and
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ or 16.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install hastscript
@@ -146,7 +146,7 @@ Yields:
 
 ## API
 
-This package exports the identifiers `h` and `s`.
+This package exports the identifiers [`h`][h] and [`s`][s].
 There is no default export.
 
 The export map supports the automatic JSX runtime.
@@ -199,6 +199,7 @@ SVG.
 ### `Child`
 
 (Lists of) children (TypeScript type).
+
 When strings or numbers are encountered, they are turned into [`Text`][text]
 nodes.
 [`Root`][root] nodes are treated as “fragments”, meaning that their children
@@ -300,7 +301,8 @@ console.log(
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types `Child`, `Properties`, and `Result`.
+It exports the additional types [`Child`][child], [`Properties`][properties],
+and [`Result`][result].
 
 ## Compatibility
 
@@ -323,7 +325,7 @@ const tree = h()
 
 // Somehow someone injected these properties instead of an expected `src` and
 // `alt`:
-const otherProps = {src: 'x', onError: 'alert(2)'}
+const otherProps = {src: 'x', onError: 'alert(1)'}
 
 tree.children.push(h('img', {src: 'default.png', ...otherProps}))
 ```
@@ -331,7 +333,7 @@ tree.children.push(h('img', {src: 'default.png', ...otherProps}))
 Yields:
 
 ```html
-<img src="x" onerror="alert(2)">
+<img src="x" onerror="alert(1)">
 ```
 
 The following example shows how code can run in a browser because someone stored
@@ -344,7 +346,7 @@ const tree = h()
 const username = {
   type: 'element',
   tagName: 'script',
-  children: [{type: 'text', value: 'alert(3)'}]
+  children: [{type: 'text', value: 'alert(2)'}]
 }
 
 tree.children.push(h('span.handle', username))
@@ -353,7 +355,7 @@ tree.children.push(h('span.handle', username))
 Yields:
 
 ```html
-<span class="handle"><script>alert(3)</script></span>
+<span class="handle"><script>alert(2)</script></span>
 ```
 
 Either do not use user-provided input in `hastscript` or use
@@ -453,6 +455,10 @@ abide by its terms.
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[h]: #hselector-properties-children
+
+[s]: #sselector-properties-children
 
 [child]: #child
 
