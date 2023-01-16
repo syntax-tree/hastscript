@@ -11,54 +11,35 @@ import * as jsxHtmlMod from '../html/jsx-runtime.js'
 import * as jsxSvgMod from '../svg/jsx-runtime.js'
 
 test('api', () => {
-  const core = Object.keys(coreMod)
-  assert(core.includes('h'), 'should expose `h` from `.`')
-  assert(core.includes('s'), 'should expose `s` from `.`')
-  const html = Object.keys(htmlMod)
-  assert(html.includes('h'), 'should expose `h` from `/html`')
-  const svg = Object.keys(svgMod)
-  assert(svg.includes('s'), 'should expose `s` from `/svg`')
-  const jsxCore = Object.keys(jsxCoreMod)
-  assert(
-    jsxCore.includes('Fragment'),
-    'should expose `Fragment` from `/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(coreMod).sort(),
+    ['h', 's'],
+    'should expose the public api (`/`)'
   )
-  assert(jsxCore.includes('jsx'), 'should expose `jsx` from `/jsx-runtime`')
-  assert(jsxCore.includes('jsxs'), 'should expose `jsxs` from `/jsx-runtime`')
-  assert(
-    jsxCore.includes('jsxDEV'),
-    'should expose `jsxDEV` from `/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(htmlMod).sort(),
+    ['h'],
+    'should expose the public api (`/html`)'
   )
-  const jsxHtml = Object.keys(jsxHtmlMod)
-  assert(
-    jsxHtml.includes('Fragment'),
-    'should expose `Fragment` from `/html/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(svgMod).sort(),
+    ['s'],
+    'should expose the public api (`/svg`)'
   )
-  assert(
-    jsxHtml.includes('jsx'),
-    'should expose `jsx` from `/html/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(jsxCoreMod).sort(),
+    ['Fragment', 'jsx', 'jsxDEV', 'jsxs'],
+    'should expose the public api (`/jsx-runtime`)'
   )
-  assert(
-    jsxHtml.includes('jsxs'),
-    'should expose `jsxs` from `/html/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(jsxHtmlMod).sort(),
+    ['Fragment', 'jsx', 'jsxDEV', 'jsxs'],
+    'should expose the public api (`/html/jsx-runtime`)'
   )
-  assert(
-    jsxHtml.includes('jsxDEV'),
-    'should expose `jsxDEV` from `/html/jsx-runtime`'
-  )
-  const jsxSvg = Object.keys(jsxSvgMod)
-  assert(
-    jsxSvg.includes('Fragment'),
-    'should expose `Fragment` from `/svg/jsx-runtime`'
-  )
-  assert(jsxSvg.includes('jsx'), 'should expose `jsx` from `/svg/jsx-runtime`')
-  assert(
-    jsxSvg.includes('jsxs'),
-    'should expose `jsxs` from `/svg/jsx-runtime`'
-  )
-  assert(
-    jsxSvg.includes('jsxDEV'),
-    'should expose `jsxDEV` from `/svg/jsx-runtime`'
+  assert.deepEqual(
+    Object.keys(jsxSvgMod).sort(),
+    ['Fragment', 'jsx', 'jsxDEV', 'jsxs'],
+    'should expose the public api (`/svg/jsx-runtime`)'
   )
 })
 
