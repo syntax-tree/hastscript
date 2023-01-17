@@ -181,11 +181,12 @@ Properties of the element ([`Properties`][properties], optional).
 
 ###### `children`
 
-Children of the element ([`Child`][child] or `Array<Child>`, optional).
+Children of the node ([`Child`][child] or `Array<Child>`, optional).
 
 ##### Returns
 
 Created tree ([`Result`][result]).
+
 [`Element`][element] when a `selector` is passed, otherwise [`Root`][root].
 
 ### `s(selector?[, properties][, …children])`
