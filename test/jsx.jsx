@@ -1,5 +1,9 @@
 /** @jsxImportSource hastscript */
 
+/**
+ * @typedef {import('../lib/core.js').HChild} HChild
+ */
+
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {u} from 'unist-builder'
@@ -124,5 +128,38 @@ test('name', () => {
       h('dd', dl[1][1])
     ]),
     'should support a fragment in an element (#2)'
+  )
+
+  /**
+   * @param {{key: HChild; value: HChild}} options
+   * @returns {JSX.Element}
+   */
+  // eslint-disable-next-line no-unused-vars
+  const DlEntry = ({key, value}) => (
+    <>
+      <dt>{key}</dt>
+      <dd>{value}</dd>
+    </>
+  )
+
+  /**
+   * @param {{children?: HChild}} options
+   * @returns {JSX.Element}
+   */
+  // eslint-disable-next-line no-unused-vars
+  const Dl = ({children}) => <dl>{children}</dl>
+
+  assert.deepEqual(
+    <Dl>
+      <DlEntry key="Firefox" value="A red panda." />
+      <DlEntry key="Chrome" value="A chemical element." />
+    </Dl>,
+    h('dl', [
+      h('dt', 'Firefox'),
+      h('dd', 'A red panda.'),
+      h('dt', 'Chrome'),
+      h('dd', 'A chemical element.')
+    ]),
+    'should support functional elements'
   )
 })

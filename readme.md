@@ -257,20 +257,13 @@ The syntax tree is [hast][].
 
 ## JSX
 
-This package can be used with JSX.
-You should use the automatic JSX runtime set to `hastscript` (also available as
-the more explicit name `hastscript/html`) or `hastscript/svg`.
+This package can be used with JSX by setting your
+[`jsxImportSource`][jsx-import-source]  to `hastscript`
 
 > 👉 **Note**: while `h` supports dots (`.`) for classes or number signs (`#`)
 > for IDs in `selector`, those are not supported in JSX.
 
-> 🪦 **Legacy**: you can also use the classic JSX runtime, but this is not
-> recommended.
-> To do so, import `h` (or `s`) yourself and define it as the pragma (plus
-> set the fragment to `null`).
-
-The Use example above can then be written like so, using inline pragmas, so
-that SVG can be used too:
+For example, to write the hastscript example provided earlier u
 
 `example-html.jsx`:
 
@@ -287,6 +280,8 @@ console.log(
 )
 ```
 
+SVG can be used too by setting `jxsImportSource` to `hastscript/svg`:
+
 `example-svg.jsx`:
 
 ```jsx
@@ -297,6 +292,15 @@ console.log(
     <circle cx={120} cy={120} r={100} />
   </svg>
 )
+```
+
+> 🪦 **Legacy**: you can also use the classic JSX runtime by importing either
+> `h` (or `s`) manually from `hastscript/jsx-factory` and setting it as the
+> `jsxFactory` in your transpiler, but it is not recommended.  For example:
+
+```jsx
+/** @jsxFactory h */
+import { h } from "hastscript/jsx-factory";
 ```
 
 ## Types
@@ -466,3 +470,5 @@ abide by its terms.
 [properties]: #properties-1
 
 [result]: #result
+
+[jsx-import-source]: https://babeljs.io/docs/babel-plugin-transform-react-jsx#customizing-the-automatic-runtime-import

@@ -43,4 +43,4 @@ expectError(<a invalid={[true]} />)
 expectType<Result>(<a children={<b />} />)
 
 declare function Bar(props?: Record<string, unknown>): Element
-expectError(<Bar />)
+expectType<Result>(<Bar />)
