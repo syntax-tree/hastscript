@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises'
 import acornJsx from 'acorn-jsx'
+import {buildJsx} from 'estree-util-build-jsx'
 import {fromJs} from 'esast-util-from-js'
 import {toJs} from 'estree-util-to-js'
-import {buildJsx} from 'estree-util-build-jsx'
 
 const doc = String(
   await fs.readFile(new URL('../test/jsx.jsx', import.meta.url))

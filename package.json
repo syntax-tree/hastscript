@@ -106,9 +106,22 @@
     "atLeast": 100,
     "detail": true,
     "ignoreCatch": true,
+    "#": "needed `any`s :'(",
+    "ignoreFiles": [
+      "test/jsx-build-jsx-automatic-development.js"
+    ],
     "strict": true
   },
   "xo": {
+    "overrides": [
+      {
+        "files": "**/*.ts",
+        "rules": {
+          "@typescript-eslint/consistent-indexed-object-style": "off",
+          "@typescript-eslint/consistent-type-definitions": "off"
+        }
+      }
+    ],
     "prettier": true
   }
 }

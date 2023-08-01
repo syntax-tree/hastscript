@@ -1,6 +1,6 @@
 /* @jsx s */
 /* @jsxFrag null */
-import {expectType, expectError} from 'tsd'
+import {expectType} from 'tsd'
 import type {Root, Element} from 'hast'
 import {s} from '../index.js'
 
@@ -34,12 +34,16 @@ expectType<Result>(<a>{[<b />, <c />]}</a>)
 expectType<Result>(<a>{[<b />, <c />]}</a>)
 expectType<Result>(<a>{[]}</a>)
 
-expectError(<a invalid={[true]} />)
+// @ts-expect-error: not a valid property value.
+const a = <a invalid={[true]} />
 
-// This is where the classic runtime differs from the automatic runtime.
-// The automatic runtime the children prop to define JSX children, whereas it’s
-// used as an attribute in the classic runtime.
-expectError(<a children={<b />} />)
+// @ts-expect-error: This is where the classic runtime differs from the
+// automatic runtime.
+// The automatic runtime the children prop to define JSX children, whereas
+// it’s used as an attribute in the classic runtime.
+const b = <a children={<b />} />
 
 declare function Bar(props?: Record<string, unknown>): Element
-expectError(<Bar />)
+
+// @ts-expect-error: components are not supported.
+const c = <Bar />

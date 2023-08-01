@@ -210,12 +210,12 @@ are used instead.
 
 ```ts
 type Child =
-  | string
+  | Array<Node | number | string | null | undefined>
+  | Node
   | number
+  | string
   | null
   | undefined
-  | Node
-  | Array<string | number | null | undefined | Node>
 ```
 
 ### `Properties`
@@ -229,15 +229,15 @@ are case-insensitive.
 ```ts
 type Properties = Record<
   string,
-  | string
-  | number
   | boolean
+  | number
+  | string
   | null
   | undefined
   // For comma- and space-separated values such as `className`:
-  | Array<string | number>
+  | Array<number | string>
   // Accepts value for `style` prop as object.
-  | Record<string, string | number>
+  | Record<string, number | string>
 >
 ```
 
@@ -248,7 +248,7 @@ Result from a `h` (or `s`) call (TypeScript type).
 ###### Type
 
 ```ts
-type Result = Root | Element
+type Result = Element | Root
 ```
 
 ## Syntax tree

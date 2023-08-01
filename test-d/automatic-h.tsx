@@ -1,7 +1,7 @@
 /* @jsxRuntime automatic */
 /* @jsxImportSource hastscript */
 
-import {expectType, expectError} from 'tsd'
+import {expectType} from 'tsd'
 import type {Root, Element} from 'hast'
 import {h} from '../index.js'
 import {Fragment, jsx, jsxs} from '../jsx-runtime.js'
@@ -9,6 +9,7 @@ import {Fragment, jsx, jsxs} from '../jsx-runtime.js'
 type Result = Element | Root
 
 // JSX automatic runtime.
+
 expectType<Root>(jsx(Fragment, {}))
 expectType<Root>(jsx(Fragment, {children: h('h')}))
 expectType<Element>(jsx('a', {}))
@@ -45,7 +46,8 @@ expectType<Result>(<a>{[<b />, <c />]}</a>)
 expectType<Result>(<a>{[<b />, <c />]}</a>)
 expectType<Result>(<a>{[]}</a>)
 
-expectError(<a invalid={[true]} />)
+// @ts-expect-error: not a valid property value.
+const a = <a invalid={[true]} />
 
 // This is where the automatic runtime differs from the classic runtime.
 // The automatic runtime the children prop to define JSX children, whereas it’s used as an attribute in the classic runtime.
@@ -53,4 +55,6 @@ expectError(<a invalid={[true]} />)
 expectType<Result>(<a children={<b />} />)
 
 declare function Bar(props?: Record<string, unknown>): Element
-expectError(<Bar />)
+
+// @ts-expect-error: components are not supported.
+const b = <Bar />
