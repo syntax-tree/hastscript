@@ -60,14 +60,14 @@ npm install hastscript
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {h} from 'https://esm.sh/hastscript@7'
+import {h} from 'https://esm.sh/hastscript@8'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {h} from 'https://esm.sh/hastscript@7?bundle'
+  import {h} from 'https://esm.sh/hastscript@8?bundle'
 </script>
 ```
 
