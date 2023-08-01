@@ -51,7 +51,7 @@ You can instead use [`unist-builder`][u] when creating any unist nodes and
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install hastscript
@@ -146,7 +146,7 @@ Yields:
 
 ## API
 
-This package exports the identifiers [`h`][h] and [`s`][s].
+This package exports the identifiers [`h`][api-h] and [`s`][api-s].
 There is no default export.
 
 The export map supports the automatic JSX runtime.
@@ -177,15 +177,15 @@ When nullish, builds a [`Root`][root] instead.
 
 ###### `properties`
 
-Properties of the element ([`Properties`][properties], optional).
+Properties of the element ([`Properties`][api-properties], optional).
 
 ###### `children`
 
-Children of the node ([`Child`][child] or `Array<Child>`, optional).
+Children of the node ([`Child`][api-child] or `Array<Child>`, optional).
 
 ##### Returns
 
-Created tree ([`Result`][result]).
+Created tree ([`Result`][api-result]).
 
 [`Element`][element] when a `selector` is passed, otherwise [`Root`][root].
 
@@ -302,15 +302,19 @@ console.log(
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Child`][child], [`Properties`][properties],
-and [`Result`][result].
+It exports the additional types [`Child`][api-child],
+[`Properties`][api-properties], and
+[`Result`][api-result].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `hastscript@^7`,
+compatible with Node.js 12.
 
 ## Security
 
@@ -405,9 +409,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hastscript
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hastscript.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hastscript
 
-[size]: https://bundlephobia.com/result?p=hastscript
+[size]: https://bundlejs.com/?q=hastscript
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -457,12 +461,12 @@ abide by its terms.
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
-[h]: #hselector-properties-children
+[api-h]: #hselector-properties-children
 
-[s]: #sselector-properties-children
+[api-s]: #sselector-properties-children
 
-[child]: #child
+[api-child]: #child
 
-[properties]: #properties-1
+[api-properties]: #properties-1
 
-[result]: #result
+[api-result]: #result
