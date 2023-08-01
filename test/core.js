@@ -10,14 +10,6 @@ test('core', async function (t) {
     ])
   })
 
-  await t.test('should expose the public api (`/html`)', async function () {
-    assert.deepEqual(Object.keys(await import('../html.js')).sort(), ['h'])
-  })
-
-  await t.test('should expose the public api (`/svg`)', async function () {
-    assert.deepEqual(Object.keys(await import('../svg.js')).sort(), ['s'])
-  })
-
   await t.test(
     'should expose the public api (`/jsx-runtime`)',
     async function () {
