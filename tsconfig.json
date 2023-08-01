@@ -6,10 +6,10 @@
     "emitDeclarationOnly": true,
     "exactOptionalPropertyTypes": true,
     "jsx": "preserve",
-    "lib": ["es2020"],
+    "lib": ["es2022"],
     "module": "node16",
     "strict": true,
-    "target": "es2020"
+    "target": "es2022"
   },
   "exclude": ["coverage/", "node_modules/"],
   "include": [
