@@ -4,29 +4,14 @@ import {h, s} from '../index.js'
 
 test('core', async function (t) {
   await t.test('should expose the public api (`/`)', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
-      'h',
-      's'
-    ])
+    assert.deepEqual(Object.keys(await import('hastscript')).sort(), ['h', 's'])
   })
 
   await t.test(
     'should expose the public api (`/jsx-runtime`)',
     async function () {
-      assert.deepEqual(Object.keys(await import('../jsx-runtime.js')).sort(), [
-        'Fragment',
-        'jsx',
-        'jsxDEV',
-        'jsxs'
-      ])
-    }
-  )
-
-  await t.test(
-    'should expose the public api (`/html/jsx-runtime`)',
-    async function () {
       assert.deepEqual(
-        Object.keys(await import('../html/jsx-runtime.js')).sort(),
+        Object.keys(await import('hastscript/jsx-runtime')).sort(),
         ['Fragment', 'jsx', 'jsxDEV', 'jsxs']
       )
     }
@@ -36,7 +21,7 @@ test('core', async function (t) {
     'should expose the public api (`/svg/jsx-runtime`)',
     async function () {
       assert.deepEqual(
-        Object.keys(await import('../svg/jsx-runtime.js')).sort(),
+        Object.keys(await import('hastscript/svg/jsx-runtime')).sort(),
         ['Fragment', 'jsx', 'jsxDEV', 'jsxs']
       )
     }

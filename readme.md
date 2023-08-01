@@ -150,8 +150,8 @@ This package exports the identifiers [`h`][h] and [`s`][s].
 There is no default export.
 
 The export map supports the automatic JSX runtime.
-You can pass `hastscript` (or `hastscript/html`) or `hastscript/svg` to your
-build tool (TypeScript, Babel, SWC) with an `importSource` option or similar.
+You can pass `hastscript` or `hastscript/svg` to your build tool (TypeScript,
+Babel, SWC) with an `importSource` option or similar.
 
 ### `h(selector?[, properties][, …children])`
 
@@ -258,8 +258,8 @@ The syntax tree is [hast][].
 ## JSX
 
 This package can be used with JSX.
-You should use the automatic JSX runtime set to `hastscript` (also available as
-the more explicit name `hastscript/html`) or `hastscript/svg`.
+You should use the automatic JSX runtime set to `hastscript` or
+`hastscript/svg`.
 
 > 👉 **Note**: while `h` supports dots (`.`) for classes or number signs (`#`)
 > for IDs in `selector`, those are not supported in JSX.

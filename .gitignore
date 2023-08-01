@@ -4,6 +4,6 @@ coverage/
 node_modules/
 test/jsx-*.js
 yarn.lock
-**/*.d.ts
+*.d.ts
 !lib/jsx-classic.d.ts
 !lib/jsx-automatic.d.ts

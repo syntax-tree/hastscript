@@ -4,7 +4,7 @@
 import {expectType} from 'tsd'
 import type {Root, Element} from 'hast'
 import {h} from '../index.js'
-import {Fragment, jsx, jsxs} from '../jsx-runtime.js'
+import {Fragment, jsx, jsxs} from '../lib/runtime-html.js'
 
 type Result = Element | Root
 

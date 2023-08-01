@@ -33,19 +33,13 @@
   "types": "index.d.ts",
   "exports": {
     ".": "./index.js",
-    "./jsx-runtime": "./jsx-runtime.js",
-    "./jsx-dev-runtime": "./jsx-runtime.js",
-    "./html/jsx-runtime": "./html/jsx-runtime.js",
-    "./html/jsx-dev-runtime": "./html/jsx-runtime.js",
-    "./svg/jsx-runtime": "./svg/jsx-runtime.js",
-    "./svg/jsx-dev-runtime": "./svg/jsx-runtime.js"
+    "./jsx-runtime": "./lib/runtime-html.js",
+    "./jsx-dev-runtime": "./lib/runtime-html.js",
+    "./svg/jsx-runtime": "./lib/runtime-svg.js",
+    "./svg/jsx-dev-runtime": "./lib/runtime-svg.js"
   },
   "files": [
     "lib/",
-    "html/",
-    "svg/",
-    "jsx-runtime.d.ts",
-    "jsx-runtime.js",
     "index.d.ts",
     "index.js"
   ],
@@ -115,6 +109,9 @@
         }
       }
     ],
-    "prettier": true
+    "prettier": true,
+    "rules": {
+      "n/file-extension-in-import": "off"
+    }
   }
 }
