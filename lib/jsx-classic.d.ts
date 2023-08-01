@@ -1,4 +1,4 @@
-import type {HProperties, HChild, HResult} from './core.js'
+import type {Child, Properties, Result} from './create-h.js'
 
 /**
  * This unique symbol is declared to specify the key on which JSX children are
@@ -9,7 +9,7 @@ declare const children: unique symbol
 /**
  * Define the return value of JSX syntax.
  */
-export type Element = HResult
+export type Element = Result
 
 /**
  * Key of this interface defines as what prop children are passed.
@@ -36,12 +36,12 @@ export type IntrinsicAttributes = never
  */
 export interface IntrinsicElements {
   [name: string]:
-    | HProperties
+    | Properties
     | {
         /**
          * The prop that matches `ElementChildrenAttribute` key defines the
          * type of JSX children, defines the children type.
          */
-        [children]?: HChild
+        [children]?: Child
       }
 }
