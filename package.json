@@ -53,7 +53,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "acorn-jsx": "^5.0.0",
-    "c8": "^8.0.0",
+    "c8": "^9.0.0",
     "esast-util-from-js": "^2.0.0",
     "estree-util-build-jsx": "^3.0.0",
     "estree-util-to-js": "^2.0.0",
@@ -61,11 +61,11 @@
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
     "svg-tag-names": "^3.0.0",
-    "tsd": "^0.28.0",
+    "tsd": "^0.30.0",
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
     "unist-builder": "^4.0.0",
-    "xo": "^0.55.0"
+    "xo": "^0.56.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
