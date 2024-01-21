@@ -60,14 +60,14 @@ npm install hastscript
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {h} from 'https://esm.sh/hastscript@8'
+import {h} from 'https://esm.sh/hastscript@9'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {h} from 'https://esm.sh/hastscript@8?bundle'
+  import {h} from 'https://esm.sh/hastscript@9?bundle'
 </script>
 ```
 
@@ -313,7 +313,7 @@ versions of Node.js.
 
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
-This means we try to keep the current release line, `hastscript@^8`,
+This means we try to keep the current release line, `hastscript@^9`,
 compatible with Node.js 16.
 
 ## Security
