@@ -742,132 +742,100 @@ test('children', async function (t) {
     }
   )
 
+  await t.test('should disambiguate non-object as a child', async function () {
+    assert.deepEqual(h('x', 'y'), {
+      type: 'element',
+      tagName: 'x',
+      properties: {},
+      children: [{type: 'text', value: 'y'}]
+    })
+  })
+
+  await t.test('should disambiguate `array` as a child', async function () {
+    assert.deepEqual(h('x', ['y']), {
+      type: 'element',
+      tagName: 'x',
+      properties: {},
+      children: [{type: 'text', value: 'y'}]
+    })
+  })
+
   await t.test(
-    'should allow omitting `properties` for a `string`',
+    'should not disambiguate an object w/o `type` as a child',
     async function () {
-      assert.deepEqual(h('strong', 'foo'), {
+      assert.deepEqual(
+        // @ts-expect-error: incorrect properties.
+        h('x', {
+          a: 'y',
+          b: 1,
+          c: true,
+          d: ['z'],
+          e: {f: true}
+        }),
+        {
+          type: 'element',
+          tagName: 'x',
+          properties: {
+            a: 'y',
+            b: 1,
+            c: true,
+            d: ['z'],
+            e: '[object Object]'
+          },
+          children: []
+        }
+      )
+    }
+  )
+
+  await t.test(
+    'should disambiguate an object w/ a `type` and an array of non-primitives as a child',
+    async function () {
+      assert.deepEqual(
+        // @ts-expect-error: unknown node.
+        h('x', {type: 'y', key: [{value: 1}]}),
+        {
+          type: 'element',
+          tagName: 'x',
+          properties: {},
+          children: [{type: 'y', key: [{value: 1}]}]
+        }
+      )
+    }
+  )
+
+  await t.test(
+    'should not disambiguate an object w/ a `type` and an array of primitives as a child',
+    async function () {
+      assert.deepEqual(h('x', {type: 'y', key: [1]}), {
         type: 'element',
-        tagName: 'strong',
+        tagName: 'x',
+        properties: {type: 'y', key: [1]},
+        children: []
+      })
+    }
+  )
+
+  await t.test(
+    'should disambiguate an object w/ a `type` and an `object` as a child',
+    async function () {
+      assert.deepEqual(h('x', {type: 'y', data: {bar: 'baz'}}), {
+        type: 'element',
+        tagName: 'x',
         properties: {},
-        children: [{type: 'text', value: 'foo'}]
+        children: [{type: 'y', data: {bar: 'baz'}}]
       })
     }
   )
 
   await t.test(
-    'should allow omitting `properties` for a node',
+    'should disambiguate an object w/ a `type` and an empty `children` array is a child',
     async function () {
-      assert.deepEqual(h('strong', h('span', 'foo')), {
+      assert.deepEqual(h('x', {type: 'y', children: []}), {
         type: 'element',
-        tagName: 'strong',
+        tagName: 'x',
         properties: {},
-        children: [
-          {
-            type: 'element',
-            tagName: 'span',
-            properties: {},
-            children: [{type: 'text', value: 'foo'}]
-          }
-        ]
-      })
-    }
-  )
-
-  await t.test(
-    'should allow omitting `properties` for an array',
-    async function () {
-      assert.deepEqual(h('strong', ['foo', 'bar']), {
-        type: 'element',
-        tagName: 'strong',
-        properties: {},
-        children: [
-          {type: 'text', value: 'foo'},
-          {type: 'text', value: 'bar'}
-        ]
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` for an `input[type=text][value]`, as those are void and clash',
-    async function () {
-      assert.deepEqual(h('input', {type: 'text', value: 'foo'}), {
-        type: 'element',
-        tagName: 'input',
-        properties: {type: 'text', value: 'foo'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` for a `[type]`, without `value` or `children`',
-    async function () {
-      assert.deepEqual(h('a', {type: 'text/html'}), {
-        type: 'element',
-        tagName: 'a',
-        properties: {type: 'text/html'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` when `children` is not set to an array',
-    async function () {
-      assert.deepEqual(h('foo', {type: 'text/html', children: {bar: 'baz'}}), {
-        type: 'element',
-        tagName: 'foo',
-        properties: {type: 'text/html', children: '[object Object]'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` when a button has a valid type',
-    async function () {
-      assert.deepEqual(h('button', {type: 'submit', value: 'Send'}), {
-        type: 'element',
-        tagName: 'button',
-        properties: {type: 'submit', value: 'Send'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` when a button has a valid non-lowercase type',
-    async function () {
-      assert.deepEqual(h('button', {type: 'BUTTON', value: 'Send'}), {
-        type: 'element',
-        tagName: 'button',
-        properties: {type: 'BUTTON', value: 'Send'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should *not* allow omitting `properties` when a button has a valid type',
-    async function () {
-      assert.deepEqual(h('button', {type: 'menu', value: 'Send'}), {
-        type: 'element',
-        tagName: 'button',
-        properties: {type: 'menu', value: 'Send'},
-        children: []
-      })
-    }
-  )
-
-  await t.test(
-    'should allow omitting `properties` when a button has an invalid type',
-    async function () {
-      assert.deepEqual(h('button', {type: 'text', value: 'Send'}), {
-        type: 'element',
-        tagName: 'button',
-        properties: {},
-        children: [{type: 'text', value: 'Send'}]
+        children: [{type: 'y', children: []}]
       })
     }
   )
