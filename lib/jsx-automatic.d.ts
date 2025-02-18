@@ -29,15 +29,15 @@ export namespace JSX {
    *
    * This **must** be an interface.
    */
-  interface IntrinsicElements {
-    [name: string]:
-      | Properties
-      | {
-          /**
-           * The prop that matches `ElementChildrenAttribute` key defines the
-           * type of JSX children, defines the children type.
-           */
-          children?: Child
-        }
-  }
+  type IntrinsicElements = Record<
+    string,
+    | Properties
+    | {
+        /**
+         * The prop that matches `ElementChildrenAttribute` key defines the
+         * type of JSX children, defines the children type.
+         */
+        children?: Child
+      }
+  >
 }

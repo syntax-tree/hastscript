@@ -34,14 +34,14 @@ export type IntrinsicAttributes = never
  *
  * This **must** be an interface.
  */
-export interface IntrinsicElements {
-  [name: string]:
-    | Properties
-    | {
-        /**
-         * The prop that matches `ElementChildrenAttribute` key defines the
-         * type of JSX children, defines the children type.
-         */
-        [children]?: Child
-      }
-}
+export type IntrinsicElements = Record<
+  string,
+  | Properties
+  | {
+      /**
+       * The prop that matches `ElementChildrenAttribute` key defines the
+       * type of JSX children, defines the children type.
+       */
+      [children]?: Child
+    }
+>
