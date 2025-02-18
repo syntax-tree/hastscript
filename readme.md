@@ -1,35 +1,32 @@
 # hastscript
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
 
-[hast][] utility to create trees with ease.
+[hast][github-hast] utility to create trees with ease.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`h(selector?[, properties][, …children])`](#hselector-properties-children)
-    *   [`s(selector?[, properties][, …children])`](#sselector-properties-children)
-    *   [`Child`](#child)
-    *   [`Properties`](#properties-1)
-    *   [`Result`](#result)
-*   [Syntax tree](#syntax-tree)
-*   [JSX](#jsx)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`h(selector?[, properties][, …children])`](#hselector-properties-children)
+  * [`s(selector?[, properties][, …children])`](#sselector-properties-children)
+  * [`Child`](#child)
+  * [`Properties`](#properties-1)
+  * [`Result`](#result)
+* [Syntax tree](#syntax-tree)
+* [JSX](#jsx)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Related](#related)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -45,13 +42,14 @@ tree with function calls.
 It also helps as it improves the attributes you pass by turning them into the
 form that is required by hast.
 
-You can instead use [`unist-builder`][u] when creating any unist nodes and
-[`xastscript`][x] when creating xast (XML) nodes.
+You can instead use [`unist-builder`][github-unist-builder]
+when creating any unist nodes and
+[`xastscript`][github-xastscript] when creating xast (XML) nodes.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 16+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+), install with [npm][npmjs-install]:
 
 ```sh
 npm install hastscript
@@ -155,13 +153,13 @@ Babel, SWC) with an `importSource` option or similar.
 
 ### `h(selector?[, properties][, …children])`
 
-Create virtual **[hast][]** trees for HTML.
+Create virtual **[hast][github-hast]** trees for HTML.
 
 ##### Signatures
 
-*   `h(): root`
-*   `h(null[, …children]): root`
-*   `h(selector[, properties][, …children]): element`
+* `h(): root`
+* `h(null[, …children]): root`
+* `h(selector[, properties][, …children]): element`
 
 ##### Parameters
 
@@ -171,9 +169,10 @@ Simple CSS selector (`string`, optional).
 Can contain a tag name (`foo`), IDs (`#bar`), and classes (`.baz`).
 If the selector is a string but there is no tag name in it, `h` defaults to
 build a `div` element, and `s` to a `g` element.
-`selector` is parsed by [`hast-util-parse-selector`][parse-selector].
-When string, builds an [`Element`][element].
-When nullish, builds a [`Root`][root] instead.
+`selector` is parsed by
+[`hast-util-parse-selector`][github-hast-util-parse-selector].
+When string, builds an [`Element`][github-hast-element].
+When nullish, builds a [`Root`][github-hast-root] instead.
 
 ###### `properties`
 
@@ -187,11 +186,12 @@ Children of the node ([`Child`][api-child] or `Array<Child>`, optional).
 
 Created tree ([`Result`][api-result]).
 
-[`Element`][element] when a `selector` is passed, otherwise [`Root`][root].
+[`Element`][github-hast-element] when a `selector` is passed,
+otherwise [`Root`][github-hast-root].
 
 ### `s(selector?[, properties][, …children])`
 
-Create virtual **[hast][]** trees for SVG.
+Create virtual **[hast][github-hast]** trees for SVG.
 
 Signatures, parameters, and return value are the same as `h` above.
 Importantly, the `selector` and `properties` parameters are interpreted as
@@ -201,10 +201,11 @@ SVG.
 
 (Lists of) children (TypeScript type).
 
-When strings or numbers are encountered, they are turned into [`Text`][text]
+When strings or numbers are encountered,
+they are turned into [`Text`][github-hast-text]
 nodes.
-[`Root`][root] nodes are treated as “fragments”, meaning that their children
-are used instead.
+[`Root`][github-hast-root] nodes are treated as “fragments”,
+meaning that their children are used instead.
 
 ###### Type
 
@@ -253,7 +254,7 @@ type Result = Element | Root
 
 ## Syntax tree
 
-The syntax tree is [hast][].
+The syntax tree is [hast][github-hast].
 
 ## JSX
 
@@ -274,7 +275,7 @@ that SVG can be used too:
 
 `example-html.jsx`:
 
-```jsx
+```js
 /** @jsxImportSource hastscript */
 console.log(
   <div class="foo" id="some-id">
@@ -289,7 +290,7 @@ console.log(
 
 `example-svg.jsx`:
 
-```jsx
+```js
 /** @jsxImportSource hastscript/svg */
 console.log(
   <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 500 500">
@@ -318,7 +319,8 @@ compatible with Node.js 16.
 
 ## Security
 
-Use of `hastscript` can open you up to a [cross-site scripting (XSS)][xss]
+Use of `hastscript` can open you up to a
+[cross-site scripting (XSS)][wikipedia-xss]
 when you pass user-provided input to it because values are injected into the
 syntax tree.
 
@@ -364,109 +366,102 @@ Yields:
 ```
 
 Either do not use user-provided input in `hastscript` or use
-[`hast-util-santize`][hast-util-sanitize].
+[`hast-util-santize`][github-hast-util-sanitize].
 
 ## Related
 
-*   [`unist-builder`](https://github.com/syntax-tree/unist-builder)
-    — create unist trees
-*   [`xastscript`](https://github.com/syntax-tree/xastscript)
-    — create xast trees
-*   [`hast-to-hyperscript`](https://github.com/syntax-tree/hast-to-hyperscript)
-    — turn hast into React, Preact, Vue, etc
-*   [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
-    — turn hast into HTML
-*   [`hast-util-to-dom`](https://github.com/syntax-tree/hast-util-to-dom)
-    — turn hast into DOM trees
-*   [`estree-util-build-jsx`](https://github.com/syntax-tree/estree-util-build-jsx)
-    — compile JSX away
+* [`unist-builder`][github-unist-builder]
+  — create unist trees
+* [`xastscript`][github-xastscript]
+  — create xast trees
+* [`hast-to-hyperscript`](https://github.com/syntax-tree/hast-to-hyperscript)
+  — turn hast into React, Preact, Vue, etc
+* [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
+  — turn hast into HTML
+* [`hast-util-to-dom`](https://github.com/syntax-tree/hast-util-to-dom)
+  — turn hast into DOM trees
+* [`estree-util-build-jsx`](https://github.com/syntax-tree/estree-util-build-jsx)
+  — compile JSX away
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
-ways to get started.
-See [`support.md`][support] for ways to get help.
+See
+[`contributing.md`][health-contributing]
+in
+[`syntax-tree/.github`][health]
+for ways to get started.
+See [`support.md`][health-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][health-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][wooorm]
 
 <!-- Definitions -->
 
-[build-badge]: https://github.com/syntax-tree/hastscript/workflows/main/badge.svg
-
-[build]: https://github.com/syntax-tree/hastscript/actions
-
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hastscript.svg
-
-[coverage]: https://codecov.io/github/syntax-tree/hastscript
-
-[downloads-badge]: https://img.shields.io/npm/dm/hastscript.svg
-
-[downloads]: https://www.npmjs.com/package/hastscript
-
-[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hastscript
-
-[size]: https://bundlejs.com/?q=hastscript
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/syntax-tree/unist/discussions
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[typescript]: https://www.typescriptlang.org
-
-[license]: license
-
-[author]: https://wooorm.com
-
-[health]: https://github.com/syntax-tree/.github
-
-[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
-
-[support]: https://github.com/syntax-tree/.github/blob/main/support.md
-
-[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
-
-[hast]: https://github.com/syntax-tree/hast
-
-[element]: https://github.com/syntax-tree/hast#element
-
-[root]: https://github.com/syntax-tree/xast#root
-
-[text]: https://github.com/syntax-tree/hast#text
-
-[u]: https://github.com/syntax-tree/unist-builder
-
-[x]: https://github.com/syntax-tree/xastscript
-
-[parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
-
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
-
-[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+[api-child]: #child
 
 [api-h]: #hselector-properties-children
-
-[api-s]: #sselector-properties-children
-
-[api-child]: #child
 
 [api-properties]: #properties-1
 
 [api-result]: #result
+
+[api-s]: #sselector-properties-children
+
+[badge-build-image]: https://github.com/syntax-tree/hastscript/workflows/main/badge.svg
+
+[badge-build-url]: https://github.com/syntax-tree/hastscript/actions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/syntax-tree/hastscript.svg
+
+[badge-coverage-url]: https://codecov.io/github/syntax-tree/hastscript
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/hastscript.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/hastscript
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/hastscript
+
+[badge-size-url]: https://bundlejs.com/?q=hastscript
+
+[esmsh]: https://esm.sh
+
+[file-license]: license
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-hast]: https://github.com/syntax-tree/hast
+
+[github-hast-element]: https://github.com/syntax-tree/hast#element
+
+[github-hast-root]: https://github.com/syntax-tree/hast#root
+
+[github-hast-text]: https://github.com/syntax-tree/hast#text
+
+[github-hast-util-parse-selector]: https://github.com/syntax-tree/hast-util-parse-selector
+
+[github-hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[github-unist-builder]: https://github.com/syntax-tree/unist-builder
+
+[github-xastscript]: https://github.com/syntax-tree/xastscript
+
+[health]: https://github.com/syntax-tree/.github
+
+[health-coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
+
+[health-contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
+
+[health-support]: https://github.com/syntax-tree/.github/blob/main/support.md
+
+[npmjs-install]: https://docs.npmjs.com/cli/install
+
+[typescript]: https://www.typescriptlang.org
+
+[wikipedia-xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[wooorm]: https://wooorm.com

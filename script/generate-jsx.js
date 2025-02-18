@@ -4,17 +4,17 @@ import {buildJsx} from 'estree-util-build-jsx'
 import {fromJs} from 'esast-util-from-js'
 import {toJs} from 'estree-util-to-js'
 
-const doc = String(
+const document = String(
   await fs.readFile(new URL('../test/jsx.jsx', import.meta.url))
 )
 
 const treeAutomatic = fromJs(
-  doc.replace(/'name'/, "'jsx (estree-util-build-jsx, automatic)'"),
+  document.replace(/'name'/, "'jsx (estree-util-build-jsx, automatic)'"),
   {plugins: [acornJsx()], module: true}
 )
 
 const treeAutomaticDevelopment = fromJs(
-  doc.replace(
+  document.replace(
     /'name'/,
     "'jsx (estree-util-build-jsx, automatic, development)'"
   ),
@@ -22,7 +22,7 @@ const treeAutomaticDevelopment = fromJs(
 )
 
 const treeClassic = fromJs(
-  doc.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"),
+  document.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"),
   {
     plugins: [acornJsx()],
     module: true

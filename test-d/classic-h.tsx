@@ -43,7 +43,7 @@ const a = <a invalid={[true]} />
 // it’s used as an attribute in the classic runtime.
 const b = <a children={<b />} />
 
-declare function Bar(props?: Record<string, unknown>): Element
+declare function Bar(properties?: Record<string, unknown>): Element
 
 // @ts-expect-error: components are not supported.
 const c = <Bar />

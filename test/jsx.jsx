@@ -80,9 +80,9 @@ test('name', async function (t) {
   await t.test(
     'should support expression spread attributes',
     async function () {
-      const props = {a: 1, b: 2}
+      const properties = {a: 1, b: 2}
 
-      assert.deepEqual(<a {...props} />, h('a', props))
+      assert.deepEqual(<a {...properties} />, h('a', properties))
     }
   )
 
