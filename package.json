@@ -48,7 +48,7 @@
     "@types/hast": "^3.0.0",
     "comma-separated-tokens": "^2.0.0",
     "hast-util-parse-selector": "^4.0.0",
-    "property-information": "^6.0.0",
+    "property-information": "^7.0.0",
     "space-separated-tokens": "^2.0.0"
   },
   "#devDependencies": "note: some bug with `typescript` 5.5 being broken",
