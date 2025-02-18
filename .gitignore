@@ -1,10 +1,11 @@
-.DS_Store
+*.d.ts
 *.log
+*.map
+*.tsbuildinfo
+.DS_Store
 coverage/
 node_modules/
 test/jsx-*.js
 yarn.lock
-*.d.ts.map
-*.d.ts
-!lib/jsx-classic.d.ts
-!lib/jsx-automatic.d.ts
+!/lib/jsx-automatic.d.ts
+!/lib/jsx-classic.d.ts
