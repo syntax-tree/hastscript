@@ -21,7 +21,6 @@
   * [`Result`](#result)
 * [Syntax tree](#syntax-tree)
 * [JSX](#jsx)
-* [Types](#types)
 * [Compatibility](#compatibility)
 * [Security](#security)
 * [Related](#related)
@@ -49,7 +48,8 @@ when creating any unist nodes and
 ## Install
 
 This package is [ESM only][github-gist-esm].
-In Node.js (version 16+), install with [npm][npmjs-install]:
+In Node.js (version 16+),
+install with [npm][npmjs-install]:
 
 ```sh
 npm install hastscript
@@ -146,10 +146,16 @@ Yields:
 
 This package exports the identifiers [`h`][api-h] and [`s`][api-s].
 There is no default export.
+It exports the additional [TypeScript][] types
+[`Child`][api-child],
+[`Properties`][api-properties],
+and
+[`Result`][api-result].
 
 The export map supports the automatic JSX runtime.
-You can pass `hastscript` or `hastscript/svg` to your build tool (TypeScript,
-Babel, SWC) with an `importSource` option or similar.
+You can pass `hastscript` or `hastscript/svg` to your build tool
+(TypeScript, Babel, SWC)
+with an `importSource` option or similar.
 
 ### `h(selector?[, properties][, …children])`
 
@@ -165,18 +171,22 @@ Create virtual **[hast][github-hast]** trees for HTML.
 
 ###### `selector`
 
-Simple CSS selector (`string`, optional).
-Can contain a tag name (`foo`), IDs (`#bar`), and classes (`.baz`).
-If the selector is a string but there is no tag name in it, `h` defaults to
-build a `div` element, and `s` to a `g` element.
-`selector` is parsed by
-[`hast-util-parse-selector`][github-hast-util-parse-selector].
+Simple CSS selector
+(`string`, optional).
 When string, builds an [`Element`][github-hast-element].
 When nullish, builds a [`Root`][github-hast-root] instead.
+The selector can contain a tag name (`foo`),
+IDs (`#bar`),
+and classes (`.baz`).
+If the selector is a string but there is no tag name in it then `h` defaults to
+build a `div` element and `s` to a `g` element.
+`selector` is parsed by
+[`hast-util-parse-selector`][github-hast-util-parse-selector].
 
 ###### `properties`
 
-Properties of the element ([`Properties`][api-properties], optional).
+Properties of the element
+([`Properties`][api-properties], optional).
 
 ###### `children`
 
@@ -194,8 +204,8 @@ otherwise [`Root`][github-hast-root].
 Create virtual **[hast][github-hast]** trees for SVG.
 
 Signatures, parameters, and return value are the same as `h` above.
-Importantly, the `selector` and `properties` parameters are interpreted as
-SVG.
+Importantly,
+the `selector` and `properties` parameters are interpreted as SVG.
 
 ### `Child`
 
@@ -222,8 +232,8 @@ type Child =
 ### `Properties`
 
 Map of properties (TypeScript type).
-Keys should match either the HTML attribute name, or the DOM property name, but
-are case-insensitive.
+Keys should match either the HTML attribute name or the DOM property name,
+but are case-insensitive.
 
 ###### Type
 
@@ -262,16 +272,21 @@ This package can be used with JSX.
 You should use the automatic JSX runtime set to `hastscript` or
 `hastscript/svg`.
 
-> 👉 **Note**: while `h` supports dots (`.`) for classes or number signs (`#`)
-> for IDs in `selector`, those are not supported in JSX.
+> 👉 **Note**
+> while `h` supports dots (`.`) for classes or number signs (`#`)
+> for IDs in `selector`,
+> those are not supported in JSX.
 
-> 🪦 **Legacy**: you can also use the classic JSX runtime, but this is not
-> recommended.
-> To do so, import `h` (or `s`) yourself and define it as the pragma (plus
-> set the fragment to `null`).
+> 🪦 **Legacy**:
+> you can also use the classic JSX runtime,
+> but this is not recommended.
+> To do so,
+> import `h` (or `s`) yourself and define it as the pragma
+> (plus set the fragment to `null`).
 
-The Use example above can then be written like so, using inline pragmas, so
-that SVG can be used too:
+The Use example above can then be written like so,
+using inline pragmas,
+so that SVG can be used too:
 
 `example-html.jsx`:
 
@@ -300,21 +315,15 @@ console.log(
 )
 ```
 
-## Types
-
-This package is fully typed with [TypeScript][].
-It exports the additional types [`Child`][api-child],
-[`Properties`][api-properties], and
-[`Result`][api-result].
-
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
 
-When we cut a new major release, we drop support for unmaintained versions of
-Node.
-This means we try to keep the current release line, `hastscript@^9`,
+When we cut a new major release,
+we drop support for unmaintained versions of Node.
+This means we try to keep the current release line,
+`hastscript@9`,
 compatible with Node.js 16.
 
 ## Security
@@ -393,8 +402,9 @@ for ways to get started.
 See [`support.md`][health-support] for ways to get help.
 
 This project has a [code of conduct][health-coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+By interacting with this repository,
+organization,
+or community you agree to abide by its terms.
 
 ## License
 
