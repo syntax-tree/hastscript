@@ -16,6 +16,8 @@
   "include": [
     "**/**.js",
     "**/**.jsx",
+    "lib/automatic-runtime-html.d.ts",
+    "lib/automatic-runtime-svg.d.ts",
     "lib/jsx-automatic.d.ts",
     "lib/jsx-classic.d.ts"
   ]

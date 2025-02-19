@@ -7,5 +7,7 @@ coverage/
 node_modules/
 test/jsx-*.js
 yarn.lock
+!/lib/automatic-runtime-html.d.ts
+!/lib/automatic-runtime-svg.d.ts
 !/lib/jsx-automatic.d.ts
 !/lib/jsx-classic.d.ts
