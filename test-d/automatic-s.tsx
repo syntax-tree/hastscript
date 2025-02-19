@@ -1,9 +1,9 @@
 /* @jsxRuntime automatic */
 /* @jsxImportSource hastscript/svg */
 
+import {s} from 'hastscript'
+import type {Element, Root} from 'hast'
 import {expectType} from 'tsd'
-import type {Root, Element} from 'hast'
-import {s} from '../index.js'
 
 type Result = Element | Root
 

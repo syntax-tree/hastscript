@@ -1,8 +1,9 @@
-/* @jsx h */
 /* @jsxFrag null */
+/* @jsx h */
+
+import {h} from 'hastscript'
+import type {Element, Root} from 'hast'
 import {expectType} from 'tsd'
-import type {Root, Element} from 'hast'
-import {h} from '../index.js'
 
 type Result = Element | Root
 

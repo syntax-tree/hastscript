@@ -4,13 +4,14 @@ import {buildJsx} from 'estree-util-build-jsx'
 import {fromJs} from 'esast-util-from-js'
 import {toJs} from 'estree-util-to-js'
 
-const document = String(
-  await fs.readFile(new URL('../test/jsx.jsx', import.meta.url))
+const document = await fs.readFile(
+  new URL('../test/jsx.jsx', import.meta.url),
+  'utf8'
 )
 
 const treeAutomatic = fromJs(
   document.replace(/'name'/, "'jsx (estree-util-build-jsx, automatic)'"),
-  {plugins: [acornJsx()], module: true}
+  {module: true, plugins: [acornJsx()]}
 )
 
 const treeAutomaticDevelopment = fromJs(
@@ -18,27 +19,21 @@ const treeAutomaticDevelopment = fromJs(
     /'name'/,
     "'jsx (estree-util-build-jsx, automatic, development)'"
   ),
-  {plugins: [acornJsx()], module: true}
+  {module: true, plugins: [acornJsx()]}
 )
 
 const treeClassic = fromJs(
   document.replace(/'name'/, "'jsx (estree-util-build-jsx, classic)'"),
-  {
-    plugins: [acornJsx()],
-    module: true
-  }
+  {module: true, plugins: [acornJsx()]}
 )
 
-buildJsx(treeAutomatic, {
-  runtime: 'automatic',
-  importSource: 'hastscript'
-})
+buildJsx(treeAutomatic, {importSource: 'hastscript', runtime: 'automatic'})
 buildJsx(treeAutomaticDevelopment, {
-  runtime: 'automatic',
+  development: true,
   importSource: 'hastscript',
-  development: true
+  runtime: 'automatic'
 })
-buildJsx(treeClassic, {pragma: 'h', pragmaFrag: 'null'})
+buildJsx(treeClassic, {pragmaFrag: 'null', pragma: 'h'})
 
 await fs.writeFile(
   new URL('../test/jsx-build-jsx-automatic.js', import.meta.url),

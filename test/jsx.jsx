@@ -2,8 +2,7 @@
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {u} from 'unist-builder'
-import {h} from '../index.js'
+import {h} from 'hastscript'
 
 test('name', async function (t) {
   await t.test('should support a self-closing element', async function () {
@@ -27,11 +26,14 @@ test('name', async function (t) {
   })
 
   await t.test('should support a fragment', async function () {
-    assert.deepEqual(<></>, u('root', []))
+    assert.deepEqual(<></>, {type: 'root', children: []})
   })
 
   await t.test('should support a fragment with text', async function () {
-    assert.deepEqual(<>a</>, u('root', [u('text', 'a')]))
+    assert.deepEqual(<>a</>, {
+      type: 'root',
+      children: [{type: 'text', value: 'a'}]
+    })
   })
 
   await t.test('should support a fragment with an element', async function () {
@@ -39,14 +41,17 @@ test('name', async function (t) {
       <>
         <a />
       </>,
-      u('root', [h('a')])
+      {type: 'root', children: [h('a')]}
     )
   })
 
   await t.test(
     'should support a fragment with an expression',
     async function () {
-      assert.deepEqual(<>{-1}</>, u('root', [u('text', '-1')]))
+      assert.deepEqual(<>{-1}</>, {
+        type: 'root',
+        children: [{type: 'text', value: '-1'}]
+      })
     }
   )
 

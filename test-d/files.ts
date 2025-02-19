@@ -1,6 +1,6 @@
-import {expectType} from 'tsd'
+import {h, s} from 'hastscript'
 import type {Root} from 'hast'
-import {h as hFromIndex, s as sFromIndex} from '../index.js'
+import {expectType} from 'tsd'
 
-expectType<Root>(hFromIndex())
-expectType<Root>(sFromIndex())
+expectType<Root>(h())
+expectType<Root>(s())

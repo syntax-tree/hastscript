@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {h, s} from '../index.js'
+import {h, s} from 'hastscript'
 
 test('core', async function (t) {
   await t.test('should expose the public api (`/`)', async function () {
@@ -18,10 +18,30 @@ test('core', async function (t) {
   )
 
   await t.test(
+    'should expose the public api (`/jsx-dev-runtime`)',
+    async function () {
+      assert.deepEqual(
+        Object.keys(await import('hastscript/jsx-dev-runtime')).sort(),
+        ['Fragment', 'jsx', 'jsxDEV', 'jsxs']
+      )
+    }
+  )
+
+  await t.test(
     'should expose the public api (`/svg/jsx-runtime`)',
     async function () {
       assert.deepEqual(
         Object.keys(await import('hastscript/svg/jsx-runtime')).sort(),
+        ['Fragment', 'jsx', 'jsxDEV', 'jsxs']
+      )
+    }
+  )
+
+  await t.test(
+    'should expose the public api (`/svg/jsx-dev-runtime`)',
+    async function () {
+      assert.deepEqual(
+        Object.keys(await import('hastscript/svg/jsx-dev-runtime')).sort(),
         ['Fragment', 'jsx', 'jsxDEV', 'jsxs']
       )
     }
@@ -617,9 +637,7 @@ test('style property', async function (t) {
       {
         type: 'element',
         tagName: 'div',
-        properties: {
-          style: 'color: red; -webkit-border-radius: 3px'
-        },
+        properties: {style: 'color: red; -webkit-border-radius: 3px'},
         children: []
       }
     )
@@ -631,9 +649,7 @@ test('style property', async function (t) {
       {
         type: 'element',
         tagName: 'div',
-        properties: {
-          style: 'color:/*red*/purple; -webkit-border-radius: 3px'
-        },
+        properties: {style: 'color:/*red*/purple; -webkit-border-radius: 3px'},
         children: []
       }
     )
@@ -979,11 +995,11 @@ test('svg', async function (t) {
       s(
         'svg',
         {
-          xmlns: 'http://www.w3.org/2000/svg',
-          'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-          viewBox: '0 0 500 500',
           height: '500',
-          width: '500'
+          viewBox: '0 0 500 500',
+          width: '500',
+          'xmlns:xlink': 'http://www.w3.org/1999/xlink',
+          xmlns: 'http://www.w3.org/2000/svg'
         },
         [
           s('title', 'SVG `<circle>` element'),
@@ -994,11 +1010,11 @@ test('svg', async function (t) {
         type: 'element',
         tagName: 'svg',
         properties: {
-          xmlns: 'http://www.w3.org/2000/svg',
-          xmlnsXLink: 'http://www.w3.org/1999/xlink',
-          viewBox: '0 0 500 500',
           height: '500',
-          width: '500'
+          viewBox: '0 0 500 500',
+          width: '500',
+          xmlnsXLink: 'http://www.w3.org/1999/xlink',
+          xmlns: 'http://www.w3.org/2000/svg'
         },
         children: [
           {

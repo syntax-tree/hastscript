@@ -1,7 +1,7 @@
+import {Fragment, jsxs, jsx} from 'hastscript/jsx-runtime'
+import {h, s} from 'hastscript'
+import type {Element, Root} from 'hast'
 import {expectType} from 'tsd'
-import type {Root, Element} from 'hast'
-import {h, s} from '../index.js'
-import {Fragment, jsx, jsxs} from '../lib/automatic-runtime-html.js'
 
 expectType<Root>(jsx(Fragment, {}))
 expectType<Root>(jsx(Fragment, {children: h('h')}))
@@ -46,7 +46,7 @@ expectType<Element>(h('', {p: {x: 1}})) // Style
 h('', {p: {x: true}})
 
 expectType<Element>(
-  s('svg', {xmlns: 'http://www.w3.org/2000/svg', viewbox: '0 0 500 500'}, [
+  s('svg', {viewbox: '0 0 500 500', xmlns: 'http://www.w3.org/2000/svg'}, [
     s('title', 'SVG `<circle` element'),
     s('circle', {cx: 120, cy: 120, r: 100})
   ])

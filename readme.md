@@ -86,7 +86,7 @@ console.log(
 )
 
 console.log(
-  s('svg', {xmlns: 'http://www.w3.org/2000/svg', viewbox: '0 0 500 500'}, [
+  s('svg', {viewbox: '0 0 500 500', xmlns: 'http://www.w3.org/2000/svg'}, [
     s('title', 'SVG `<circle>` element'),
     s('circle', {cx: 120, cy: 120, r: 100})
   ])
@@ -124,7 +124,7 @@ Yields:
 {
   type: 'element',
   tagName: 'svg',
-  properties: {xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 500 500'},
+  properties: {viewBox: '0 0 500 500', xmlns: 'http://www.w3.org/2000/svg'},
   children: [
     {
       type: 'element',
@@ -332,7 +332,7 @@ const tree = h()
 
 // Somehow someone injected these properties instead of an expected `src` and
 // `alt`:
-const otherProps = {src: 'x', onError: 'alert(1)'}
+const otherProps = {onError: 'alert(1)', src: 'x'}
 
 tree.children.push(h('img', {src: 'default.png', ...otherProps}))
 ```
@@ -340,7 +340,7 @@ tree.children.push(h('img', {src: 'default.png', ...otherProps}))
 Yields:
 
 ```html
-<img src="x" onerror="alert(1)">
+<img onerror="alert(1)" src="x">
 ```
 
 The following example shows how code can run in a browser because someone stored
