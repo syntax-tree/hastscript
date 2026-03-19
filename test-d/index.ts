@@ -45,6 +45,14 @@ expectType<Element>(h('', {p: {x: 1}})) // Style
 // @ts-expect-error: not a property value.
 h('', {p: {x: true}})
 
+declare const propsOrChild:
+  | Record<string, string | null | undefined>
+  | string
+  | null
+  | undefined
+
+expectType<Element>(h('', propsOrChild))
+
 expectType<Element>(
   s('svg', {viewbox: '0 0 500 500', xmlns: 'http://www.w3.org/2000/svg'}, [
     s('title', 'SVG `<circle` element'),
