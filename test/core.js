@@ -980,6 +980,20 @@ test('<template>', async function (t) {
       }
     )
   })
+
+  await t.test(
+    'should not move children of a `template` in SVG into `content`',
+    async function () {
+      assert.deepEqual(s('template', s('circle')), {
+        type: 'element',
+        tagName: 'template',
+        properties: {},
+        children: [
+          {type: 'element', tagName: 'circle', properties: {}, children: []}
+        ]
+      })
+    }
+  )
 })
 
 test('svg', async function (t) {
