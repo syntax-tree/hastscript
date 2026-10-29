@@ -10,12 +10,15 @@
     "lib": ["es2022"],
     "module": "node16",
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "types": ["node"]
   },
   "exclude": ["coverage/", "node_modules/"],
   "include": [
     "**/**.js",
     "**/**.jsx",
+    "test-d/**/*.ts",
+    "test-d/**/*.tsx",
     "lib/automatic-runtime-html.d.ts",
     "lib/automatic-runtime-svg.d.ts",
     "lib/jsx-automatic.d.ts",

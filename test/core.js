@@ -477,7 +477,7 @@ test('property values (unknown)', async function (t) {
   await t.test(
     'should ignore properties with a value of `NaN`',
     async function () {
-      assert.deepEqual(h('', {foo: Number.NaN}), {
+      assert.deepEqual(h('', {foo: NaN}), {
         type: 'element',
         tagName: 'div',
         properties: {},
@@ -600,6 +600,18 @@ test('list properties', async function (t) {
         type: 'element',
         tagName: 'div',
         properties: {className: ['foo', 'bar', 'baz']},
+        children: []
+      })
+    }
+  )
+
+  await t.test(
+    'should add a number `className` to classes from the selector',
+    async function () {
+      assert.deepEqual(h('.foo', {className: 1}), {
+        type: 'element',
+        tagName: 'div',
+        properties: {className: ['foo', 1]},
         children: []
       })
     }

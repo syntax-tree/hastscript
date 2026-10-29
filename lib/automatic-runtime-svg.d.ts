@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/naming-convention -- names are defined by JSX. */
 
 import type {Element, Root} from 'hast'
 import type {Child} from './create-h.js'
@@ -9,28 +9,16 @@ export * from './jsx-automatic.js'
 export const Fragment: null
 
 export const jsxDEV: {
-  (
-    type: null,
-    properties: {children?: Child},
-    key?: string | null | undefined
-  ): Root
-  (type: string, properties: JSXProps, key?: string | null | undefined): Element
+  (type: null, properties: {children?: Child}, key?: string | null): Root
+  (type: string, properties: JSXProps, key?: string | null): Element
 }
 
 export const jsxs: {
-  (
-    type: null,
-    properties: {children?: Child},
-    key?: string | null | undefined
-  ): Root
-  (type: string, properties: JSXProps, key?: string | null | undefined): Element
+  (type: null, properties: {children?: Child}, key?: string | null): Root
+  (type: string, properties: JSXProps, key?: string | null): Element
 }
 
 export const jsx: {
-  (
-    type: null,
-    properties: {children?: Child},
-    key?: string | null | undefined
-  ): Root
-  (type: string, properties: JSXProps, key?: string | null | undefined): Element
+  (type: null, properties: {children?: Child}, key?: string | null): Root
+  (type: string, properties: JSXProps, key?: string | null): Element
 }
