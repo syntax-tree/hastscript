@@ -55,12 +55,6 @@ install with [npm][npmjs-install]:
 npm install hastscript
 ```
 
-In Deno with [`esm.sh`][esmsh]:
-
-```js
-import {h} from 'https://esm.sh/hastscript@9'
-```
-
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
