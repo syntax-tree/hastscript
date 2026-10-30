@@ -9,8 +9,18 @@ export * from './jsx-automatic.js'
 export const Fragment: null
 
 export const jsxDEV: {
-  (type: null, properties: {children?: Child}, key?: string | null): Root
-  (type: string, properties: JSXProps, key?: string | null): Element
+  (
+    type: null,
+    properties: {children?: Child},
+    key?: string | null,
+    ...unused: Array<unknown>
+  ): Root
+  (
+    type: string,
+    properties: JSXProps,
+    key?: string | null,
+    ...unused: Array<unknown>
+  ): Element
 }
 
 export const jsxs: {

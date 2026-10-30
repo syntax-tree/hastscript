@@ -1,4 +1,5 @@
-import {Fragment, jsxs, jsx} from 'hastscript/jsx-runtime'
+import {jsxDEV as svgJsxDEV} from 'hastscript/svg/jsx-dev-runtime'
+import {jsxDEV, Fragment, jsxs, jsx} from 'hastscript/jsx-dev-runtime'
 import {h, s} from 'hastscript'
 import type {Element, Root} from 'hast'
 import {expectType} from 'tsd'
@@ -10,6 +11,17 @@ expectType<Element>(jsx('a', {children: 'a'}))
 expectType<Element>(jsx('a', {children: h('h')}))
 expectType<Element>(jsxs('a', {children: ['a', 'b']}))
 expectType<Element>(jsxs('a', {children: [h('x'), h('y')]}))
+expectType<Element>(jsxDEV('a', {children: 'a'}))
+// Development builds pass more arguments.
+expectType<Element>(
+  jsxDEV('a', {}, undefined, false, {fileName: 'a.js'}, undefined)
+)
+expectType<Root>(
+  jsxDEV(Fragment, {}, undefined, false, {fileName: 'a.js'}, undefined)
+)
+expectType<Element>(
+  svgJsxDEV('a', {}, undefined, false, {fileName: 'a.js'}, undefined)
+)
 
 expectType<Root>(h())
 expectType<Root>(s())

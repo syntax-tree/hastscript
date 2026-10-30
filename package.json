@@ -86,10 +86,6 @@
   "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
-    "ignoreFiles#": "needed `any`s :'(",
-    "ignoreFiles": [
-      "test/jsx-build-jsx-automatic-development.js"
-    ],
     "strict": true
   },
   "type": "module",
