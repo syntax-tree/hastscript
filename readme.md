@@ -369,7 +369,7 @@ Yields:
 ```
 
 Either do not use user-provided input in `hastscript` or use
-[`hast-util-santize`][github-hast-util-sanitize].
+[`hast-util-sanitize`][github-hast-util-sanitize].
 
 ## Related
 
